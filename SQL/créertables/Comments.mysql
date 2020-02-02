@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS `Comments`;
+CREATE TABLE Comments 
+(
+  idComment smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  idMatch smallint(5) unsigned,
+  Comments TEXT,
+	PRIMARY KEY (`idComment`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS `Players`;
+CREATE TABLE Players 
+(
+  idPlayer smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  Alias	CHAR(40),
+  Couleurs BIT(5),
+  Victories smallint(5) unsigned,
+  Conceded smallint(5) unsigned,
+  Defeated smallint(5) unsigned,
+  Draws smallint(5) unsigned
+  MyScore smallint(5),
+  HisScore smallint(5),
+  MatchesDone smallint(5) unsigned,
+  PRIMARY KEY (`idPlayer`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
