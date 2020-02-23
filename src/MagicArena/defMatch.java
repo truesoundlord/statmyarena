@@ -7,7 +7,6 @@ import java.awt.Font;
 import java.util.BitSet;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -49,6 +48,7 @@ public class defMatch extends javax.swing.JPanel implements TableCellRenderer
 	public Component getTableCellRendererComponent(JTable LaTable, Object source, boolean isSelected, boolean hasFocus, int ligne, int colonne) 
 	{
 		removeAll();
+		
 		if(colonne==ma_tablemodelmatch.COL) LaTable.getColumnModel().getColumn(colonne).setMinWidth(200);
 		if(colonne==ma_tablemodelmatch.NAME || colonne==ma_tablemodelmatch.ENLVL || colonne==ma_tablemodelmatch.MYLVL) LaTable.getColumnModel().getColumn(colonne).setMinWidth(100);
 		else
@@ -59,25 +59,65 @@ public class defMatch extends javax.swing.JPanel implements TableCellRenderer
 				
 		switch(colonne)
 		{
-			case ma_tablemodelmatch.NAME:	add(new JTextField((String)source));
-																		this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 12));	
+			case ma_tablemodelmatch.NAME:	add(new JLabel((String)source));
+																		this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 227, 126, 255));
+																		this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 16));	
+																		((FlowLayout)getLayout()).setVgap(baseline);
 																		break;
-			case ma_tablemodelmatch.COL:	BitSet valeur=(BitSet)((ma_Couleurs)source).DeckColors.clone();
+			case ma_tablemodelmatch.COL:		BitSet valeur=(BitSet)((ma_Couleurs)source).DeckColors.clone();
 																		add(new ma_Couleurs(valeur));
+																		((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
 																		break;
-			case ma_tablemodelmatch.MYLVL:	int keyLevelP=Integer.valueOf((String)source);
-																			add(new JTextField((String)classMatch.Levels.get(keyLevelP)));
+			case ma_tablemodelmatch.MYLVL:		int keyLevelP=Integer.valueOf((String)source);
+																			add(new JLabel((String)classMatch.Levels.get(keyLevelP)));
+																			this.getComponent(this.getComponentCount()-1).setForeground(new Color(0, 255, 255, 255));
 																			this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 12));	
+																																						
+																			((FlowLayout)getLayout()).setVgap(baseline);
+																			((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);	
 																			break;
-			case ma_tablemodelmatch.SCP:	add(new JTextField((String)source));
+			case ma_tablemodelmatch.SCP:	add(new JLabel((String)source));
 																		this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 12));	
+																		
+																		this.getComponent(this.getComponentCount()-1).setForeground(new Color(121, 181, 181, 255));
+																		if(Integer.parseInt((String)source)<0 || Integer.parseInt((String)source)>20)
+																		{
+																			if(Integer.parseInt((String)source)<0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 0, 0, 255));	
+																			if(Integer.parseInt((String)source)>20) this.getComponent(this.getComponentCount()-1).setForeground(new Color(85, 85, 0, 255));	
+																			setBackground(new Color(170, 170, 127, 255));
+																		}
+																		
+																		((FlowLayout)getLayout()).setVgap(baseline);
+																		((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
+																		
 																		break;
-			case ma_tablemodelmatch.SCC:	add(new JTextField((String)source));
+			case ma_tablemodelmatch.SCE:	add(new JLabel((String)source));
 																		this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 12));	
+																		
+																		this.getComponent(this.getComponentCount()-1).setForeground(new Color(121, 181, 181, 255));
+																		if(Integer.parseInt((String)source)<0 || Integer.parseInt((String)source)>20)
+																		{
+																			if(Integer.parseInt((String)source)<0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 0, 0, 255));	
+																			if(Integer.parseInt((String)source)>20) this.getComponent(this.getComponentCount()-1).setForeground(new Color(85, 85, 0, 255));	
+																			setBackground(new Color(170, 170, 127, 255));
+																		}
+																		
+																		((FlowLayout)getLayout()).setVgap(baseline);
+																		((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
+																		
 																		break;
-			case ma_tablemodelmatch.ENLVL:	int keyLevelE=Integer.valueOf((String)source);
-																			add(new JTextField((String)classMatch.Levels.get(keyLevelE)));
+			case ma_tablemodelmatch.ENLVL: 	int keyLevelE=Integer.valueOf((String)source);
+																			add(new JLabel((String)classMatch.Levels.get(keyLevelE)));
+																			this.getComponent(this.getComponentCount()-1).setForeground(new Color(0, 255, 255, 255));
 																			this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 12));	
+																			
+																			
+																			((FlowLayout)getLayout()).setVgap(baseline);
+																			((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
+																			
+																			
+																			
+																			
 																			break;
 			/*case ma_tablemodelmatch.RES:	//add(new JTextField((String)source));
 																		if(((String)source).contains("VIC")) add(new JLabel(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/victoire.png"))));
@@ -88,6 +128,7 @@ public class defMatch extends javax.swing.JPanel implements TableCellRenderer
 																		
 		}
 		LaTable.setToolTipText(FenetrePrincipale.ToolTipForStats);
+		this.validate();
 		return this;
 	}
 	
@@ -95,7 +136,11 @@ public class defMatch extends javax.swing.JPanel implements TableCellRenderer
 	{
 		return false;
 	}
+	
+	private int largeur;
+	private final int baseline=12;
 
+	
   // Variables declaration - do not modify//GEN-BEGIN:variables
   // End of variables declaration//GEN-END:variables
 }

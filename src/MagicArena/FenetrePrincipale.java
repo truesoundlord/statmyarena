@@ -27,6 +27,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	 * Creates new form FenetrePrincipale
 	 * @throws java.sql.SQLException
 	 */
+	@SuppressWarnings("OverridableMethodCallInConstructor")
 	public FenetrePrincipale() throws SQLException 
 	{
 		this.lesdonnees = new LinkedList<>();
@@ -91,6 +92,26 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				jLabelStatus.setEnabled(true);
 				jLabelStatus.setToolTipText("Connecté à la base de données ("+LaConnection.getCatalog()+")");
 				isConnected=true;
+				
+				PopulateTable();
+				
+				Tours=0;
+		
+				TableStatistiques=new ma_Statistiques(jTableMatches);
+				TableStatistiques.setConnection(LaConnection);
+		
+				
+				jScrollPanePlayers.getVerticalScrollBar().setUnitIncrement(360);
+				jScrollPaneMatches.getVerticalScrollBar().setUnitIncrement(40);
+				jScrollPanePlayers.getVerticalScrollBar().setBlockIncrement(360);
+				jScrollPaneMatches.getVerticalScrollBar().setBlockIncrement(40);
+
+				jScrollPanePlayers.getVerticalScrollBar().setValue(80);
+				jScrollPanePlayers.getVerticalScrollBar().setDoubleBuffered(true);
+		
+		
+				jTextAreaCommentaires.setEditable(false);
+				setMyLevel();
 			}
 		} 
 		catch (SQLException ex) 
@@ -98,34 +119,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			Logger.getLogger(FenetrePrincipale.class.getName()).log(Level.SEVERE, null, ex);
 			jLabelStatus.setEnabled(false);
 		}
-		
-		try
-		{
-			PopulateTable();
-		}
-		catch(SQLException ex)
-		{
-			Logger.getLogger(FenetrePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-			jLabelStatus.setEnabled(false);
-		}
-	
-		
-		Tours=0;
-		
-		TableStatistiques=new ma_Statistiques(jTableMatches);
-		
-				
-		jScrollPanePlayers.getVerticalScrollBar().setUnitIncrement(360);
-		jScrollPaneMatches.getVerticalScrollBar().setUnitIncrement(40);
-		jScrollPanePlayers.getVerticalScrollBar().setBlockIncrement(360);
-		jScrollPaneMatches.getVerticalScrollBar().setBlockIncrement(40);
-
-		jScrollPanePlayers.getVerticalScrollBar().setValue(80);
-		jScrollPanePlayers.getVerticalScrollBar().setDoubleBuffered(true);
-		
-		
-		jTextAreaCommentaires.setEditable(false);
-		
 	}
 	
 	/**
@@ -134,7 +127,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	 */
 	@SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-  private void initComponents() {
+  private void initComponents()
+  {
 
     jPanelPanneau = new javax.swing.JPanel();
     jTextField_enemy = new javax.swing.JTextField();
@@ -171,14 +165,16 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jStatsManasTours = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setTitle("MagicArena v0.2.2020");
+    setTitle("MagicArena Stats v0.2.2020");
     setBackground(new java.awt.Color(67, 100, 121));
     setMaximumSize(new java.awt.Dimension(1400, 900));
     setMinimumSize(new java.awt.Dimension(1400, 900));
     setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
     setResizable(false);
-    addWindowListener(new java.awt.event.WindowAdapter() {
-      public void windowClosing(java.awt.event.WindowEvent evt) {
+    addWindowListener(new java.awt.event.WindowAdapter()
+    {
+      public void windowClosing(java.awt.event.WindowEvent evt)
+      {
         formWindowClosing(evt);
       }
     });
@@ -195,8 +191,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextField_enemy.setToolTipText("Player name");
     jTextField_enemy.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
     jTextField_enemy.setFocusTraversalPolicyProvider(true);
-    jTextField_enemy.addKeyListener(new java.awt.event.KeyAdapter() {
-      public void keyReleased(java.awt.event.KeyEvent evt) {
+    jTextField_enemy.addKeyListener(new java.awt.event.KeyAdapter()
+    {
+      public void keyReleased(java.awt.event.KeyEvent evt)
+      {
         displayAsTyped(evt);
       }
     });
@@ -211,8 +209,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTablePlayer.setDoubleBuffered(true);
     jTablePlayer.setRowHeight(32);
     jTablePlayer.setUpdateSelectionOnSort(false);
-    jTablePlayer.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mouseClicked(java.awt.event.MouseEvent evt) {
+    jTablePlayer.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
         SelectionJoueur(evt);
       }
     });
@@ -221,8 +221,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jCheckBoxRouge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/dis_manarouge.png"))); // NOI18N
     jCheckBoxRouge.setRolloverEnabled(false);
     jCheckBoxRouge.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manarouge.png"))); // NOI18N
-    jCheckBoxRouge.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCheckBoxRouge.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         selectDeckRouge(evt);
       }
     });
@@ -230,8 +232,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jCheckBoxVert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/dis_manavert.png"))); // NOI18N
     jCheckBoxVert.setRolloverEnabled(false);
     jCheckBoxVert.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manavert.png"))); // NOI18N
-    jCheckBoxVert.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCheckBoxVert.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         selectDeckVert(evt);
       }
     });
@@ -239,8 +243,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jCheckBoxBleu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/dis_manableu.png"))); // NOI18N
     jCheckBoxBleu.setRolloverEnabled(false);
     jCheckBoxBleu.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manableu.png"))); // NOI18N
-    jCheckBoxBleu.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCheckBoxBleu.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         selectDeckBleu(evt);
       }
     });
@@ -248,8 +254,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jCheckBoxBlanc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/dis_manablanc.png"))); // NOI18N
     jCheckBoxBlanc.setRolloverEnabled(false);
     jCheckBoxBlanc.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manablanc.png"))); // NOI18N
-    jCheckBoxBlanc.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCheckBoxBlanc.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         selectDeckBlanc(evt);
       }
     });
@@ -257,8 +265,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jCheckBoxNoir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/dis_mananoir.png"))); // NOI18N
     jCheckBoxNoir.setRolloverEnabled(false);
     jCheckBoxNoir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/mananoir.png"))); // NOI18N
-    jCheckBoxNoir.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCheckBoxNoir.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         selectDeckNoir(evt);
       }
     });
@@ -266,8 +276,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jComboBoxMyLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jComboBoxMyLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
     jComboBoxMyLevel.setToolTipText("My current level");
-    jComboBoxMyLevel.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jComboBoxMyLevel.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         selectionMyLevel(evt);
       }
     });
@@ -275,8 +287,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jComboBoxEnemyLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jComboBoxEnemyLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
     jComboBoxEnemyLevel.setToolTipText("Enemy level");
-    jComboBoxEnemyLevel.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jComboBoxEnemyLevel.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         SelectionEnemyLevel(evt);
       }
     });
@@ -293,8 +307,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jSliderResults.setToolTipText("Results");
     jSliderResults.setValue(1);
     jSliderResults.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-    jSliderResults.addChangeListener(new javax.swing.event.ChangeListener() {
-      public void stateChanged(javax.swing.event.ChangeEvent evt) {
+    jSliderResults.addChangeListener(new javax.swing.event.ChangeListener()
+    {
+      public void stateChanged(javax.swing.event.ChangeEvent evt)
+      {
         jsliderchanged(evt);
       }
     });
@@ -346,8 +362,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jButtonUpdate.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
     jButtonUpdate.setText("Update");
     jButtonUpdate.setToolTipText("Save datas");
-    jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jButtonUpdate.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         updatedatas(evt);
       }
     });
@@ -387,25 +405,31 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jButtonAddTurn.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
     jButtonAddTurn.setText("Turn");
     jButtonAddTurn.setToolTipText("Push each time it is YOUR turn");
-    jButtonAddTurn.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mouseClicked(java.awt.event.MouseEvent evt) {
+    jButtonAddTurn.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
         clicsouris(evt);
       }
     });
-    jButtonAddTurn.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jButtonAddTurn.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         AjouterTour(evt);
       }
     });
 
     jTableMatches.setModel(new javax.swing.table.DefaultTableModel(
-      new Object [][] {
+      new Object [][]
+      {
         {null, null, null, null},
         {null, null, null, null},
         {null, null, null, null},
         {null, null, null, null}
       },
-      new String [] {
+      new String []
+      {
         "Title 1", "Title 2", "Title 3", "Title 4"
       }
     ));
@@ -416,8 +440,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTableMatches.setRowSelectionAllowed(false);
     jTableMatches.setUpdateSelectionOnSort(false);
     jTableMatches.setVerifyInputWhenFocusTarget(false);
-    jTableMatches.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mouseClicked(java.awt.event.MouseEvent evt) {
+    jTableMatches.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
         SelectionMatch(evt);
       }
     });
@@ -425,8 +451,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 
     jTextAreaCommentaires.setBackground(new java.awt.Color(204, 255, 255));
     jTextAreaCommentaires.setColumns(20);
-    jTextAreaCommentaires.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
-    jTextAreaCommentaires.setForeground(new java.awt.Color(0, 153, 153));
+    jTextAreaCommentaires.setFont(new java.awt.Font("Monospaced", 1, 10)); // NOI18N
+    jTextAreaCommentaires.setForeground(new java.awt.Color(102, 102, 102));
     jTextAreaCommentaires.setLineWrap(true);
     jTextAreaCommentaires.setRows(5);
     jTextAreaCommentaires.setTabSize(2);
@@ -435,8 +461,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextAreaCommentaires.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
     jTextAreaCommentaires.setMaximumSize(new java.awt.Dimension(126, 66));
     jTextAreaCommentaires.setMinimumSize(new java.awt.Dimension(126, 66));
-    jTextAreaCommentaires.addFocusListener(new java.awt.event.FocusAdapter() {
-      public void focusLost(java.awt.event.FocusEvent evt) {
+    jTextAreaCommentaires.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusLost(java.awt.event.FocusEvent evt)
+      {
         SauvegarderCommentaires(evt);
       }
     });
@@ -445,7 +473,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextFieldDate.setBackground(new java.awt.Color(0, 153, 153));
     jTextFieldDate.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jTextFieldDate.setForeground(new java.awt.Color(255, 170, 0));
-    jTextFieldDate.setToolTipText("Match date ");
+    jTextFieldDate.setToolTipText("Fixture date");
 
     jTextFieldMatchDuration.setBackground(new java.awt.Color(0, 153, 153));
     jTextFieldMatchDuration.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
@@ -460,16 +488,18 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextFieldOAVictories.setBackground(new java.awt.Color(0, 153, 153));
     jTextFieldOAVictories.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jTextFieldOAVictories.setForeground(new java.awt.Color(255, 170, 0));
-    jTextFieldOAVictories.setToolTipText("Score total (advantage) ");
+    jTextFieldOAVictories.setToolTipText("Number of won matches (including concedes)");
 
     jTextFieldOADefeats.setBackground(new java.awt.Color(0, 153, 153));
     jTextFieldOADefeats.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jTextFieldOADefeats.setForeground(new java.awt.Color(255, 170, 0));
-    jTextFieldOADefeats.setToolTipText("Score total (against)");
+    jTextFieldOADefeats.setToolTipText("Number of lost matches (including concedes)");
 
     jSpinnerManaNoires.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
-    jSpinnerManaNoires.addChangeListener(new javax.swing.event.ChangeListener() {
-      public void stateChanged(javax.swing.event.ChangeEvent evt) {
+    jSpinnerManaNoires.addChangeListener(new javax.swing.event.ChangeListener()
+    {
+      public void stateChanged(javax.swing.event.ChangeEvent evt)
+      {
         modifyManasNoires(evt);
       }
     });
@@ -618,32 +648,32 @@ public class FenetrePrincipale extends javax.swing.JFrame
   private void selectDeckNoir(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectDeckNoir
     if(enemyColors.DeckColors.get(ma_Couleurs.NOIR)==false) enemyColors.DeckColors.set(ma_Couleurs.NOIR);
 		else enemyColors.DeckColors.clear(ma_Couleurs.NOIR);
-		System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
+		//System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
 		
   }//GEN-LAST:event_selectDeckNoir
 
   private void selectDeckRouge(java.awt.event.ActionEvent evt) {                                 
     if(enemyColors.DeckColors.get(ma_Couleurs.ROUGE)==false) enemyColors.DeckColors.set(ma_Couleurs.ROUGE);
 		else enemyColors.DeckColors.clear(ma_Couleurs.ROUGE);
-		System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
+		//System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
   }                                
 
   private void selectDeckVert(java.awt.event.ActionEvent evt) {                                 
     if(enemyColors.DeckColors.get(ma_Couleurs.VERT)==false) enemyColors.DeckColors.set(ma_Couleurs.VERT);
 		else enemyColors.DeckColors.clear(ma_Couleurs.VERT);
-		System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
+		//System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
   }                                
   
   private void selectDeckBleu(java.awt.event.ActionEvent evt) {                                 
     if(enemyColors.DeckColors.get(ma_Couleurs.BLEU)==false) enemyColors.DeckColors.set(ma_Couleurs.BLEU);
 		else enemyColors.DeckColors.clear(ma_Couleurs.BLEU);
-		System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
+		//System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
   }                                
   
   private void selectDeckBlanc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectDeckRouge
     if(enemyColors.DeckColors.get(ma_Couleurs.BLANC)==false) enemyColors.DeckColors.set(ma_Couleurs.BLANC);
 		else enemyColors.DeckColors.clear(ma_Couleurs.BLANC);
-		System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
+		//System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
   }//GEN-LAST:event_selectDeckRouge
 
 	/**
@@ -676,7 +706,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	 * @param evt 
 	 */
   private void updatedatas(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatedatas
-    Result=jSliderResults.getValue();
+    MatchResult=jSliderResults.getValue();
 		
 		if(cematch==null)
 		{
@@ -686,7 +716,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		
 		
 		// Par rapport au match, on se place de mon point de vue...
-		switch(Result)
+		switch(MatchResult)
 		{
 			case 1: cematch.setResult(classMatch.Resultats.DEF);		// défaite ou lorsque je concède un match
 							break;
@@ -698,7 +728,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 							break;
 		}
 			
-		String dlgMessage="Confirmation needed\n";
+		String dlgMessage="Informations:\n";
 		dlgMessage+="Match results:\n"+jTextFieldResultText.getText()+"\n";
 		dlgMessage+="Enemy name:"+jTextField_enemy.getText()+"\n";
 		dlgMessage+="Enemy Score (up):"+jTextFieldEnemyScore.getText()+"\n";
@@ -834,7 +864,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 
 					listeEnnemis.get(seekfor).addClash();
 
-					switch(Result)
+					switch(MatchResult)
 					{
 						case 1: listeEnnemis.get(seekfor).addVictory();
 										break;
@@ -869,12 +899,13 @@ public class FenetrePrincipale extends javax.swing.JFrame
 
 					ceConnard.Reset(); // oui il faut remettre l'objet à zéro sinon on va "hériter" des merdes résultantes de la recherche dans la liste...
 					
-					ceConnard.setName(cematch.getName());
+					ceConnard.setName(cematch.getName().replace("\\", "\\\\"));
+					ceConnard.setName(cematch.getName().replace("'", "\\'"));
 					ceConnard.setClashes(1);
 					ceConnard.setColors(enemyColors.DeckColors);
 					ceConnard.setScoreE(Integer.valueOf(jTextFieldEnemyScore.getText()));
 					ceConnard.setScoreP(Integer.valueOf(jTextFieldMyScore.getText()));
-					switch(Result)
+					switch(MatchResult)
 					{
 						case 1: ceConnard.addVictory();				// victoire contre moi (ou que j'ai concédé)
 										break;	
@@ -885,6 +916,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 						case 4: ceConnard.addDraw();
 										break;
 					}
+					
 					ceConnard.insertdb(LaConnection);
 					
 					// Lié au bug de la recherche
@@ -909,21 +941,29 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				jTextFieldOAVictories.setText("");
 				jTextFieldMatchTurns.setText("");
 				
-				switch(Result)
+				switch(MatchResult)
 				{
-					case 1:	TableStatistiques.computeResults(LaConnection,'D');
+					case 1:	TableStatistiques.computeResults('D');
 									ToolTipForStats="Defeats suffered by the player "+cematch.getName();
 									break;
-					case 2: TableStatistiques.computeResults(LaConnection,'C');
+					case 2: TableStatistiques.computeResults('C');
 									ToolTipForStats="Concedes by the player "+cematch.getName();
 									break;
-					case 3:	TableStatistiques.computeResults(LaConnection,'V');
+					case 3:	TableStatistiques.computeResults('V');
 									ToolTipForStats="Victories againsts the player "+cematch.getName();
 									break;
-					case 4: TableStatistiques.computeResults(LaConnection,'E');
+					case 4: TableStatistiques.computeResults('E');
 									ToolTipForStats="Draws with the player "+cematch.getName();
 									break;
 				}
+				
+				jTextFieldOAVictories.setText("Victories: "+getVictories());
+				jTextFieldOADefeats.setText("Defeats: "+getDefeats());
+				String prefix="Match "+String.valueOf(cematch.getMatchID());
+				jTextFieldDate.setText("Match fix: "+cematch.getBeginDate());
+				jTextFieldMatchDuration.setText("Match duration: "+cematch.getDuration());
+				jTextFieldMatchTurns.setText("Turns: "+cematch.getTurns());
+				jTextFieldDate.setToolTipText(prefix);
 				
 			} 
 			catch (SQLException ex) 
@@ -942,7 +982,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			jTextFieldMyScore.setText("20");
 			jSliderResults.setValue(1);
 			jTextField_enemy.setText("");
-			System.err.println("Nouvel élément cematch");
+			jStatsManasTours.setText(cematch.getManas()+" manas noires/"+cematch.getTurns()+" tours");
+			
 			cematch=new classMatch();
 			if(lastIndexForEnemyLevel!=-1) jComboBoxEnemyLevel.setSelectedIndex(lastIndexForEnemyLevel);
 			if(lastIndexForMyLevel!=-1) jComboBoxMyLevel.setSelectedIndex(lastIndexForMyLevel);
@@ -953,16 +994,11 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			
 			jTextAreaCommentaires.setText("");
 			jTextAreaCommentaires.setEditable(true);
-			jStatsManasTours.setText("Manas/Tours");
 			
 		}
   }//GEN-LAST:event_updatedatas
 
-	/**
-	 * Accessing the database to populate the rows of the table
-	 * @throws SQLException 
-	 */
-	public void PopulateTable() throws SQLException
+	private void PopulateTable() throws SQLException
 	{
 		if(!listeEnnemis.isEmpty())
 			listeEnnemis.clear();  // sinon la taille augmente sans cesse...
@@ -997,17 +1033,15 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				}
 				Resultats.close();
 				if(ModeleTable.getColumnCount()>=1) ModeleTable.ClearDatas();
-				for(int cptEnnemis=listeEnnemis.size()-1;cptEnnemis>=0;cptEnnemis--) ModeleTable.addRow(listeEnnemis.get(cptEnnemis));
+				
+				for(int cptEnnemis=listeEnnemis.size()-1;cptEnnemis>=0;cptEnnemis--) ModeleTable.addRow(listeEnnemis.get(cptEnnemis));	
 			}
 			Statement.close();
 		}
 	}
 	
 	
-	/**
-	 * No access to the database only refering to listeEnnemis
-	 */
-	public void RefreshTable()
+	private void RefreshTable()
 	{
 		ModeleTable.ClearDatas();
 		for(int cptEnnemis=listeEnnemis.size()-1;cptEnnemis>=0;cptEnnemis--) ModeleTable.addRow(listeEnnemis.get(cptEnnemis));
@@ -1084,6 +1118,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				
 		enemyColors.DeckColors=couleursimportees.DeckColors;
 		
+		
 		// Concept: si le joueur utilise des autres couleurs, on AJOUTE une nouvelle entrée avec le nom du joueur
 		// mais avec un set de couleurs différentes...
 		if(cematch==null) 
@@ -1094,11 +1129,19 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		
 		try 
 		{
-			System.err.println("DEBUG 2 février 2020: "+jTextAreaCommentaires.isEditable());   // elle est à true...
+			//System.err.println("DEBUG 2 février 2020: "+jTextAreaCommentaires.isEditable());   // elle est à true...
 			String tmp=getCommentsFromPlayer(jTextField_enemy.getText());
 			if(!tmp.isEmpty())
 				jTextAreaCommentaires.setText(tmp);
 			jTextAreaCommentaires.setEditable(false);
+			// TODO: ajouter les matches joués contre ce joueur dans la liste, peu importe le résultat
+			
+			TableStatistiques.computeStats(jTextField_enemy.getText());
+			
+			// TODO: déterminer le  niveau du joueur sélectionné...
+			
+			setSelectedEnemyLastLevel(jTextField_enemy.getText());
+	
 		} 
 		catch (SQLException ex) 
 		{
@@ -1107,7 +1150,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			System.err.println(ex.getMessage());
 			System.err.println(ex.getCause());
 		}
-		
+		jTextFieldDate.setToolTipText("Fixture date");
+		ToolTipForStats="Fixtures with player "+jTextField_enemy.getText();
   }//GEN-LAST:event_SelectionJoueur
 
 	/**
@@ -1146,6 +1190,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		
 		jTablePlayer.setToolTipText("");
 		ModeleTable.ClearDatas();
+		jTablePlayer.revalidate();
+		jTablePlayer.repaint();
 		nbreElem--;
 		while(nbreElem>=0)
 		{
@@ -1169,20 +1215,27 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				// essai du contournement du bug
 								
 				ModeleTable.addRow(listeEnnemis.get(nbreElem));
-												
 				jTablePlayer.setToolTipText("Select one row to set the name of the player if present");
 			}
-			nbreElem--;
+			else
+			{
+				enemyColors.DeckColors.clear();
+		
+				jCheckBoxNoir.setSelected(false);
+				jCheckBoxRouge.setSelected(false);
+				jCheckBoxVert.setSelected(false);
+				jCheckBoxBleu.setSelected(false);
+				jCheckBoxBlanc.setSelected(false);
+			}
 			jTablePlayer.revalidate();
 			jTablePlayer.repaint();
+			nbreElem--;
 		}
 		if(cematch==null)
 		{
 			cematch=new classMatch();
 			cematch.setBegin();
 		}
-		//jTablePlayer.revalidate();
-		//selejTablePlayer.repaint();
   }//GEN-LAST:event_displayAsTyped
 
   private void selectionMyLevel(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectionMyLevel
@@ -1220,9 +1273,12 @@ public class FenetrePrincipale extends javax.swing.JFrame
     int row=((JTable)evt.getSource()).getSelectedRow();
     // int column=((JTable)evt.getSource()).getSelectedColumn();
 
+		jTextAreaCommentaires.setText("");
+		
 		classMatch ctmp=ma_Statistiques.ListeDesMatches.get(row);
-    if(ctmp!=null)
+		if(ctmp!=null)
     {
+			String prefix="Match "+String.valueOf(ctmp.getMatchID());
 			jTextFieldDate.setText("Match fix: "+ctmp.getBeginDate());
 			jTextFieldMatchDuration.setText("Match duration: "+ctmp.getDuration());
 			jTextFieldMatchTurns.setText("Turns: "+ctmp.getTurns());
@@ -1244,8 +1300,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			// Chercher le commentaire du match dans la base de données...
 			// Puis ajouter le texte...
 			jTextAreaCommentaires.setEditable(true);
+			jTextFieldDate.setToolTipText(prefix);
 			ChargerCommentaires(ctmp.getMatchID());
-			
     }
   }//GEN-LAST:event_SelectionMatch
 
@@ -1309,11 +1365,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		}
   }//GEN-LAST:event_clicsouris
 	
-	/**
-	 * @param LaConnection
-	 * @param MatchID 
-	 */
-	public void ChargerCommentaires(int MatchID)
+	private void ChargerCommentaires(int MatchID)
 	{
 		if(jTextAreaCommentaires.isEditable())
 		{
@@ -1377,38 +1429,23 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		//</editor-fold>
 
 		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable() 
-		{
-			@Override
-			public void run() 
+		java.awt.EventQueue.invokeLater(() -> {
+			JFrame MaFrame;
+			try 
 			{
-				JFrame MaFrame;
-				try 
-				{
-					MaFrame = new FenetrePrincipale();
-					MaFrame.setVisible(true);
-				} 
-				catch (SQLException ex) 
-				{
-					Logger.getLogger(FenetrePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-				}
+				MaFrame = new FenetrePrincipale();
+				MaFrame.setVisible(true);
+			}
+			catch (SQLException ex)
+			{
+				Logger.getLogger(FenetrePrincipale.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		});
 	}
 	
 	// Mes méthodes
 	
-	/**
-	*
-	*
-	 * @param type indicates the type of colomun
-	 * @param source indicates the result set as the source of the parsing
-	 * @param colonne indicates the column of the row 
-	 * @return the string representing the column content of a row
-	 * @throws java.sql.SQLException 
-	*/
-	
-	public String ParseSQL(String type,java.sql.ResultSet source,int colonne) throws SQLException
+	private String ParseSQL(String type,java.sql.ResultSet source,int colonne) throws SQLException
 	{
 		String tmp=new String();
 		
@@ -1419,15 +1456,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		return tmp;
 	}
 	
-	/**
-	*	 Packs the database result set into classEnemy object...
-	*  Adds also the object into the LinkedList "source"
-	*
-	 * @param source
-	 * @return  boolean (indicating the packing has succeeded or not)
-	*/
-	
-	public boolean PackDatasFromDB(LinkedList<Object> source)
+	private boolean PackDatasFromDB(LinkedList<Object> source)
 	{
 		classEnemy tmp=new classEnemy();
 		BitSet tmpbs=new BitSet(5);
@@ -1451,7 +1480,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		tmp.setConcedes(Integer.valueOf((String)source.get(PLAYERCON)));
 		tmp.setDraws(Integer.valueOf((String)source.get(PLAYERDRW)));
 		
-		tmp.setScoreE(Integer.valueOf((String)source.get(PLAYERSCOREE)));  // 
+		tmp.setScoreE(Integer.valueOf((String)source.get(PLAYERSCOREE)));  
 		tmp.setScoreP(Integer.valueOf((String)source.get(PLAYERSCOREP)));
 		
 		tmp.setClashes(Integer.valueOf((String)source.get(PLAYERCSH)));
@@ -1459,11 +1488,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		return listeEnnemis.add(tmp);
 	}
 
-	/**
-	 * Set the icons 
-	 * @param color 
-	 */
-	public void setIcons(BitSet color)
+	private void setIcons(BitSet color)
 	{
 		jCheckBoxNoir.setSelected(color.get(ma_Couleurs.NOIR));
 		jCheckBoxRouge.setSelected(color.get(ma_Couleurs.ROUGE));
@@ -1472,13 +1497,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		jCheckBoxBlanc.setSelected(color.get(ma_Couleurs.BLANC));
 	}
 	
-	/**
-	 * Accessing the database 
-	 * @param LaConnexion
-	 * @return the number of defeats (When I concede it is a defeat)
-	 * @throws SQLException 
-	 */
-	public int getVictories() throws SQLException
+	private int getVictories() throws SQLException
 	{
 		int tmp=-1;
 		String SQLRequest="SELECT COUNT(Result) FROM Matches WHERE Result='C' OR Result='V'";
@@ -1502,12 +1521,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		return tmp;
 	}
 	
-	/**
-	 * Accessing the database 
-	 * @return the number of victories (concedes + victories)
-	 * @throws SQLException 
-	 */
-	public int getDefeats() throws SQLException
+	private int getDefeats() throws SQLException
 	{
 		int tmp=-1;
 		String SQLRequest="SELECT COUNT(Result) FROM Matches WHERE Result='D'";
@@ -1530,21 +1544,32 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		return tmp;
 	}
 	
-	public void ProceedRightClick(String current)
+	private void ProceedRightClick(String current)
 	{
 		// Afficher les matches
 		System.err.println("Clic droit");
 	}
 	
-	public void ProceedMiddleClick()
+	private void ProceedMiddleClick()
 	{
 		// Afficher la fenêtre de statistiques
-		System.err.println("Clic milieu");
+		//System.err.println("Clic milieu");
 		FenetreStatistiques=new superStats(LaConnection);
+		
+		int posXRef=super.getLocation().x;
+		int posYRef=super.getLocation().y;
+		
+		int widthref=super.getWidth();
+		int heightref=super.getHeight();
+		
+		int width=FenetreStatistiques.getWidth();
+		int height=FenetreStatistiques.getHeight();
+				
+		FenetreStatistiques.setLocation(posXRef+((widthref-width)/2),posYRef+((heightref-height)/2));
 			
 	}
 	
-	public String getCommentsFromPlayer(String playername) throws SQLException
+	private String getCommentsFromPlayer(String playername) throws SQLException
 	{
 		// SELECT Comments FROM Comments WHERE idMatch >= (SELECT MAX(idMatch )) AND idMatch=(SELECT idMatch FROM Matches WHERE idPlayer=(SELECT idPlayer FROM Players WHERE Alias='Bitcoin King'));
 		// SELECT Comments FROM Comments, Matches WHERE Matches.idMatch=Comments.idMatch AND Matches.idPlayer IN (SELECT idPlayer FROM Players WHERE Alias='fabio')
@@ -1578,7 +1603,54 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		
 		return tmp;
 	}
+
+	private void setSelectedEnemyLastLevel(String param) throws SQLException
+	{
+		int tmp=-1;
+		
+		// hihi ^^
+		
+		param=param.replace("\\", "\\\\"); // Comment gérer les connards qui mettent un backslash dans leurs alias ???
+		param=param.replace("'", "\\'");
+		
+		
+		String SQLRequest="SELECT EnLvl FROM Matches WHERE idPlayer=(SELECT idPlayer FROM Players WHERE Alias='"+param+"' ORDER BY idPlayer DESC LIMIT 1) ORDER BY StartTime DESC LIMIT 1";
+		Statement=LaConnection.createStatement();
+		Statement.execute(SQLRequest);
+			
+		Resultats=Statement.getResultSet();
+		if(Resultats!=null) 
+		{
+			Resultats.first();					// Il ne devrait y avoir qu'un seul enregistrement sélectionné (mais je pourrais être une grosse merde aussi... à tester ;) )
+			tmp=Resultats.getInt(1);
+		}
+		Resultats.close();
+		Statement.close();
+		
+		if(tmp!=-1) jComboBoxEnemyLevel.setSelectedIndex(tmp);
+	}
 	
+
+	private void setMyLevel() throws SQLException 
+	{
+		int tmp=-1;
+		
+		String SQLRequest="SELECT MyLvl FROM Matches ORDER BY StartTime DESC LIMIT 1";
+		Statement=LaConnection.createStatement();
+		Statement.execute(SQLRequest);
+			
+		Resultats=Statement.getResultSet();
+		if(Resultats!=null) 
+		{
+			Resultats.first();					// Il ne devrait y avoir qu'un seul enregistrement sélectionné (mais je pourrais être une grosse merde aussi... à tester ;) )
+			tmp=Resultats.getInt(1);
+		}
+		Resultats.close();
+		Statement.close();
+		
+		if(tmp!=-1) jComboBoxMyLevel.setSelectedIndex(tmp);
+	}
+
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.JButton jButtonAddTurn;
@@ -1616,65 +1688,61 @@ public class FenetrePrincipale extends javax.swing.JFrame
   public javax.swing.JTextField jTextField_enemy;
   // End of variables declaration//GEN-END:variables
 
-	private final ma_tablemodel ModeleTable=new ma_tablemodel();
-	private final defPlayer AfficheurStandard=new defPlayer();
-	private final ma_Couleurs enemyColors=new ma_Couleurs();
+	private final ma_tablemodel ModeleTable=new ma_tablemodel();	// Modèle (données) contenues dans la table 
+	private final defPlayer AfficheurStandard=new defPlayer();		// Afficheur (dessinateur) des données de la table
+	private final ma_Couleurs enemyColors=new ma_Couleurs();			// Couleur(s) du deck de l'ennemi 
 		
-	private final LinkedList<String> Levels=new LinkedList<>();
-	private final String[] strPrefixes;
+	private final LinkedList<String> Levels=new LinkedList<>();		// Contient les niveaux 
+	private final String[] strPrefixes;														
 	private final String[] strPostfixes;
 	
-	private boolean isConnected=false;
-	private boolean bStatusRequest=false;
+	private boolean isConnected=false;														// FLAG indiquant le statut de la connexion à mariadb 
+	private boolean bStatusRequest=false;													// FLAG indique le statut de la requête SQL 
 	
-	private int Result;
-	private int Tours;
+	private int MatchResult;																			// Résultat du match 
+	private int Tours;																						// Nombre de tours du match (joués par moi) 
 	
-	private LinkedList<classEnemy> listeEnnemis;
-	private LinkedList<Object> lesdonnees;
+	private LinkedList<classEnemy> listeEnnemis;									// Contient la liste des ennemis 
+	private LinkedList<Object> lesdonnees;												// Liste des champs en provenance d'une table (ODBC style) 
 	
-	private BitSet oldValues_col;
+	private BitSet oldValues_col;																	// (???) ancienne valeur du set de couleurs (5 bits -> 0 à 31) 	
 	
-	public static String SelectedTab="Victories";
+	public static int lastIndexForMyLevel=-1;											// (???) ancien indice concernant mon niveau	 
+	public static int lastIndexForEnemyLevel=-1;									// (???) ancien indice concernant le niveau de l'ennemi 
+	public static String ToolTipForStats;													// (???) Message pour la JTable de ma_Statistiques (defMatch)	 	
 	
-	public static int lastIndexForMyLevel=-1;
-	public static int lastIndexForEnemyLevel=-1;
-	public static String ToolTipForStats;
 	
-	/**
-	 * Nouvel ennemi
-	 */
 	
-	public static classEnemy ceConnard;
+	public static classEnemy ceConnard;														// Nouvel ennemi 
 
-	/**
-	 * Représente le match en cours...
-	 */
-	public static classMatch cematch;
+	public static classMatch cematch;															// Représente le match en cours... 
 	
 	// Position des champs
 	
-	public final int IDPLAYER=0;
-	public final int PLAYERNAME=1;
-	public final int PLAYERCOL=2;
-	public final int PLAYERVIC=3;
-	public final int PLAYERCON=4;
-	public final int PLAYERDEF=5;
-	public final int PLAYERDRW=6;
-	public final int PLAYERSCOREP=7;
-	public final int PLAYERSCOREE=8;
-	public final int PLAYERCSH=9;
+	public final int IDPLAYER=0;																	// Position du champs idPlayer 	
+	public final int PLAYERNAME=1;																// Position du champs Alias 	
+	public final int PLAYERCOL=2;																	// Position du champs Couleurs 
+	public final int PLAYERVIC=3;																	// Position du champs Victories 
+	public final int PLAYERCON=4;																	// Position du champs Concedes 
+	public final int PLAYERDEF=5;																	// Position du champs Defeats 
+	public final int PLAYERDRW=6;																	// Position du champs Draws 
+	public final int PLAYERSCOREP=7;															// Position du champs MyScore 
+	public final int PLAYERSCOREE=8;															// Position du champs HisScore 
+	public final int PLAYERCSH=9;																	// Position du champs MatchesDone 
 	
 	// Statistiques
 	
-	public ma_Statistiques TableStatistiques;
-	public superStats FenetreStatistiques;
+	public ma_Statistiques TableStatistiques;											// Objet permettant d'obtenir les stats d'un match 
+	public superStats FenetreStatistiques;												// Objet permettant d'accéder aux statistiques étendues 
 		
 	// SQL related
 	
-	private Driver LeDriver;
-	private java.sql.Connection LaConnection;
-	private java.sql.Statement Statement;
-	private java.sql.ResultSet Resultats;
+	private Driver LeDriver;																			// Objet ODBC représentant le pilote 
+	private java.sql.Connection LaConnection;											// Objet représentant la connection avec mariaDB 
+	private java.sql.Statement Statement;													// Objet représentant une requête SQL 	
+	private java.sql.ResultSet Resultats;													// Objet représentant les résultats d'une requête 
+
+
+	
 }
 

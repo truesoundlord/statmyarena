@@ -75,9 +75,10 @@ public class defPlayer extends javax.swing.JPanel implements TableCellRenderer
 																((FlowLayout)getLayout()).setVgap(baseline);
 																
 																break;
-			case ma_tablemodel.COL:		BitSet valeur=new BitSet(5);
+			case ma_tablemodel.COL:		BitSet valeur;
 																valeur=(BitSet)((ma_Couleurs)source).DeckColors.clone(); 
 																add(new ma_Couleurs(valeur));
+																((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
 																break;
 
 			case ma_tablemodel.VIC:		add(new JLabel((String)source));
@@ -85,21 +86,21 @@ public class defPlayer extends javax.swing.JPanel implements TableCellRenderer
 																this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 15));
 																largeur=((String)source).length();
 																((FlowLayout)getLayout()).setVgap(baseline);
-																((FlowLayout)getLayout()).setHgap((100-largeur)/3);
+																((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
 																break;
 			case ma_tablemodel.DEF:		add(new JLabel((String)source));
 																largeur=((String)source).length();
 																if(Integer.valueOf((String)source)!=0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 227, 126, 255));
 																this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 14));	
 																((FlowLayout)getLayout()).setVgap(baseline);
-																((FlowLayout)getLayout()).setHgap((100-largeur)/3);
+																((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
 																break;
 			case ma_tablemodel.CON:		add(new JLabel((String)source));
 																largeur=((String)source).length();
 																if(Integer.valueOf((String)source)!=0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 227, 126, 255));	
 																this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 14));
 																((FlowLayout)getLayout()).setVgap(baseline);
-																((FlowLayout)getLayout()).setHgap((100-largeur)/3);
+																((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
 																break;
 			case ma_tablemodel.SCP:		add(new JLabel((String)source));
 																this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 14));
@@ -114,7 +115,7 @@ public class defPlayer extends javax.swing.JPanel implements TableCellRenderer
 																
 																		
 																((FlowLayout)getLayout()).setVgap(baseline);
-																((FlowLayout)getLayout()).setHgap((100-largeur)/3);
+																((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
 																break;
 			case ma_tablemodel.SCE:		add(new JLabel((String)source));
 			
@@ -129,7 +130,7 @@ public class defPlayer extends javax.swing.JPanel implements TableCellRenderer
 																}
 																	
 																((FlowLayout)getLayout()).setVgap(baseline);
-																((FlowLayout)getLayout()).setHgap((100-largeur)/3);
+																((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
 																break;
 			case ma_tablemodel.MJ:		add(new JLabel((String)source));
 																largeur=((String)source).length();
@@ -140,23 +141,26 @@ public class defPlayer extends javax.swing.JPanel implements TableCellRenderer
 																}
 																this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 14));
 																((FlowLayout)getLayout()).setVgap(baseline);
-																((FlowLayout)getLayout()).setHgap((100-largeur)/3);
+																((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
 																break;
 			case ma_tablemodel.DRWS:	add(new JLabel((String)source));
 																largeur=((String)source).length();
 																if(Integer.valueOf((String)source)!=0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 227, 126, 255));
 																this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 14));
 																((FlowLayout)getLayout()).setVgap(baseline);
-																((FlowLayout)getLayout()).setHgap((100-largeur)/3);
+																((FlowLayout)getLayout()).setAlignment(FlowLayout.CENTER);
 																break;														
 	
 																
 		}
+		this.validate();
 		return this;
 	}
+	
+
 
 	private int largeur;
-	private int baseline=12;
+	private final int baseline=12;
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   // End of variables declaration//GEN-END:variables

@@ -6,12 +6,15 @@
     </Component>
   </NonVisualComponents>
   <Properties>
+    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[1368, 762]"/>
+    </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1336, 836]"/>
+      <Dimension value="[1368, 762]"/>
     </Property>
     <Property name="resizable" type="boolean" value="false"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1392, 836]"/>
+      <Dimension value="[1368, 762]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -35,17 +38,17 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanelSuperStats" pref="1294" max="32767" attributes="0"/>
+              <Component id="jPanelSuperStats" pref="1356" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanelSuperStats" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              <Component id="jPanelSuperStats" min="-2" pref="787" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -75,8 +78,8 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanelInfos" alignment="1" max="32767" attributes="0"/>
-                      <Component id="jPanelSStats" alignment="1" max="32767" attributes="0"/>
+                      <Component id="jPanelSStats" max="32767" attributes="0"/>
+                      <Component id="jScrollPanePourTable" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -86,9 +89,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jPanelSStats" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jPanelInfos" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPanePourTable" min="-2" pref="426" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -309,6 +312,9 @@
                 <Property name="text" type="java.lang.String" value="0"/>
                 <Property name="toolTipText" type="java.lang.String" value="Victories"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTFVictoriesMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLBLWinTotal">
               <Properties>
@@ -364,6 +370,9 @@
                 <Property name="text" type="java.lang.String" value="0"/>
                 <Property name="toolTipText" type="java.lang.String" value="Concedes"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTFConcedesMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="jCBEnemyLevel">
               <Properties>
@@ -400,6 +409,9 @@
                   <Dimension value="[7, 24]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLBLWinsMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLBLDef">
               <Properties>
@@ -418,6 +430,9 @@
                   <Dimension value="[7, 24]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLBLDefMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLBLCon">
               <Properties>
@@ -436,6 +451,9 @@
                   <Dimension value="[7, 24]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLBLConMouseClicked"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="jPanelForme">
               <Properties>
@@ -570,7 +588,7 @@
                               <Component id="jLBLDefeatsInaRow" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLBLConcedesInaRow" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="376" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLBLMINPScore" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLBLMAXPScore" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -786,27 +804,9 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="jPanelInfos">
-          <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
-                <BevelBorder bevelType="1"/>
-              </Border>
-            </Property>
-          </Properties>
+        <Container class="javax.swing.JScrollPane" name="jScrollPanePourTable">
 
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="456" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
         </Container>
       </SubComponents>
     </Container>

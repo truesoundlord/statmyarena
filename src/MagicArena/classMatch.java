@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.util.BitSet;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JToolTip;
 
 /**
  *
@@ -35,7 +38,7 @@ public class classMatch
 	
 	private GregorianCalendar dateDebut;
 	private GregorianCalendar dateFin;
-	private GregorianCalendar MatchLength;
+	private final GregorianCalendar MatchLength;
 	
 	private final String strPostfixes[]=new String[]{"Tier 4", "Tier 3", "Tier 2", "Tier 1"};
 	private final String strPrefixes[]=new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mystic"};   // platinium tier 1 <-> 15
@@ -96,43 +99,6 @@ public class classMatch
 		
 		MatchLength=(GregorianCalendar)GregorianCalendar.getInstance();				
 	}
-	
-	/** PARFAITEMENT INUTILE ^^
-	 * 
-	 * @return 
-	 */
-	public boolean isStarted()
-	{
-		return bStart;
-	}
-	
-	public classMatch(String Enemy,int param_myscore,int param_hisscore,BitSet Couleurs)
-	{
-		this.bStart = false;
-		EnemyName=Enemy;
-		MyScore=param_myscore;
-		HisScore=param_hisscore;
-		MatchColors=new BitSet(5);
-		MatchColors=Couleurs;
-		
-		Levels=new LinkedList<>();
-		Levels.clear();
-		
-		//int cptLevel=0;
-		for(int cptPrefixes=0;cptPrefixes<strPrefixes.length;cptPrefixes++)
-		{
-			for(int cptPostfixes=0;cptPostfixes<strPostfixes.length;cptPostfixes++)
-			{
-				String strLevel=strPrefixes[cptPrefixes]+"("+strPostfixes[cptPostfixes]+")";
-				Levels.add(strLevel);
-				//cptLevel++;
-			}		
-		}
-		
-		dateDebut=(GregorianCalendar)GregorianCalendar.getInstance();
-		dateFin=(GregorianCalendar)GregorianCalendar.getInstance();
-		MatchLength=(GregorianCalendar)GregorianCalendar.getInstance();
-	};
 
 	// set methods
 	
@@ -152,6 +118,11 @@ public class classMatch
 		Turns=param;
 	}
 	
+	/**
+	 * 
+	 * @param direction false ennemy, true player
+	 * @param param the string representation not the index
+	 */
 	public void setLevel(boolean direction,String param)
 	{
 		if(direction)
@@ -243,10 +214,6 @@ public class classMatch
 		dateDebut.set(GregorianCalendar.MINUTE, Integer.valueOf(parsed[PRSm]));
 		dateDebut.set(GregorianCalendar.SECOND, Integer.valueOf(parsed[PRSS]));
 		
-		
-		
-		
-		
 	}
 	
 	public void EndFROMDB(String param)
@@ -325,7 +292,7 @@ public class classMatch
 	
 	public String getBeginDate()
 	{
-		String composed=new String();
+		String composed;
 		
 		// Comme Java c'est de la merde et qu'il n'est pas possible d'extraire les champs de l'objet il va falloir 
 		//chipoter (c'est là qu'en C en une seule ligne de code c'était réglé... enfin bref...)
@@ -357,9 +324,15 @@ public class classMatch
 		return idMatch;
 	}
 	
+	/**
+	 * Saves the object to the database
+	 * @param LaConnection
+	 * @return
+	 * @throws SQLException 
+	 */
 	public boolean SaveMeToDB(java.sql.Connection LaConnection) throws SQLException
 	{
-		String SQLRequest=new String();
+		String SQLRequest;
 		
 		if(LaConnection.isValid(1))
 		{
@@ -407,13 +380,7 @@ public class classMatch
 		
 		return true;
 	}
-	
-	public boolean LoadMeFromDB(java.sql.Connection LaConnexion)
-	{
-		
-		return true;
-	}
-	
+
 	/**
 	 * Pratiquement inutile en fait :{
 	 * Finalement si, j'ai bien fait de la prévoir cette fonction
@@ -450,4 +417,41 @@ public class classMatch
 		}
 		return id;
 	}
-}
+	
+	public String getComments(java.sql.Connection LaConnection) throws SQLException
+	{
+		String tmp="no comments";
+		if(idMatch>0)
+		{
+			if(LaConnection.isValid(1))
+			{
+				String SQLRequest="SELECT Comments FROM Comments WHERE idMatch="+idMatch;
+				Statement=LaConnection.createStatement();
+				Statement.execute(SQLRequest);
+				
+				java.sql.ResultSet Resultats;
+				Resultats=Statement.getResultSet();
+				
+				if(Resultats.first())
+				{
+					// Il faudrait utiliser d'après la documentation le format HTML :{
+					tmp="<HTML><TABLE><TR ALIGN=JUSTIFY><TD>";
+					
+					String prework=Resultats.getString(1);
+					int length=prework.length();
+					
+					// Il faudrait formater le message de manière à ce que ce soit lisible ^^
+					
+					tmp+="<TEXTAREA ROWS=10 COLS=30>"+prework+"</TEXTAREA>";	
+					
+					tmp+="</TD></TR></TABLE></HTML>";
+				}
+				Resultats.close();
+				Statement.close();
+				
+			}
+		}
+		return tmp;
+	}
+} // END CLASS
+

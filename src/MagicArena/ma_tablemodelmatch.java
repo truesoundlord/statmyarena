@@ -16,7 +16,7 @@ public class ma_tablemodelmatch extends AbstractTableModel
 	final static int COL=1;
 	final static int MYLVL=5;
 	final static int SCP=4;
-	final static int SCC=3;
+	final static int SCE=3;
 	final static int ENLVL=2;
 	//final static int RES=6;
 	
@@ -79,14 +79,14 @@ public class ma_tablemodelmatch extends AbstractTableModel
 		Donnees[CurrentRow][COL]=new ma_Couleurs(unmatch.getColors());
 		Donnees[CurrentRow][MYLVL]=String.valueOf(unmatch.getLevel(true));
 		Donnees[CurrentRow][SCP]=String.valueOf(unmatch.getScore(true));
-		Donnees[CurrentRow][SCC]=String.valueOf(unmatch.getScore(false));
+		Donnees[CurrentRow][SCE]=String.valueOf(unmatch.getScore(false));
 		Donnees[CurrentRow][ENLVL]=String.valueOf(unmatch.getLevel(false));
 		//Donnees[CurrentRow][RES]=String.valueOf(unmatch.getResults());
-		
+				
 		//System.err.println("Appel au modèle -- classMatch (CurrentRow "+CurrentRow+")");
 		
-		//fireTableDataChanged();                                        // On indique au contrôle que quelque chose a changé et qu'il faut redessiner le contenu
-		fireTableRowsInserted(CurrentRow-1, CurrentRow);
+		fireTableDataChanged();                                        // On indique au contrôle que quelque chose a changé et qu'il faut redessiner le contenu
+		//fireTableRowsInserted(CurrentRow-1, CurrentRow);
 	}
 	
 	public void ClearDatas()

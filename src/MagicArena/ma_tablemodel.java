@@ -142,8 +142,8 @@ public class ma_tablemodel extends AbstractTableModel
 		Donnees[CurrentRow][MJ]=Integer.toString(target.getClashes());
 		Donnees[CurrentRow][DRWS]=Integer.toString(target.getDraws());
 		
-	//	fireTableDataChanged();                                        // On indique au contrôle que quelque chose a changé et qu'il faut redessiner le contenu
-		fireTableRowsInserted(CurrentRow, CurrentRow);
+		fireTableDataChanged();                                        // On indique au contrôle que quelque chose a changé et qu'il faut redessiner le contenu
+		//fireTableRowsInserted(CurrentRow, CurrentRow);
 	}
 	
 	public void setRow(classEnemy target,int CurrentRow)
@@ -158,7 +158,8 @@ public class ma_tablemodel extends AbstractTableModel
 		Donnees[CurrentRow][MJ]=Integer.toString(target.getClashes());
 		Donnees[CurrentRow][DRWS]=Integer.toString(target.getDraws());
 		
-		fireTableRowsUpdated(CurrentRow, CurrentRow);
+		//fireTableRowsUpdated(CurrentRow, CurrentRow);
+		fireTableDataChanged();
 	}
 		
 	public void ClearDatas()

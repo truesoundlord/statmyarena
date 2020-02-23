@@ -49,34 +49,7 @@ public class classEnemy implements java.io.Serializable
 		Draws=0;
 	};
 	
-	public classEnemy(String sonbiessenom)
-	{
-		this.Colors = new BitSet(5);
-		Name=sonbiessenom;
-	};
-	
-	// @result: indique par vrai que J'AI gagné
-
-	/**
-	 *
-	 * @param biessenom
-	 * @param couleurs
-	 * @param MyScore
-	 * @param HisScore
-	 * @throws NullPointerException
-	 */
-	public classEnemy(String biessenom,BitSet couleurs,int MyScore,int HisScore) 
-	{
-		this.Colors = new BitSet(5);
-		Name=biessenom;
-		Colors=(BitSet)couleurs.clone();
-				
-		this.MyScore+=MyScore;
-		this.HisScore+=HisScore;
-	};
-	
 	// Interface get...
-	
 	
 	public String getName()
 	{
@@ -244,7 +217,7 @@ public class classEnemy implements java.io.Serializable
 	
 	public void updatedb(java.sql.Connection LaConnection) throws SQLException
 	{
-		String SQLRequest=new String();
+		String SQLRequest;
 		
 		if(LaConnection.isValid(1))
 		{
@@ -266,7 +239,7 @@ public class classEnemy implements java.io.Serializable
 	
 	public void insertdb(java.sql.Connection LaConnection) throws SQLException
 	{
-		String SQLRequest=new String();
+		String SQLRequest;
 		
 		ma_Couleurs tmp=new ma_Couleurs(Colors);
 		int couleursenint=tmp.getInt();
@@ -275,7 +248,7 @@ public class classEnemy implements java.io.Serializable
 		{
 			Statement=LaConnection.createStatement();
 			SQLRequest="INSERT INTO Players (Alias,Couleurs,Victories,Conceded,Defeated,Draws,MyScore,HisScore,MatchesDone) VALUES (";
-			SQLRequest+="'"+Name.replace("'", "\\'")+"',";
+			SQLRequest+="'"+Name+"',";
 			SQLRequest+=couleursenint+",";
 			SQLRequest+=Victories+",";
 			SQLRequest+=Concedes+",";
@@ -301,7 +274,7 @@ public class classEnemy implements java.io.Serializable
 	 */
 	public int getEnemyID_DB(java.sql.Connection LaConnection) throws SQLException
 	{
-		String SQLRequest=new String();
+		String SQLRequest;
 		
 		ma_Couleurs tmp=new ma_Couleurs(Colors);
 		int couleursenint=tmp.getInt();

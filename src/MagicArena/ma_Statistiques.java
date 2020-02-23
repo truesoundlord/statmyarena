@@ -17,33 +17,9 @@ public class ma_Statistiques extends javax.swing.JPanel
 {
 
 	/**
-	 * Creates new form ma_Statistiques
+	 * To be usable the SetConnection() method must be called once the constructor invoked
+	 * @param source The JTable duplicated in main class
 	 */
-	public ma_Statistiques() 
-	{
-		lesdonneesMatches = new LinkedList<>();
-		ListeDesMatches = new LinkedList<>();
-				
-		initComponents();
-		setBackground(new Color(31, 112, 121,200));
-		
-		jTableInfos.setCellSelectionEnabled(true);
-		jTableInfos.setAutoCreateColumnsFromModel(true);
-		jTableInfos.setModel(ModeleTableMatch);
-		
-		jTableInfos.setShowGrid(false);
-		jTableInfos.getTableHeader().setReorderingAllowed(false);
-		jTableInfos.getTableHeader().setResizingAllowed(true);
-		
-		((DefaultTableCellRenderer) jTableInfos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
-		
-		jTableInfos.setDefaultRenderer(ma_Couleurs.class, AfficheurMatch);
-		jTableInfos.setDefaultRenderer(String.class, AfficheurMatch);
-		
-		jTableInfos.setRowHeight(40);
-		
-	}
-	
 	public ma_Statistiques(JTable source)
 	{
 		lesdonneesMatches = new LinkedList<>();
@@ -71,17 +47,57 @@ public class ma_Statistiques extends javax.swing.JPanel
 		jTableInfos.setRowHeight(40);
 	}
 	
-	public void computeResults(java.sql.Connection LaConnection,char param) throws SQLException
+	public void computeResults(char param) throws SQLException
 	{
-		System.err.println("compute "+param);
+		//System.err.println("compute "+param);
 										
 		
-		if(LaConnection.isValid(1))
+		if(uneConnexion.isValid(1))
 		{
-			uneConnexion=LaConnection;
 			ListeDesMatches.clear();
-			Statement=LaConnection.createStatement();
+			Statement=uneConnexion.createStatement();
 			bStatusRequest=Statement.execute("SELECT * FROM Matches WHERE Result='"+param+"' AND idPlayer=(SELECT idPlayer FROM Players WHERE idPlayer="+FenetrePrincipale.cematch.getDBPlayerID()+")");
+			if(bStatusRequest)
+			{
+				Resultats = Statement.getResultSet();
+				ModeleTableMatch.ClearDatas();
+				while(Resultats.next())
+				{
+					java.sql.ResultSetMetaData MetaDonnees=Resultats.getMetaData();
+					int NbChamps=MetaDonnees.getColumnCount();
+					
+					for(int cptchamps=0;cptchamps<NbChamps;cptchamps++)
+					{
+						String unecolonne=ParseSQL(MetaDonnees.getColumnTypeName(cptchamps+1),Resultats,cptchamps+1);
+						lesdonneesMatches.add(unecolonne);
+					}
+					PackDatasFromDB(lesdonneesMatches); // ListeDesMatches est modifié ici (je sais c'est opaque)
+					lesdonneesMatches.clear();
+				}
+				for(int cptMatches=0;cptMatches<ListeDesMatches.size();cptMatches++) 
+				{
+					ModeleTableMatch.addRow(ListeDesMatches.get(cptMatches));
+				}
+				
+			}
+			Resultats.close();
+			Statement.close();
+		}
+		MatchesDone=ListeDesMatches.size();
+	}
+	
+	public void computeStats(String param) throws SQLException
+	{
+			// hihi ^^
+		
+		param=param.replace("\\", "\\\\"); // Comment gérer les connards qui mettent un backslash dans leurs alias ???
+		param=param.replace("'", "\\'");
+		
+		if(uneConnexion.isValid(1))
+		{
+			ListeDesMatches.clear();
+			Statement=uneConnexion.createStatement();
+			bStatusRequest=Statement.execute("SELECT * FROM Matches WHERE idPlayer IN (SELECT idPlayer FROM Players WHERE Alias='"+param+"' ORDER BY Couleurs DESC)");
 			if(bStatusRequest)
 			{
 				Resultats = Statement.getResultSet();
@@ -109,12 +125,6 @@ public class ma_Statistiques extends javax.swing.JPanel
 			Statement.close();
 		}
 		MatchesDone=ListeDesMatches.size();
-		ComputeOverallScores();
-	}
-	
-	public void computeStats()
-	{
-		System.err.println("computeStats");
 	}
 	
 	public String ParseSQL(String type,java.sql.ResultSet source,int colonne) throws SQLException
@@ -131,18 +141,14 @@ public class ma_Statistiques extends javax.swing.JPanel
 		return tmp;
 	}
 	
-	public void ComputeOverallScores()
-	{
-		TotalInflicted=0;
-		TotalSuffered=0;
-		
-		for(int cpt=0;cpt<ListeDesMatches.size();cpt++)
-		{
-			TotalInflicted+=((classMatch)ListeDesMatches.get(cpt)).getScore(false);		// total des points infligés (différence entre 20 et le score de points de vie en fin de match) 
-			TotalSuffered+=((classMatch)ListeDesMatches.get(cpt)).getScore(true);			// total des points subis (différence entre 20 et mon score en fin de match)
-		}
-	}
+
 	
+	/**
+	 * ListeDesMatches is modified here...
+	 * @param source
+	 * @return
+	 * @throws SQLException 
+	 */
 	public boolean PackDatasFromDB(LinkedList<Object> source) throws SQLException
 	{
 		classMatch tmp=new classMatch();
@@ -239,6 +245,11 @@ public class ma_Statistiques extends javax.swing.JPanel
 		return ListeDesMatches.size();
 	}
 	
+	public void setConnection(java.sql.Connection param) throws SQLException
+	{
+		if(param.isValid(1)) uneConnexion=param;
+	}
+	
 		
 	
 	/**
@@ -320,8 +331,6 @@ public class ma_Statistiques extends javax.swing.JPanel
 	
 	
 	static int MatchesDone;
-	static int TotalInflicted;
-	static int TotalSuffered;
 	
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.JScrollPane jScrollPaneTable;

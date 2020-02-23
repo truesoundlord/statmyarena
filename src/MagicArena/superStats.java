@@ -1,8 +1,10 @@
 package MagicArena;
 
+import static MagicArena.ma_Statistiques.ListeDesMatches;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.sql.SQLException;
+import java.util.BitSet;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +12,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -22,15 +27,10 @@ public class superStats extends javax.swing.JFrame
 	 * Creates new form superStats 
 	 * @param param The mariadb connection instance
 	 */
-	/*public superStats() 
-	{
-		initComponents();
-		setVisible(true);
-		enemyColors=new ma_Couleurs();
-	}*/
-	
+		
 	public superStats(java.sql.Connection param)
 	{
+		this.MDMatches = new LinkedList<>();
 		initComponents();
 		setVisible(true);
 		enemyColors=new ma_Couleurs();
@@ -149,10 +149,38 @@ public class superStats extends javax.swing.JFrame
 			jLBLMatchOpponentScoreVSMIN.setText(getScoresInfos(ScoreInfo.MINPP, ScoreInfo.SCmE));
 			jLBLMatchOpponentScoreVSMIN.setToolTipText(jLBLAliasMINPScore.getText()+" scored this against your worst score...");			
 			
-			jLBLVictoriesInaRow.setText(getInARow('V'));
-			jLBLConcedesInaRow.setText(getInARow('C'));
-			jLBLDefeatsInaRow.setText(getInARow('D'));
+			jLBLVictoriesInaRow.setText("Victories in a row: "+getInARow('V'));
+			jLBLConcedesInaRow.setText("Concedes ina row: "+getInARow('C'));
+			jLBLDefeatsInaRow.setText("Defeats in a row: "+getInARow('D'));
 			
+			ModeleTableMatch=new ma_tablemodelmatch();
+			RendererMatch=new defMatch();
+			
+			LinkedList<Object> handledclasses=new LinkedList<>();
+			handledclasses.add(classMatch.class);
+						
+			LaTable=new UEPTableImpl(ModeleTableMatch,RendererMatch,handledclasses);
+			LaTable.addDefaultRenderer(String.class);
+			LaTable.addDefaultRenderer(ma_Couleurs.class);
+			
+			LaTable.setBackground(new java.awt.Color(31, 112, 121));
+			LaTable.setCellSelectionEnabled(true);
+			LaTable.setAutoCreateColumnsFromModel(false);
+		
+			LaTable.setShowGrid(false);
+			LaTable.getTableHeader().setReorderingAllowed(false);
+			LaTable.getTableHeader().setResizingAllowed(true);
+			
+			LaTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+			LaTable.setRequestFocusEnabled(false);
+			LaTable.setRowHeight(40);
+			LaTable.setRowSelectionAllowed(false);
+			LaTable.setShowHorizontalLines(true);
+		
+			((DefaultTableCellRenderer) LaTable.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+		
+			jScrollPanePourTable.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+			jScrollPanePourTable.setViewportView(LaTable);
 		} 
 		catch (SQLException ex) 
 		{
@@ -168,7 +196,8 @@ public class superStats extends javax.swing.JFrame
 	 */
 	@SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-  private void initComponents() {
+  private void initComponents()
+  {
 
     GroupeDeBoutons = new javax.swing.ButtonGroup();
     jPanelSuperStats = new javax.swing.JPanel();
@@ -216,11 +245,12 @@ public class superStats extends javax.swing.JFrame
     jLBLVictoriesInaRow = new javax.swing.JLabel();
     jLBLDefeatsInaRow = new javax.swing.JLabel();
     jLBLConcedesInaRow = new javax.swing.JLabel();
-    jPanelInfos = new javax.swing.JPanel();
+    jScrollPanePourTable = new javax.swing.JScrollPane();
 
-    setMinimumSize(new java.awt.Dimension(1336, 836));
+    setMaximumSize(new java.awt.Dimension(1368, 762));
+    setMinimumSize(new java.awt.Dimension(1368, 762));
     setResizable(false);
-    setSize(new java.awt.Dimension(1392, 836));
+    setSize(new java.awt.Dimension(1368, 762));
 
     jPanelSuperStats.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
     jPanelSuperStats.setMaximumSize(new java.awt.Dimension(1300, 800));
@@ -233,8 +263,10 @@ public class superStats extends javax.swing.JFrame
     jCBBlanc.setName("White"); // NOI18N
     jCBBlanc.setRolloverEnabled(false);
     jCBBlanc.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manablanc.png"))); // NOI18N
-    jCBBlanc.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCBBlanc.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         SelectColor(evt);
       }
     });
@@ -243,8 +275,10 @@ public class superStats extends javax.swing.JFrame
     jCBBleu.setName("Blue"); // NOI18N
     jCBBleu.setRolloverEnabled(false);
     jCBBleu.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manableu.png"))); // NOI18N
-    jCBBleu.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCBBleu.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         SelectColor(evt);
       }
     });
@@ -253,8 +287,10 @@ public class superStats extends javax.swing.JFrame
     jCBVert.setName("Green"); // NOI18N
     jCBVert.setRolloverEnabled(false);
     jCBVert.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manavert.png"))); // NOI18N
-    jCBVert.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCBVert.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         SelectColor(evt);
       }
     });
@@ -263,8 +299,10 @@ public class superStats extends javax.swing.JFrame
     jCBRouge.setName("Red"); // NOI18N
     jCBRouge.setRolloverEnabled(false);
     jCBRouge.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manarouge.png"))); // NOI18N
-    jCBRouge.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCBRouge.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         SelectColor(evt);
       }
     });
@@ -273,8 +311,10 @@ public class superStats extends javax.swing.JFrame
     jCBNoir.setName("Black"); // NOI18N
     jCBNoir.setRolloverEnabled(false);
     jCBNoir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/mananoir.png"))); // NOI18N
-    jCBNoir.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCBNoir.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         SelectColor(evt);
       }
     });
@@ -285,6 +325,13 @@ public class superStats extends javax.swing.JFrame
     jTFVictories.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTFVictories.setText("0");
     jTFVictories.setToolTipText("Victories");
+    jTFVictories.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        jTFVictoriesMouseClicked(evt);
+      }
+    });
 
     jLBLWinTotal.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLWinTotal.setText("0");
@@ -296,13 +343,17 @@ public class superStats extends javax.swing.JFrame
     jTFDefeats.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTFDefeats.setText("0");
     jTFDefeats.setToolTipText("Defeats");
-    jTFDefeats.addFocusListener(new java.awt.event.FocusAdapter() {
-      public void focusLost(java.awt.event.FocusEvent evt) {
+    jTFDefeats.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusLost(java.awt.event.FocusEvent evt)
+      {
         jTFDefeatsFocusLost(evt);
       }
     });
-    jTFDefeats.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mouseClicked(java.awt.event.MouseEvent evt) {
+    jTFDefeats.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
         jTFDefeatsMouseClicked(evt);
       }
     });
@@ -321,10 +372,19 @@ public class superStats extends javax.swing.JFrame
     jTFConcedes.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTFConcedes.setText("0");
     jTFConcedes.setToolTipText("Concedes");
+    jTFConcedes.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        jTFConcedesMouseClicked(evt);
+      }
+    });
 
     jCBEnemyLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-    jCBEnemyLevel.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jCBEnemyLevel.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         jCBEnemyLevelActionPerformed(evt);
       }
     });
@@ -335,6 +395,13 @@ public class superStats extends javax.swing.JFrame
     jLBLWins.setMaximumSize(new java.awt.Dimension(7, 24));
     jLBLWins.setMinimumSize(new java.awt.Dimension(7, 24));
     jLBLWins.setPreferredSize(new java.awt.Dimension(7, 24));
+    jLBLWins.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        jLBLWinsMouseClicked(evt);
+      }
+    });
 
     jLBLDef.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLDef.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -342,6 +409,13 @@ public class superStats extends javax.swing.JFrame
     jLBLDef.setMaximumSize(new java.awt.Dimension(7, 24));
     jLBLDef.setMinimumSize(new java.awt.Dimension(7, 24));
     jLBLDef.setPreferredSize(new java.awt.Dimension(7, 24));
+    jLBLDef.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        jLBLDefMouseClicked(evt);
+      }
+    });
 
     jLBLCon.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLCon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -349,6 +423,13 @@ public class superStats extends javax.swing.JFrame
     jLBLCon.setMaximumSize(new java.awt.Dimension(7, 24));
     jLBLCon.setMinimumSize(new java.awt.Dimension(7, 24));
     jLBLCon.setPreferredSize(new java.awt.Dimension(7, 24));
+    jLBLCon.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        jLBLConMouseClicked(evt);
+      }
+    });
 
     jPanelForme.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
     jPanelForme.setToolTipText("Results on the last (10) matches ");
@@ -442,26 +523,34 @@ public class superStats extends javax.swing.JFrame
     jLBLMINEScore.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
     jLBLMINEScore.setText("Rien");
 
-    jRBMAXP.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jRBMAXP.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         SelectionBouton(evt);
       }
     });
 
-    jRBMINP.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jRBMINP.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         SelectionBouton(evt);
       }
     });
 
-    jRBMINE.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jRBMINE.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         SelectionBouton(evt);
       }
     });
 
-    jRBMAXE.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jRBMAXE.addActionListener(new java.awt.event.ActionListener()
+    {
+      public void actionPerformed(java.awt.event.ActionEvent evt)
+      {
         SelectionBouton(evt);
       }
     });
@@ -504,7 +593,7 @@ public class superStats extends javax.swing.JFrame
           .addComponent(jLBLAliasMAXPScore)
           .addComponent(jLBLDefeatsInaRow)
           .addComponent(jLBLConcedesInaRow))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 376, Short.MAX_VALUE)
         .addGroup(jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jLBLMINPScore)
           .addComponent(jLBLMAXPScore)
@@ -649,19 +738,6 @@ public class superStats extends javax.swing.JFrame
     jCBRouge.getAccessibleContext().setAccessibleName("Red");
     jCBNoir.getAccessibleContext().setAccessibleName("Black");
 
-    jPanelInfos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-    javax.swing.GroupLayout jPanelInfosLayout = new javax.swing.GroupLayout(jPanelInfos);
-    jPanelInfos.setLayout(jPanelInfosLayout);
-    jPanelInfosLayout.setHorizontalGroup(
-      jPanelInfosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 0, Short.MAX_VALUE)
-    );
-    jPanelInfosLayout.setVerticalGroup(
-      jPanelInfosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 456, Short.MAX_VALUE)
-    );
-
     javax.swing.GroupLayout jPanelSuperStatsLayout = new javax.swing.GroupLayout(jPanelSuperStats);
     jPanelSuperStats.setLayout(jPanelSuperStatsLayout);
     jPanelSuperStatsLayout.setHorizontalGroup(
@@ -669,8 +745,8 @@ public class superStats extends javax.swing.JFrame
       .addGroup(jPanelSuperStatsLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanelSuperStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jPanelInfos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(jPanelSStats, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addComponent(jPanelSStats, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(jScrollPanePourTable))
         .addContainerGap())
     );
     jPanelSuperStatsLayout.setVerticalGroup(
@@ -678,8 +754,8 @@ public class superStats extends javax.swing.JFrame
       .addGroup(jPanelSuperStatsLayout.createSequentialGroup()
         .addComponent(jPanelSStats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jPanelInfos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addContainerGap())
+        .addComponent(jScrollPanePourTable, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -688,15 +764,15 @@ public class superStats extends javax.swing.JFrame
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jPanelSuperStats, javax.swing.GroupLayout.PREFERRED_SIZE, 1294, Short.MAX_VALUE)
+        .addComponent(jPanelSuperStats, javax.swing.GroupLayout.DEFAULT_SIZE, 1356, Short.MAX_VALUE)
         .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jPanelSuperStats, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addGap(25, 25, 25))
+        .addComponent(jPanelSuperStats, javax.swing.GroupLayout.PREFERRED_SIZE, 787, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     pack();
@@ -729,6 +805,7 @@ public class superStats extends javax.swing.JFrame
         jLBLDef.setToolTipText("Number of defeats against level "+Levels.get(EnnemyLvl)+" ("+String.format("%.1f", percentdef)+"%)");
         jLBLCon.setToolTipText("Number of games conceded by level "+Levels.get(EnnemyLvl)+" ("+String.format("%.1f", percentcon)+"%)");
 
+				if(ModeleTableMatch!=null) ModeleTableMatch.ClearDatas();
       }
       catch (SQLException ex)
       {
@@ -739,7 +816,8 @@ public class superStats extends javax.swing.JFrame
   }//GEN-LAST:event_jCBEnemyLevelActionPerformed
 
   private void jTFDefeatsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFDefeatsMouseClicked
-    if(bToggleRealDefeats==false)
+    if(enemyColors.getInt()==0) return;
+		if(bToggleRealDefeats==false)
     {
       try
       {
@@ -753,6 +831,14 @@ public class superStats extends javax.swing.JFrame
         Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
       }
       bToggleRealDefeats=true;
+			try 
+			{
+				populateTableWith("RealDefeats");
+			} 
+			catch (SQLException ex) 
+			{
+				Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+			}
     }
     else
     {
@@ -771,7 +857,16 @@ public class superStats extends javax.swing.JFrame
         Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
       }
       bToggleRealDefeats=false;
+			try 
+			{
+				populateTableWith("Defeats");
+			} 
+			catch (SQLException ex) 
+			{
+				Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+			}
     }
+		
   }//GEN-LAST:event_jTFDefeatsMouseClicked
 
   private void jTFDefeatsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFDefeatsFocusLost
@@ -821,7 +916,6 @@ public class superStats extends javax.swing.JFrame
       if(enemyColors.DeckColors.get(ma_Couleurs.BLANC)==false) enemyColors.DeckColors.set(ma_Couleurs.BLANC);
       else enemyColors.DeckColors.clear(ma_Couleurs.BLANC);
     }
-    System.err.println("Value: "+enemyColors.DeckColors.toString()+"("+enemyColors.getBinaryString()+")");
     try
     {
       DisplayDatas(enemyColors.getInt());
@@ -833,10 +927,113 @@ public class superStats extends javax.swing.JFrame
   }//GEN-LAST:event_SelectColor
 
   private void SelectionBouton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectionBouton
-    System.err.println("Bouton selected");
-		System.err.println("Bouton: "+((JRadioButton)evt.getSource()).getText());
+		String selected=((JRadioButton)evt.getSource()).getText();
+		
+		if(Integer.valueOf(selected)>0)
+		{
+			try
+			{
+				if(LaConnection.isValid(1))				
+				{
+					Statement=LaConnection.createStatement();
+					String SQLRequest="SELECT (SELECT Alias FROM Players WHERE Players.idPlayer=Matches.idPlayer),MatchColor,EnLvl,HisScore,MyScore,MyLvl FROM Matches WHERE idMatch="+selected;
+					Statement.executeQuery(SQLRequest);
+					Resultats=Statement.getResultSet();
+					if(Resultats.first())
+					{
+						ModeleTableMatch.ClearDatas();
+						classMatch degraded=new classMatch();
+						degraded.setName(Resultats.getString(1));
+						
+						BitSet tmpbs=new BitSet(5);
+						int rep=Integer.valueOf(Resultats.getByte(2));
+												
+						if((rep&ma_Couleurs.VALNOIR)==ma_Couleurs.VALNOIR) tmpbs.set(ma_Couleurs.NOIR);
+						if((rep&ma_Couleurs.VALROUGE)==ma_Couleurs.VALROUGE) tmpbs.set(ma_Couleurs.ROUGE);
+						if((rep&ma_Couleurs.VALVERT)==ma_Couleurs.VALVERT) tmpbs.set(ma_Couleurs.VERT);
+						if((rep&ma_Couleurs.VALBLEU)==ma_Couleurs.VALBLEU) tmpbs.set(ma_Couleurs.BLEU);
+						if((rep&ma_Couleurs.VALBLANC)==ma_Couleurs.VALBLANC) tmpbs.set(ma_Couleurs.BLANC);
+												
+						degraded.setColors(tmpbs);
+						String replvl=classMatch.Levels.get(Integer.valueOf(Resultats.getString(3)));
+						degraded.setLevel(false,replvl);
+						degraded.setScore(false, Resultats.getInt(4));
+						degraded.setScore(true, Resultats.getInt(5));
+						replvl=classMatch.Levels.get(Integer.valueOf(Resultats.getString(6)));
+						degraded.setLevel(true, replvl);
+						ModeleTableMatch.addRow(degraded);
+					}
+				}
+			} 
+			catch (SQLException ex)
+			{
+				Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
 		
   }//GEN-LAST:event_SelectionBouton
+
+  private void jTFVictoriesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTFVictoriesMouseClicked
+  {//GEN-HEADEREND:event_jTFVictoriesMouseClicked
+    try 
+		{
+			populateTableWith("Victories");
+		} 
+		catch (SQLException ex) 
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jTFVictoriesMouseClicked
+
+  private void jTFConcedesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTFConcedesMouseClicked
+  {//GEN-HEADEREND:event_jTFConcedesMouseClicked
+    try 
+		{
+			populateTableWith("Concedes");
+		} 
+		catch (SQLException ex) 
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jTFConcedesMouseClicked
+
+  private void jLBLWinsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLBLWinsMouseClicked
+  {//GEN-HEADEREND:event_jLBLWinsMouseClicked
+		try
+		{
+			populateTableWith("Level V");
+		} 
+		catch (SQLException ex)
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jLBLWinsMouseClicked
+
+  private void jLBLDefMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLBLDefMouseClicked
+  {//GEN-HEADEREND:event_jLBLDefMouseClicked
+    try
+		{
+			populateTableWith("Level D");
+		} 
+		catch (SQLException ex)
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jLBLDefMouseClicked
+
+  private void jLBLConMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLBLConMouseClicked
+  {//GEN-HEADEREND:event_jLBLConMouseClicked
+    try
+		{
+			populateTableWith("Level C");
+		} 
+		catch (SQLException ex)
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jLBLConMouseClicked
+	
+	
 	
 	private void DisplayDatas(int combinaison) throws SQLException
 	{
@@ -911,8 +1108,6 @@ public class superStats extends javax.swing.JFrame
 		// + ignore les matches contre les decks à couleur unique 
 		// + inclus les combinaisons dans celles plus larges (blanc noir vs blanc noir bleu vs blanc vs noir) <-- il va additionner tout 
 		// :{
-		
-		// 	if(couleur==ma_Couleurs.VALNOIR || couleur==ma_Couleurs.VALROUGE || couleur==ma_Couleurs.VALVERT || couleur==ma_Couleurs.VALBLEU || couleur==ma_Couleurs.VALBLANC)
 		
 		SQLRequest="SELECT COUNT(idMatch) FROM Matches WHERE MatchColor="+couleur+" AND Result='"+type+"'";
 				
@@ -1000,28 +1195,6 @@ public class superStats extends javax.swing.JFrame
 		return null;
 	}
 	
-	/*private String getEfficiency(int limit) throws SQLException
-	{
-		String tmp="";
-		String SQLRequest="select Result from Matches ORDER BY idMatch DESC LIMIT "+limit;
-		
-		Statement=LaConnection.createStatement();
-		Resultats=Statement.executeQuery(SQLRequest);
-			
-		if(Resultats!=null)
-		{
-			Resultats.first();
-			do
-			{
-				tmp=tmp+"["+Resultats.getString(1)+"]";
-			}while(Resultats.next());
-			Resultats.close();
-			Statement.close();
-			return tmp;
-		}
-		return null;
-	}*/
-	
 	private void getEfficencyIcons(int limit) throws SQLException
 	{
 		String SQLRequest="select Result,MyScore from Matches ORDER BY idMatch DESC LIMIT "+limit;
@@ -1075,8 +1248,7 @@ public class superStats extends javax.swing.JFrame
 		
 		if(copy=='D') SQLRequest+="AND MyScore > 0 ";
 		if(copy=='P') SQLRequest+="AND MyScore <= 0 ";
-		// ce n'est pas suffisant (surtout quand on a sélectionné un joueur dans la liste ^^ -> MatchColor sera différent de 0 normalement)
- 		if(copy=='T') SQLRequest+="AND HisScore=20 AND HisScore=MyScore OR MatchColor = 0 ";																									
+		if(copy=='T') SQLRequest+="AND HisScore=20 AND HisScore=MyScore AND Turns <= 1 ";								// un "concede" de tapette se passe généralement quand le nombre de tours est 0 ou 1																	
 		SQLRequest+="ORDER BY EndTime DESC LIMIT 1";
 		
 		//System.err.println("getLast: param -> "+param);
@@ -1117,7 +1289,7 @@ public class superStats extends javax.swing.JFrame
 		String tmp="";
 		String SQLRequest="";
 		
-		// Attention si j'ai deux fois les mêmes scores cette requête va planter :{ faudra mette limit 1 à mon avis
+		// Attention si j'ai deux fois les mêmes scores (sur HisScore et MyScore) cette requête va planter :{ faudra mettre limit 1 à mon avis
 		
 		switch(param)
 		{
@@ -1166,7 +1338,7 @@ public class superStats extends javax.swing.JFrame
 	{
 		if(LaConnection.isValid(1))
 		{
-			String tmp="-1";
+			String tmp;
 			int leplusgrand=-1;
 			LinkedList<String> listedesresultats=new LinkedList<>();
 			
@@ -1202,20 +1374,238 @@ public class superStats extends javax.swing.JFrame
 		return "0";
 	}
 
+	private void populateTableWith(String whattodo) throws SQLException 
+	{
+		String SQLRequest="";
+		if(whattodo.equals("RealDefeats"))
+		{
+			SQLRequest="SELECT * FROM Matches WHERE Result='D' AND MyScore <= 0 AND MatchColor="+enemyColors.getInt()+" ORDER BY EndTime DESC"; 		
+		}
+		if(whattodo.equals("Defeats"))
+		{
+			SQLRequest="SELECT * FROM Matches WHERE Result='D' AND MyScore > 0 AND MatchColor="+enemyColors.getInt()+" ORDER BY EndTime DESC"; 		
+		}
+		if(whattodo.equals("Victories"))
+		{
+			SQLRequest="SELECT * FROM Matches WHERE Result='V' AND MatchColor="+enemyColors.getInt()+" ORDER BY EndTime DESC"; 		
+		}
+		if(whattodo.equals("Concedes"))
+		{
+			SQLRequest="SELECT * FROM Matches WHERE Result='C' AND MatchColor="+enemyColors.getInt()+" ORDER BY EndTime DESC"; 		
+		}
+		if(whattodo.contains("Level"))
+		{
+			int dbenlevel=jCBEnemyLevel.getSelectedIndex();
+			String[] status=whattodo.split(" ");
+			SQLRequest="SELECT * FROM Matches WHERE Result='"+status[1]+"' AND EnLvl="+dbenlevel+" ORDER BY EndTime DESC";
+		}
+		
+		ModeleTableMatch.ClearDatas();
+		LesMatches.clear();
+		if(LaConnection.isValid(1))
+		{
+			Statement=LaConnection.createStatement();
+			Resultats=Statement.executeQuery(SQLRequest);
+			while(Resultats.next())
+			{
+				java.sql.ResultSetMetaData MetaDonnees=Resultats.getMetaData();
+				int NbChamps=MetaDonnees.getColumnCount();
+					
+				for(int cptchamps=0;cptchamps<NbChamps;cptchamps++)
+				{
+					String unecolonne=ParseSQL(MetaDonnees.getColumnTypeName(cptchamps+1),Resultats,cptchamps+1);
+					MDMatches.add(unecolonne);
+				}
+				PackDatasFromDB(MDMatches); // ListeDesMatches est modifié ici (je sais c'est opaque)
+				MDMatches.clear();
+			}
+		}
+		for(int cpt=0;cpt<LesMatches.size();cpt++) ModeleTableMatch.addRow(LesMatches.get(cpt));
+	}
+	
+	public boolean PackDatasFromDB(LinkedList<Object> source) throws SQLException
+	{
+		classMatch tmp=new classMatch();
+		BitSet tmpbs=new BitSet(5);
+		String PlayerName=new String();
+		
+		int repint;
+		
+		tmp.setDBMatchID(Integer.valueOf((String)source.get(classMatch.IDMATCH)));
+		tmp.setDBPlayerID(Integer.valueOf((String)source.get(classMatch.IDPLAYER)));
+		
+		if(LaConnection.isValid(1))
+		{
+			PlayerName=getPlayerNameDB(LaConnection,tmp.getDBPlayerID());
+		}
+		
+		tmp.setName(PlayerName);
+				
+		repint=Integer.valueOf((String)source.get(classMatch.MCOL));
+		
+		if((repint&ma_Couleurs.VALNOIR)==ma_Couleurs.VALNOIR) tmpbs.set(ma_Couleurs.NOIR);
+		if((repint&ma_Couleurs.VALROUGE)==ma_Couleurs.VALROUGE) tmpbs.set(ma_Couleurs.ROUGE);
+		if((repint&ma_Couleurs.VALVERT)==ma_Couleurs.VALVERT) tmpbs.set(ma_Couleurs.VERT);
+		if((repint&ma_Couleurs.VALBLEU)==ma_Couleurs.VALBLEU) tmpbs.set(ma_Couleurs.BLEU);
+		if((repint&ma_Couleurs.VALBLANC)==ma_Couleurs.VALBLANC) tmpbs.set(ma_Couleurs.BLANC);
+				
+		tmp.setColors(tmpbs);
+		
+		
+		tmp.setTurns(Integer.valueOf((String)source.get(classMatch.TRNS)));
+		tmp.setScore(false,Integer.valueOf((String)source.get(classMatch.HIS)));	// son score en fin de match
+		tmp.setScore(true,Integer.valueOf((String)source.get(classMatch.MYS)));		// mon score en fin de match
+						
+		tmp.setResult((String)source.get(classMatch.RES));
+		
+		
+		String srcStart=(String)source.get(classMatch.STT);
+		String srcEnd=(String)source.get(classMatch.NDT);
+		
+		tmp.StartFROMDB(srcStart);
+		tmp.EndFROMDB(srcEnd);
+						
+		tmp.setDuration(Integer.valueOf((String)source.get(classMatch.MT)));				// nombres de millisecondes 
+				
+		String value;
+		value = source.get(classMatch.ELVL).toString();
+		
+		tmp.importLevel(false,value);
+		
+		value=source.get(classMatch.PLVL).toString();
+		
+		tmp.importLevel(true,value);
+		tmp.setManas(Integer.valueOf((String)source.get(classMatch.MANAS)));
+		
+				
+		return LesMatches.add(tmp);
+	}
+	
+	public String getPlayerNameDB(java.sql.Connection LaConnection,int param) throws SQLException
+	{
+		String SQLRequest;
+		String PlayerName=new String();
+		
+		if(LaConnection.isValid(1))
+		{
+			try
+			{
+				Statement=LaConnection.createStatement();
+				SQLRequest="SELECT Alias FROM Players WHERE idPlayer="+param;
+			
+				Statement.execute(SQLRequest);
+			
+				SousRqte=Statement.getResultSet();
+			
+				if(SousRqte!=null)
+				{
+					if(!SousRqte.first()) return "";							// peu de chances d'avoir deux enregistrements dans le resulset à moins que je sois une grosse merde
+					PlayerName=SousRqte.getString(1);
+				}
+				SousRqte.close();
+				Statement.close();
+				
+			}
+			catch(SQLException ex)
+			{
+				throw ex;
+			}
+		}
+		return PlayerName;
+	}
+	
+		
+	public String ParseSQL(String type,java.sql.ResultSet source,int colonne) throws SQLException
+	{
+		String tmp=new String();
+				
+		if(type.contains("SMALLINT")) tmp=String.valueOf(source.getInt(colonne));
+		if(type.contains("CHAR")) tmp=source.getString(colonne);
+		if(type.contains("BIT")) tmp=String.valueOf(source.getByte(colonne));
+ 		if(type.contains("TINYINT")) tmp=String.valueOf(source.getInt(colonne));
+		if(type.contains("DATETIME")) tmp=source.getDate(colonne).toString()+" "+source.getTime(colonne).toString();
+		if(type.contains("INTEGER")) tmp=String.valueOf(source.getInt(colonne));
+				
+		return tmp;
+	}
+	
+	
+	/**
+	 * Truc bizarre java... à priori on crée une sous-classe de la classe UEPTable pour "transformer" l'objet UEPTable en
+	 * "classe membre" (????)
+	 */
+	private class UEPTableImpl extends UEPTable 
+	{
+
+		public UEPTableImpl(TableModel TheModel, TableCellRenderer TheRenderer, LinkedList<Object> handled) 
+		{
+			super(TheModel, TheRenderer, handled);
+		}
+
+		@Override
+		public void PopulateTableWithDatas(LinkedList<Object> lesdonnees) throws SQLException
+		{
+			/*if(LaConnection.isValid(1))
+			{
+				for(int cpt=0;cpt<lesdonnees.size();cpt++)
+				{
+					Class<?> handledclass=getIfHandled(lesdonnees.get(cpt).getClass());
+					if(handledclass!=null)
+					{
+						if(handledclass.equals(classMatch.class))
+						{
+							ModeleTableMatch.addRow(((classMatch)lesdonnees.get(cpt)));
+						}
+					}
+				}
+			}*/
+		}
+
+		@Override
+		public String getFromModel(int ligne, int colonne) 
+		{
+			switch(colonne)
+			{
+				case ma_tablemodelmatch.NAME:		return "Match: "+String.valueOf(LesMatches.get(ligne).getMatchID())+" "+LesMatches.get(ligne).getBeginDate();
+				case ma_tablemodelmatch.COL:			return ((ma_Couleurs)ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.COL)).getBinaryString();
+				case ma_tablemodelmatch.ENLVL:		return Levels.get(Integer.valueOf(ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.ENLVL).toString()));
+				case ma_tablemodelmatch.MYLVL:		return Levels.get(Integer.valueOf(ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.MYLVL).toString()));
+				case ma_tablemodelmatch.SCP:		
+																				try 
+																				{
+																					return LesMatches.get(ligne).getComments(LaConnection);
+																				} 
+																				catch(SQLException ex) 
+																				{
+																					Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+																				}
+				default: return "";
+			}
+		}
+	}
+
 	private ma_Couleurs enemyColors;
 	private boolean bToggleRealDefeats=false;
 	
 	private LinkedList<String> Levels;
+	private LinkedList<Object> MDMatches;
+	private LinkedList<classMatch> LesMatches=new LinkedList<>();
 	private final String strPostfixes[]=new String[]{"Tier 4", "Tier 3", "Tier 2", "Tier 1"};
 	private final String strPrefixes[]=new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mystic"};   // platinium tier 1 <-> 15
 	
 	public enum ScoreInfo {MAXPP,MINPP,MAXPE,MINPE,MID,SCMP,SCmP,SCME,SCmE,Alias;};
+	
+	UEPTable LaTable;
+	ma_tablemodelmatch ModeleTableMatch;
+	defMatch RendererMatch;
+	
 			
 	// SQL Related
 	
 	private java.sql.Connection LaConnection;
 	private java.sql.ResultSet Resultats;
 	private java.sql.Statement Statement;
+	private java.sql.ResultSet SousRqte;
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.ButtonGroup GroupeDeBoutons;
@@ -1247,7 +1637,6 @@ public class superStats extends javax.swing.JFrame
   public javax.swing.JLabel jLBLWinTotal;
   public javax.swing.JLabel jLBLWins;
   public javax.swing.JPanel jPanelForme;
-  public javax.swing.JPanel jPanelInfos;
   public javax.swing.JPanel jPanelLastest;
   public javax.swing.JPanel jPanelSStats;
   public javax.swing.JPanel jPanelStatsScores;
@@ -1256,6 +1645,7 @@ public class superStats extends javax.swing.JFrame
   public javax.swing.JRadioButton jRBMAXP;
   public javax.swing.JRadioButton jRBMINE;
   public javax.swing.JRadioButton jRBMINP;
+  public javax.swing.JScrollPane jScrollPanePourTable;
   public javax.swing.JTextField jTFConcedes;
   public javax.swing.JTextField jTFDefeats;
   public javax.swing.JTextField jTFLastConcede;
@@ -1266,4 +1656,6 @@ public class superStats extends javax.swing.JFrame
   public javax.swing.JTextField jTFLastRealWin;
   public javax.swing.JTextField jTFVictories;
   // End of variables declaration//GEN-END:variables
+
+
 }

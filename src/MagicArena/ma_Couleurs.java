@@ -121,6 +121,7 @@ public final class ma_Couleurs extends javax.swing.JPanel
 		validate();
 		setVisible(true);
 	}
+
 	
 	public void SetIcons(int value)
 	{
@@ -186,4 +187,9 @@ public final class ma_Couleurs extends javax.swing.JPanel
   public javax.swing.JLabel jLabelRouge;
   public javax.swing.JLabel jLabelVert;
   // End of variables declaration//GEN-END:variables
+
+	void ClearIcons() 
+	{
+		DeckColors.clear();
+	}
 }
