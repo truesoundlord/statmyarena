@@ -518,7 +518,7 @@
             <Component class="javax.swing.JTextField" name="jTextFieldEnemyScore">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Liberation Mono" size="10" style="1"/>
+                  <Font name="Liberation Mono" size="12" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="20"/>
                 <Property name="toolTipText" type="java.lang.String" value="Set player score"/>
@@ -530,7 +530,7 @@
             <Component class="javax.swing.JTextField" name="jTextFieldMyScore">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Liberation Mono" size="10" style="1"/>
+                  <Font name="Liberation Mono" size="12" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="20"/>
                 <Property name="toolTipText" type="java.lang.String" value="Set my score"/>
@@ -557,7 +557,7 @@
         <Component class="javax.swing.JButton" name="jButtonUpdate">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Mono" size="10" style="1"/>
+              <Font name="Liberation Mono" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Update"/>
             <Property name="toolTipText" type="java.lang.String" value="Save datas"/>
@@ -640,7 +640,7 @@
         <Component class="javax.swing.JButton" name="jButtonAddTurn">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Liberation Mono" size="10" style="1"/>
+              <Font name="Liberation Mono" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Turn"/>
             <Property name="toolTipText" type="java.lang.String" value="Push each time it is YOUR turn"/>

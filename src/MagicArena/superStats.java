@@ -1,8 +1,8 @@
 package MagicArena;
 
-import static MagicArena.ma_Statistiques.ListeDesMatches;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.BitSet;
 import java.util.LinkedList;
@@ -36,6 +36,9 @@ public class superStats extends javax.swing.JFrame
 		enemyColors=new ma_Couleurs();
 		LaConnection=param;
 		Levels=new LinkedList<>();
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("images/iconma.png")));
+		setTitle("MagicArena Stats v"+FenetrePrincipale.Version+FenetrePrincipale.SubVersion+" [Statistics]");
 		
 		// populate the combobox
 		
@@ -111,8 +114,6 @@ public class superStats extends javax.swing.JFrame
 			GroupeDeBoutons.add(jRBMAXE);
 			GroupeDeBoutons.add(jRBMINE);
 			
-			
-			
 			jRBMAXP.setText(getScoresInfos(ScoreInfo.MAXPP,ScoreInfo.MID));
 			jRBMAXP.setToolTipText("Database ID corresponding to this match");
 			jRBMINP.setText(getScoresInfos(ScoreInfo.MINPP, ScoreInfo.MID));
@@ -156,10 +157,7 @@ public class superStats extends javax.swing.JFrame
 			ModeleTableMatch=new ma_tablemodelmatch();
 			RendererMatch=new defMatch();
 			
-			LinkedList<Object> handledclasses=new LinkedList<>();
-			handledclasses.add(classMatch.class);
-						
-			LaTable=new UEPTableImpl(ModeleTableMatch,RendererMatch,handledclasses);
+			LaTable=new UEPTableImpl(ModeleTableMatch,RendererMatch);
 			LaTable.addDefaultRenderer(String.class);
 			LaTable.addDefaultRenderer(ma_Couleurs.class);
 			
@@ -321,7 +319,7 @@ public class superStats extends javax.swing.JFrame
 
     jTFVictories.setEditable(false);
     jTFVictories.setColumns(3);
-    jTFVictories.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jTFVictories.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jTFVictories.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTFVictories.setText("0");
     jTFVictories.setToolTipText("Victories");
@@ -339,7 +337,7 @@ public class superStats extends javax.swing.JFrame
 
     jTFDefeats.setEditable(false);
     jTFDefeats.setColumns(3);
-    jTFDefeats.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jTFDefeats.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jTFDefeats.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTFDefeats.setText("0");
     jTFDefeats.setToolTipText("Defeats");
@@ -368,7 +366,7 @@ public class superStats extends javax.swing.JFrame
 
     jTFConcedes.setEditable(false);
     jTFConcedes.setColumns(3);
-    jTFConcedes.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jTFConcedes.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jTFConcedes.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTFConcedes.setText("0");
     jTFConcedes.setToolTipText("Concedes");
@@ -380,6 +378,7 @@ public class superStats extends javax.swing.JFrame
       }
     });
 
+    jCBEnemyLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jCBEnemyLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
     jCBEnemyLevel.addActionListener(new java.awt.event.ActionListener()
     {
@@ -498,31 +497,32 @@ public class superStats extends javax.swing.JFrame
 
     jPanelStatsScores.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-    jLBLAliasMAXPScore.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLAliasMAXPScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLAliasMAXPScore.setText("Rien");
 
-    jLBLAliasMINPScore.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLAliasMINPScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLAliasMINPScore.setText("Rien");
 
-    jLBLAliasMAXEScore.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLAliasMAXEScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLAliasMAXEScore.setText("Rien");
 
-    jLBLAliasMINEScore.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLAliasMINEScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLAliasMINEScore.setText("Rien");
 
-    jLBLMAXPScore.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLMAXPScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLMAXPScore.setText("Rien");
     jLBLMAXPScore.setToolTipText("");
 
-    jLBLMINPScore.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLMINPScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLMINPScore.setText("Rien");
 
-    jLBLMAXEScore.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLMAXEScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLMAXEScore.setText("Rien");
 
-    jLBLMINEScore.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLMINEScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLMINEScore.setText("Rien");
 
+    jRBMAXP.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jRBMAXP.addActionListener(new java.awt.event.ActionListener()
     {
       public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -531,6 +531,7 @@ public class superStats extends javax.swing.JFrame
       }
     });
 
+    jRBMINP.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jRBMINP.addActionListener(new java.awt.event.ActionListener()
     {
       public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -539,6 +540,7 @@ public class superStats extends javax.swing.JFrame
       }
     });
 
+    jRBMINE.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jRBMINE.addActionListener(new java.awt.event.ActionListener()
     {
       public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -547,6 +549,7 @@ public class superStats extends javax.swing.JFrame
       }
     });
 
+    jRBMAXE.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jRBMAXE.addActionListener(new java.awt.event.ActionListener()
     {
       public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -555,27 +558,27 @@ public class superStats extends javax.swing.JFrame
       }
     });
 
-    jLBLMatchOpponentScoreVSMAX.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLMatchOpponentScoreVSMAX.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLMatchOpponentScoreVSMAX.setText("Rien");
 
-    jLBLMatchOpponentScoreVSMIN.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLMatchOpponentScoreVSMIN.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLMatchOpponentScoreVSMIN.setText("Rien");
 
-    jLBLMatchScoreVSMAX.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLMatchScoreVSMAX.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLMatchScoreVSMAX.setText("Rien");
 
-    jLBLMatchScoreVSMIN.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLMatchScoreVSMIN.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLMatchScoreVSMIN.setText("Rien");
 
-    jLBLVictoriesInaRow.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLVictoriesInaRow.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLVictoriesInaRow.setText("Rien");
     jLBLVictoriesInaRow.setToolTipText("Number of victories  in a row");
 
-    jLBLDefeatsInaRow.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLDefeatsInaRow.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLDefeatsInaRow.setText("Rien");
     jLBLDefeatsInaRow.setToolTipText("Number of defeats in a row");
 
-    jLBLConcedesInaRow.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
+    jLBLConcedesInaRow.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLBLConcedesInaRow.setText("Rien");
     jLBLConcedesInaRow.setToolTipText("Number of concedes in a row");
 
@@ -593,7 +596,7 @@ public class superStats extends javax.swing.JFrame
           .addComponent(jLBLAliasMAXPScore)
           .addComponent(jLBLDefeatsInaRow)
           .addComponent(jLBLConcedesInaRow))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 376, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 366, Short.MAX_VALUE)
         .addGroup(jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jLBLMINPScore)
           .addComponent(jLBLMAXPScore)
@@ -682,8 +685,8 @@ public class superStats extends javax.swing.JFrame
             .addComponent(jLBLDef, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addComponent(jLBLCon, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(jCBEnemyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(68, 68, 68)
+          .addComponent(jCBEnemyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(18, 18, 18)
         .addGroup(jPanelSStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
           .addComponent(jPanelLastest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
           .addComponent(jPanelForme, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -708,17 +711,17 @@ public class superStats extends javax.swing.JFrame
               .addGroup(jPanelSStatsLayout.createSequentialGroup()
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelLastest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
               .addGroup(jPanelSStatsLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
+                .addGap(1, 1, 1)
                 .addComponent(jCBRouge)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCBVert)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCBBleu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCBBlanc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(jPanelSStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                   .addComponent(jLBLWins, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addComponent(jLBLDef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -754,7 +757,7 @@ public class superStats extends javax.swing.JFrame
       .addGroup(jPanelSuperStatsLayout.createSequentialGroup()
         .addComponent(jPanelSStats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPanePourTable, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(jScrollPanePourTable, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -817,54 +820,37 @@ public class superStats extends javax.swing.JFrame
 
   private void jTFDefeatsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFDefeatsMouseClicked
     if(enemyColors.getInt()==0) return;
-		if(bToggleRealDefeats==false)
+		try
     {
-      try
-      {
-        jTFDefeats.setText(getRealDefeats(enemyColors.getInt()));
-        jTFDefeats.setBackground(new Color(152,182,182,255));
+			if(bToggleRealDefeats==false)
+			{
+
+				jTFDefeats.setText(getRealDefeats(enemyColors.getInt()));
+				jTFDefeats.setBackground(new Color(152,182,182,255));
 				jTFDefeats.setToolTipText(	"Matches conceded by me... ("+jTFDefeats.getText()+"/"+getStats(enemyColors.getInt(), 'D')+") --> "+
 																		String.format("%.1f",Float.valueOf(jTFDefeats.getText())/Float.valueOf(getStats(enemyColors.getInt(), 'D'))*100.0f)+" %");
-      }
-      catch (SQLException ex)
-      {
-        Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
-      }
-      bToggleRealDefeats=true;
-			try 
-			{
+
+				bToggleRealDefeats=true;
 				populateTableWith("RealDefeats");
-			} 
-			catch (SQLException ex) 
-			{
-				Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+
 			}
-    }
-    else
-    {
-      try
-      {
-        jTFDefeats.setText(getStats(enemyColors.getInt(),'D'));
-        jTFDefeats.setBackground(new Color(255,255,255,255));
-				
+			else
+			{
+				jTFDefeats.setText(getStats(enemyColors.getInt(),'D'));
+				jTFDefeats.setBackground(new Color(255,255,255,255));
+
 				jTFDefeats.setToolTipText("Defeats (including concedes done by me)");
 				int Total=Integer.valueOf(jTFVictories.getText())+Integer.valueOf(jTFConcedes.getText())+Integer.valueOf(jTFDefeats.getText());
 				float PercentDef=(float)(Integer.valueOf(jTFDefeats.getText())/(float)Total)*100.0f;
 				jTFDefeats.setToolTipText(jTFDefeats.getToolTipText()+" ("+String.format("%.1f", PercentDef)+"% )");
-      }
-      catch (SQLException ex)
-      {
-        Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
-      }
-      bToggleRealDefeats=false;
-			try 
-			{
+				
+				bToggleRealDefeats=false;
 				populateTableWith("Defeats");
-			} 
-			catch (SQLException ex) 
-			{
-				Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
 			}
+		}
+    catch (SQLException ex)
+    {
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
     }
 		
   }//GEN-LAST:event_jTFDefeatsMouseClicked
@@ -942,8 +928,10 @@ public class superStats extends javax.swing.JFrame
 					if(Resultats.first())
 					{
 						ModeleTableMatch.ClearDatas();
+						LesMatches.clear();
 						classMatch degraded=new classMatch();
 						degraded.setName(Resultats.getString(1));
+						degraded.setDBMatchID(Integer.valueOf(selected));
 						
 						BitSet tmpbs=new BitSet(5);
 						int rep=Integer.valueOf(Resultats.getByte(2));
@@ -962,6 +950,7 @@ public class superStats extends javax.swing.JFrame
 						replvl=classMatch.Levels.get(Integer.valueOf(Resultats.getString(6)));
 						degraded.setLevel(true, replvl);
 						ModeleTableMatch.addRow(degraded);
+						LesMatches.add(degraded);
 					}
 				}
 			} 
@@ -1289,21 +1278,19 @@ public class superStats extends javax.swing.JFrame
 		String tmp="";
 		String SQLRequest="";
 		
-		// Attention si j'ai deux fois les mêmes scores (sur HisScore et MyScore) cette requête va planter :{ faudra mettre limit 1 à mon avis
-		
 		switch(param)
 		{
-			case MAXPP: SQLRequest=	"SELECT Alias, MyScore, HisScore, (SELECT idMatch FROM Matches WHERE Matches.idPlayer=Players.idPlayer) FROM Players "+
-															"WHERE idPlayer=(SELECT idPlayer FROM Matches WHERE MyScore=(SELECT MAX(MyScore) FROM Matches) ORDER BY EndTime DESC LIMIT 1)";
+			case MAXPP: SQLRequest=	"SELECT Alias, Matches.MyScore, Matches.HisScore, (SELECT idMatch FROM Matches WHERE Matches.idPlayer=Players.idPlayer AND MyScore=(SELECT MAX(MyScore) FROM Matches)) FROM Matches,Players "+
+															"WHERE Players.idPlayer=(SELECT idPlayer FROM Matches WHERE MyScore=(SELECT MAX(MyScore) FROM Matches )) ORDER BY MyScore DESC LIMIT 1";
 									break;
-			case MINPP: SQLRequest=	"SELECT Alias, MyScore, HisScore, (SELECT idMatch FROM Matches WHERE Matches.idPlayer=Players.idPlayer) FROM Players "+
-															"WHERE idPlayer=(SELECT idPlayer FROM Matches WHERE MyScore=(SELECT MIN(MyScore) FROM Matches) ORDER BY EndTime DESC LIMIT 1)";
+			case MINPP: SQLRequest=	"SELECT Alias, Matches.MyScore, Matches.HisScore, (SELECT idMatch FROM Matches WHERE Matches.idPlayer=Players.idPlayer AND MyScore=(SELECT MIN(MyScore) FROM Matches)) FROM Matches,Players "+
+															"WHERE Players.idPlayer=(SELECT idPlayer FROM Matches WHERE MyScore=(SELECT MIN(MyScore) FROM Matches )) ORDER BY MyScore LIMIT 1";
 									break;
-			case MAXPE: SQLRequest=	"SELECT Alias, MyScore, HisScore, (SELECT idMatch FROM Matches WHERE Matches.idPlayer=Players.idPlayer) FROM Players "+
-															"WHERE idPlayer=(SELECT idPlayer FROM Matches WHERE HisScore=(SELECT MAX(HisScore) FROM Matches) ORDER BY EndTime DESC LIMIT 1)";
+			case MAXPE: SQLRequest=	"SELECT Alias, Matches.MyScore, Matches.HisScore, (SELECT idMatch FROM Matches WHERE Matches.idPlayer=Players.idPlayer AND HisScore=(SELECT MAX(HisScore) FROM Matches)) FROM Matches,Players "+
+															"WHERE Players.idPlayer=(SELECT idPlayer FROM Matches WHERE HisScore=(SELECT MAX(HisScore) FROM Matches)) ORDER BY HisScore DESC LIMIT 1";
 									break;
-			case MINPE: SQLRequest=	"SELECT Alias, MyScore, HisScore, (SELECT idMatch FROM Matches WHERE Matches.idPlayer=Players.idPlayer) FROM Players "+
-															"WHERE idPlayer=(SELECT idPlayer FROM Matches WHERE HisScore=(SELECT MIN(HisScore) FROM Matches) ORDER BY EndTime DESC LIMIT 1)";
+			case MINPE: SQLRequest=	"SELECT Alias, Matches.MyScore, Matches.HisScore, (SELECT idMatch FROM Matches WHERE Matches.idPlayer=Players.idPlayer AND HisScore=(SELECT MIN(HisScore) FROM Matches)) FROM Matches,Players "+
+															"WHERE Players.idPlayer=(SELECT idPlayer FROM Matches WHERE HisScore=(SELECT MIN(HisScore) FROM Matches)) ORDER BY HisScore LIMIT 1";
 									break;
 		}
 		
@@ -1537,28 +1524,9 @@ public class superStats extends javax.swing.JFrame
 	private class UEPTableImpl extends UEPTable 
 	{
 
-		public UEPTableImpl(TableModel TheModel, TableCellRenderer TheRenderer, LinkedList<Object> handled) 
+		public UEPTableImpl(TableModel TheModel, TableCellRenderer TheRenderer) 
 		{
-			super(TheModel, TheRenderer, handled);
-		}
-
-		@Override
-		public void PopulateTableWithDatas(LinkedList<Object> lesdonnees) throws SQLException
-		{
-			/*if(LaConnection.isValid(1))
-			{
-				for(int cpt=0;cpt<lesdonnees.size();cpt++)
-				{
-					Class<?> handledclass=getIfHandled(lesdonnees.get(cpt).getClass());
-					if(handledclass!=null)
-					{
-						if(handledclass.equals(classMatch.class))
-						{
-							ModeleTableMatch.addRow(((classMatch)lesdonnees.get(cpt)));
-						}
-					}
-				}
-			}*/
+			super(TheModel, TheRenderer);
 		}
 
 		@Override
@@ -1582,6 +1550,12 @@ public class superStats extends javax.swing.JFrame
 				default: return "";
 			}
 		}
+
+		/*@Override
+		public void PopulateTableWithDatas(LinkedList<Object> lesdonnees) throws SQLException
+		{
+			// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		}*/
 	}
 
 	private ma_Couleurs enemyColors;

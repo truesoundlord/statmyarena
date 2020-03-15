@@ -1,14 +1,9 @@
 package MagicArena;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
-import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
@@ -26,12 +21,10 @@ public abstract class UEPTable extends JTable
 	 * @param TheRenderer the renderer to display the table datas
 	 * @param handled the specification of the class to be used to display informations
 	 */
-	public UEPTable(TableModel TheModel, TableCellRenderer TheRenderer, LinkedList<Object> handled) 
+	public UEPTable(TableModel TheModel, TableCellRenderer TheRenderer) 
 	{
-		HandledModels = new LinkedList<>();
 		InnerModel=TheModel;
 		InnerRenderer=TheRenderer;
-		HandledModels=handled;
 		
 		setModel(InnerModel);
 	}
@@ -70,30 +63,8 @@ public abstract class UEPTable extends JTable
 		
 	}
 	
-	public int giveDatas(LinkedList<Object> lesdonnees)
-	{
-		InnerList=lesdonnees;
-		return InnerList.size();
-	}
-		
-	/**
-	 * 
-	 * @param reference contains the class reference of the object to be handled by the inner list of classes this table is about to display
-	 * @return the class found in the LinkedList
-	*/
-	public Class<?> getIfHandled(Class<?> reference)
-	{
-		int index=HandledModels.indexOf(reference);
-		if(index!=-1)	return HandledModels.get(index).getClass();
-		else return null;
-	}
-	
-	//private final java.sql.Connection InnerConnection;
 	private final TableModel InnerModel;
 	private final TableCellRenderer InnerRenderer;
-	private LinkedList<Object> InnerList;
-	
-	private LinkedList<Object> HandledModels;
 	
 	// Abstract methods
 	
@@ -102,7 +73,7 @@ public abstract class UEPTable extends JTable
 	 * @param lesdonnees the linked list containing the datas to be used...
 	 * @throws SQLException 
 	 */
-	public abstract void PopulateTableWithDatas(LinkedList<Object> lesdonnees) throws SQLException;
+	//public abstract void PopulateTableWithDatas(LinkedList<Object> lesdonnees) throws SQLException;
 	/**
 	 * This abstract method has to be used to help the method getToolTipText to display coherent data
 	 * @param ligne line

@@ -14,8 +14,6 @@ public class classEnemy implements java.io.Serializable
 	
 	private int SQLid;
 	
-	//private String Level;
-	
 	private int Victories;
 	private int Defeats;
 	private int Concedes;
@@ -47,34 +45,29 @@ public class classEnemy implements java.io.Serializable
 		Concedes=0;
 		Clashes=0;
 		Draws=0;
-	};
+	}
 	
 	// Interface get...
 	
 	public String getName()
 	{
 		return Name;
-	};
-	
-	/*public String getLevel()
-	{
-		return Level;
-	}*/
+	}
 	
 	public BitSet getColors()
 	{
 		return Colors;
-	};
+	}
 	
 	public int getVictories()
 	{
 		return Victories;
-	};
+	}
 	
 	public int getDefeats()
 	{
 		return Defeats;
-	};
+	}
 	
 	/**
 	 * 
@@ -83,7 +76,7 @@ public class classEnemy implements java.io.Serializable
 	public int getScoreP()
 	{
 		return MyScore;
-	};
+	}
 	
 	/**
 	 * 
@@ -92,12 +85,12 @@ public class classEnemy implements java.io.Serializable
 	public int getScoreE()
 	{
 		return HisScore;
-	};
+	}
 	
 	public String getEvaluation()
 	{
 		return Evaluation;
-	};
+	}
 	
 	public int getDraws()
 	{
@@ -124,39 +117,28 @@ public class classEnemy implements java.io.Serializable
 	public void setName(String param)
 	{
 		Name=param;
-	};
-	
-	/*public void setLevel(String param)
-	{
-		Level=param;
-	}*/
+	}
 	
 	public void setColors(BitSet param)
 	{
 		Colors=(BitSet)param.clone();
-	};
+	}
 	
-	/**
-	 * 
-	 * 
-	 * @param thescoreE
-	 * @return 
-	 */
 	public int setScoreE(int thescoreE)
 	{
 		return this.HisScore=thescoreE;
-	};
+	}
 	
 	public int setScoreP(int thescoreP)
 	{
 		return this.MyScore=thescoreP;
-	};
-	
+	}
+
 	public void setEvaluation(String param)
 	{
 		Evaluation=param;
-	};
-	
+	}
+
 	public void setVictories(int value)
 	{
 		Victories=value;
@@ -193,12 +175,12 @@ public class classEnemy implements java.io.Serializable
 	public int addVictory()
 	{
 		return ++Victories;
-	};
+	}
 	
 	public int addDefeat()
 	{
 		return ++Defeats;
-	};	
+	}
 	
 	public int addConcede()
 	{
@@ -215,6 +197,11 @@ public class classEnemy implements java.io.Serializable
 		return ++Clashes;
 	}
 	
+	/**
+	 * Updates the record in the DB
+	 * @param LaConnection
+	 * @throws SQLException 
+	 */
 	public void updatedb(java.sql.Connection LaConnection) throws SQLException
 	{
 		String SQLRequest;
@@ -229,13 +216,22 @@ public class classEnemy implements java.io.Serializable
 			SQLRequest+="Draws="+Draws+",";
 			SQLRequest+="MyScore="+MyScore+",";
 			SQLRequest+="HisScore="+HisScore+",";
-			SQLRequest+="MatchesDone="+Clashes;
+			SQLRequest+="MatchesDone="+Clashes+",";
+			// correction BUG 25 février 2020
+			
+			SQLRequest+="Couleurs="+ma_Couleurs.getInt(Colors);
 			SQLRequest+=" WHERE idPlayer="+SQLid;
 			
 			Statement.execute(SQLRequest);
 			Statement.close();
 		}
 	}
+	
+	/**
+	 * Inserts the opponent to the DB (sets the SQLid field).
+	 * @param LaConnection
+	 * @throws java.sql.SQLException
+	 */
 	
 	public void insertdb(java.sql.Connection LaConnection) throws SQLException
 	{
@@ -267,51 +263,11 @@ public class classEnemy implements java.io.Serializable
 	}
 	
 	/**
-	 * 
+	 * Gets the last inserted DB id 
 	 * @param LaConnection
-	 * @return l'identifiant de cet ennemi (pour un deck particulier)
+	 * @return
 	 * @throws SQLException 
 	 */
-	public int getEnemyID_DB(java.sql.Connection LaConnection) throws SQLException
-	{
-		String SQLRequest;
-		
-		ma_Couleurs tmp=new ma_Couleurs(Colors);
-		int couleursenint=tmp.getInt();
-		
-		if(LaConnection.isValid(1))
-		{
-			System.err.println("[DEBUG getEnemyID_DB] "+Name+"("+couleursenint+")");
-			try
-			{
-				Statement=LaConnection.createStatement();
-				SQLRequest="SELECT idPlayer FROM Players WHERE Couleurs="+couleursenint+" AND Alias='"+Name+"'";
-			
-				Statement.execute(SQLRequest);
-			
-				java.sql.ResultSet Resultats;
-				Resultats=Statement.getResultSet();
-			
-				if(Resultats!=null)
-				{
-					if(!Resultats.first()) return -1;							// peu de chances d'avoir deux enregistrements dans le resulset à moins que je sois une grosse merde
-					SQLid=Resultats.getInt(1);
-					Resultats.close();
-				}
-				Statement.close();
-				
-			}
-			catch(SQLException ex)
-			{
-				throw ex;
-			}
-			
-			return SQLid;
-		}
-		return -1;
-	}
-
-	
 	static public int getLastInsertedID(java.sql.Connection LaConnection) throws SQLException
 	{
 		int id=-1;

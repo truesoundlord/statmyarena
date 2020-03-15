@@ -1,0 +1,15 @@
+DROP PROCEDURE IF EXISTS `UPDT_Score`;
+delimiter //
+CREATE DEFINER = 'root'@'%' PROCEDURE UPDT_Score(IN par_Alias VARCHAR(40), IN par_MyScore SMALLINT,IN par_HisScore SMALLINT)
+SQL SECURITY INVOKER
+BEGIN
+	DECLARE result SMALLINT UNSIGNED;
+	-- Est-ce que le "joueur" existe ?
+	SET result=(SELECT idPlayer FROM Players WHERE Alias = par_Alias); 
+	IF result IS NOT NULL
+	THEN
+		UPDATE Matches SET MyScore=par_MyScore, HisScore=par_HisScore WHERE idPlayer=result;
+		UPDATE Players SET MyScore=par_MyScore, HisScore=par_HisScore WHERE idPlayer=result;
+	END IF;
+END//
+delimiter ;

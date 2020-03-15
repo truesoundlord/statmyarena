@@ -106,9 +106,9 @@ public class defPlayer extends javax.swing.JPanel implements TableCellRenderer
 																this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 14));
 																largeur=((String)source).length();
 																this.getComponent(this.getComponentCount()-1).setForeground(new Color(121, 181, 181, 255));
-																if(Integer.parseInt((String)source)<0 || Integer.parseInt((String)source)>20)
+																if(Integer.parseInt((String)source)<=0 || Integer.parseInt((String)source)>20)
 																{
-																	if(Integer.parseInt((String)source)<0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 0, 0, 255));	
+																	if(Integer.parseInt((String)source)<=0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 0, 0, 255));	
 																	if(Integer.parseInt((String)source)>20) this.getComponent(this.getComponentCount()-1).setForeground(new Color(85, 85, 0, 255));	
 																	setBackground(new Color(170, 170, 127, 255));
 																}
@@ -122,9 +122,9 @@ public class defPlayer extends javax.swing.JPanel implements TableCellRenderer
 																this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 14));
 																largeur=((String)source).length();
 																this.getComponent(this.getComponentCount()-1).setForeground(new Color(121, 181, 181, 255));	
-																if(Integer.parseInt((String)source)<0 || Integer.parseInt((String)source)>20)
+																if(Integer.parseInt((String)source)<=0 || Integer.parseInt((String)source)>20)
 																{
-																	if(Integer.parseInt((String)source)<0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 0, 0, 255));	
+																	if(Integer.parseInt((String)source)<=0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 0, 0, 255));	
 																	if(Integer.parseInt((String)source)>20) this.getComponent(this.getComponentCount()-1).setForeground(new Color(85, 85, 0, 255));	
 																	setBackground(new Color(170, 170, 127, 255));
 																}

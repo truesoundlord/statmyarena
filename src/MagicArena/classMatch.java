@@ -4,9 +4,6 @@ import java.sql.SQLException;
 import java.util.BitSet;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JToolTip;
 
 /**
  *
@@ -30,8 +27,7 @@ public class classMatch
 	private int idMatch;
 	private int Manas;									// noires je ne pense pas changer de deck pour faire les tapettes avec plusieurs couleurs et faire des combinaisons de merde qui prennent des heures...
 																			// et qui une fois sur deux ne servent à rien ^^
-	
-		
+
 	public enum Resultats {VIC,CON,DEF,DRW;};
 	
 	Resultats MatchResult;
@@ -76,6 +72,9 @@ public class classMatch
 			
 	// Constructeur
 	
+	/**
+	 * Object representing a "match"... (here each time 1 vs 1)
+	 */
 	public classMatch()
 	{
 		this.bStart = false;
@@ -102,11 +101,23 @@ public class classMatch
 
 	// set methods
 	
+	/**
+	 * Sets the name of the opponent 
+	 * @param param 
+	 */
 	public void setName(String param)
 	{
 		EnemyName=param;
 	}
 	
+	/**
+	 * Sets the score
+	 * @param direction
+	 * true: the score of the player
+	 * false: the score of the opponent
+	 * @param param 
+	 * value representing the score
+	 */
 	public void setScore(boolean direction,int param)
 	{
 		if(direction) MyScore=param;
@@ -120,8 +131,8 @@ public class classMatch
 	
 	/**
 	 * 
-	 * @param direction false ennemy, true player
-	 * @param param the string representation not the index
+	 * @param direction false opponent, true player
+	 * @param param the string representation, not the index
 	 */
 	public void setLevel(boolean direction,String param)
 	{
@@ -138,7 +149,7 @@ public class classMatch
 	
 	/**
 	 *
-	 * @param direction true for me
+	 * @param direction true for player, false for opponent
 	 * @param param
 	 */
 	public void importLevel(boolean direction,String param)
@@ -187,12 +198,19 @@ public class classMatch
  		if(param.contains("E")) MatchResult=Resultats.DRW;
 	}
 	
+	/**
+	 * Sets the beginning time stamp
+	 */
 	public void setBegin()
 	{
 		dateDebut=(GregorianCalendar)GregorianCalendar.getInstance();
 		bStart=true;
 	}
 	
+	/**
+	 * Sets the ending time stamp 
+	 * Computes the duration of a match
+	 */
 	public void setEnd()
 	{
 		dateFin=(GregorianCalendar)GregorianCalendar.getInstance();
@@ -203,6 +221,10 @@ public class classMatch
 		bStart=false;
 	}
 	
+	/**
+	 * Computes the date representation from DB
+	 * @param param 
+	 */
 	public void StartFROMDB(String param)
 	{
 		String[] parsed=param.split("[\\-|\\:|\\s]");
@@ -216,6 +238,10 @@ public class classMatch
 		
 	}
 	
+	/**
+	 * Computes the date representation from DB
+	 * @param param 
+	 */
 	public void EndFROMDB(String param)
 	{
 		String[] parsed=param.split("[\\-|\\:|\\s]");
@@ -228,7 +254,9 @@ public class classMatch
 		dateFin.set(GregorianCalendar.SECOND, Integer.valueOf(parsed[PRSS]));
 	}
 	
-	
+	/**
+	 * Sets the duration in milliseconds
+	 */
 	public void setMatchLength()
 	{
 		MatchLength.clear();
@@ -243,6 +271,11 @@ public class classMatch
 	{
 		Manas=param;
 	}
+	
+	/**
+	 * Sets the duration of a match from seconds to milliseconds
+	 * @param param 
+	 */
 	
 	public void setDuration(long param)
 	{
@@ -261,6 +294,12 @@ public class classMatch
 		return MatchColors;
 	}
 	
+	/**
+	 * To get the level of the opponent set to false.
+	 * To get the level of the player set to true.
+	 * @param direction
+	 * @return 
+	 */
 	public int getLevel(boolean direction)
 	{
 		if(direction)
@@ -273,6 +312,12 @@ public class classMatch
 		}
 	}
 	
+	/**
+	 * To get the level of the opponent set to false.
+	 * To get the level of the player set to true.
+	 * @param direction
+	 * @return 
+	 */
 	public int getScore(boolean direction)
 	{
 		if(direction)
@@ -290,6 +335,10 @@ public class classMatch
 		return MatchResult;
 	}
 	
+	/**
+	 * Get the date string in the DD/MM/YYYY HH:MM:SS format
+	 * @return 
+	 */
 	public String getBeginDate()
 	{
 		String composed;
@@ -303,6 +352,27 @@ public class classMatch
 		return composed;
 	}
 	
+	/**
+	 * Get the date string in the DD/MM/YYYY HH:MM:SS format
+	 * @return 
+	 */
+	String getEndDate()
+	{
+		String composed;
+		
+		// Comme Java c'est de la merde et qu'il n'est pas possible d'extraire les champs de l'objet il va falloir 
+		//chipoter (c'est là qu'en C en une seule ligne de code c'était réglé... enfin bref...)
+		
+		composed=String.format("%02d",dateFin.get(GregorianCalendar.DAY_OF_MONTH))+"/"+String.format("%02d",dateFin.get(GregorianCalendar.MONTH))+"/"+dateFin.get(GregorianCalendar.YEAR)+" ";
+		composed+=String.format("%02d",dateFin.get(GregorianCalendar.HOUR_OF_DAY))+":"+String.format("%02d", dateFin.get(GregorianCalendar.MINUTE))+":"+String.format("%02d",dateFin.get(GregorianCalendar.SECOND));
+				
+		return composed;
+	}
+	
+	/**
+	 * Get the date string in the HH:MM:SS format
+	 * @return 
+	 */
 	public String getDuration()
 	{
 		//System.err.println("Vérifications: "+MatchLength.toString());
@@ -344,9 +414,9 @@ public class classMatch
 			SQLRequest+="(idPlayer,MatchColor,Turns,HisScore,MyScore,Result,StartTime,EndTime,EnLvl,MyLvl,Manas,Duration) VALUES (";
 			SQLRequest+=idPlayer+",";
 			
-			ma_Couleurs tmp=new ma_Couleurs(MatchColors);
+			//ma_Couleurs tmp=new ma_Couleurs(MatchColors);  février 2020
 			
-			SQLRequest+=tmp.getInt()+",";
+			SQLRequest+=ma_Couleurs.getInt(MatchColors)+",";
 			SQLRequest+=Turns+",";
 			SQLRequest+=HisScore+",";
 			SQLRequest+=MyScore+",";
@@ -370,7 +440,7 @@ public class classMatch
 			SQLRequest+=")";
 							
 			Statement.execute(SQLRequest);
-			System.err.println("Enregistrement ajoûté à la base de données...");
+			System.err.println("Match enregistré...");
 			
 			idMatch=getLastInsertedID(LaConnection);
 			
@@ -382,8 +452,7 @@ public class classMatch
 	}
 
 	/**
-	 * Pratiquement inutile en fait :{
-	 * Finalement si, j'ai bien fait de la prévoir cette fonction
+	 * Get the last inserted ID from DB 
 	 * @param LaConnection
 	 * @return
 	 * @throws SQLException 
@@ -435,23 +504,96 @@ public class classMatch
 				if(Resultats.first())
 				{
 					// Il faudrait utiliser d'après la documentation le format HTML :{
-					tmp="<HTML><TABLE><TR ALIGN=JUSTIFY><TD>";
+					tmp="<html>";
 					
 					String prework=Resultats.getString(1);
+					
 					int length=prework.length();
 					
 					// Il faudrait formater le message de manière à ce que ce soit lisible ^^
 					
-					tmp+="<TEXTAREA ROWS=10 COLS=30>"+prework+"</TEXTAREA>";	
+					if(prework.length()>30) prework=WrapComments(prework);
+										
+					//tmp+="<TEXTAREA ROWS=4 COLS=50 BORDER=0>"+prework+"</TEXTAREA>";	
+					tmp+=prework;	
 					
-					tmp+="</TD></TR></TABLE></HTML>";
+					tmp+="</html>";
 				}
 				Resultats.close();
 				Statement.close();
 				
 			}
 		}
+		tmp=tmp.replace("\n", "<BR>");
+		
 		return tmp;
 	}
+	
+	/**
+	 * Attempt to format the TootTipText in a readable way...
+	 * @param texttoformat
+	 * @return 
+	 */
+	private String WrapComments(String texttoformat)
+	{
+		String formatedtext="";
+				
+		//texttoformat=texttoformat.replace("\n"," ");
+		
+		char[] strText=texttoformat.toCharArray();
+		
+		// Principe: les commentaires tiennent sur un nombre limité de colonnes (30)
+		// il faut faire en sorte que le texte qui vient de la base de données soit correctement formatté
+				
+		int longueurtexte=texttoformat.length();
+		
+		
+		// vu qu'on est pas en C il va falloir se casser le cul :{
+		
+		int position=1;
+		int positionligne=1;
+		do
+		{
+			if(strText[position]=='\n') 
+			{
+				positionligne=0;
+			}
+			if((strText[position]>='0' && strText[position]<'9') && strText[position+1]=='x' && position<longueurtexte-1)															// essayer de lister
+			{
+				strText[position-1]='\n';
+				positionligne=0;
+				position+=2;
+				formatedtext=String.valueOf(strText);
+				continue;
+			}
+			if((strText[position]>='0' && strText[position]<'9') && strText[position+1]=='/' && position<longueurtexte-1)															// essayer de lister
+			{
+				positionligne=0;
+				position+=2;
+				formatedtext=String.valueOf(strText);
+				continue;
+			}
+						
+			if(positionligne>40)
+			{
+				if(strText[position]=='.') 
+				{
+					strText[position+1]='\n';
+					positionligne=0;
+				}
+				if(strText[position]==' ' && strText[position+1]!='!' && position<longueurtexte-1) 
+				{
+					strText[position]='\n';
+					positionligne=0;
+				}
+			}
+			else positionligne++;
+			formatedtext=String.valueOf(strText);
+			position++;
+		}while(position<longueurtexte-1);
+		
+		return formatedtext;
+	}
+	
 } // END CLASS
 

@@ -1,0 +1,30 @@
+DROP PROCEDURE IF EXISTS `UPDT_Result`;
+delimiter //
+CREATE DEFINER = 'root'@'%' PROCEDURE UPDT_Result(IN par_Alias VARCHAR(40), IN par_Result enum('V','C','D','E'), IN par_idMatch SMALLINT UNSIGNED)
+SQL SECURITY INVOKER
+BEGIN
+	DECLARE result SMALLINT UNSIGNED;
+	DECLARE oldResult enum('V','C','D','E');
+	-- Est-ce que le "joueur" existe ?
+	SET result=(SELECT idPlayer FROM Players WHERE Alias = par_Alias);
+	SET oldResult=(SELECT Result FROM Matches WHERE idMatch = par_idMatch); 
+	IF result IS NOT NULL
+	THEN
+		-- Modifications en fonction des résultats
+		CASE par_Result
+			WHEN 'V' THEN UPDATE Players SET Defeated = Defeated+1 WHERE idPlayer=result;
+			WHEN 'C' THEN UPDATE Players SET Conceded = Conceded+1 WHERE idPlayer=result;
+			WHEN 'D' THEN UPDATE Players SET Victories = Victories+1 WHERE idPlayer=result;
+			WHEN 'E' THEN UPDATE Players SET Draws = Draws+1 WHERE idPlayer=result;
+		END CASE;
+		
+		CASE oldResult
+			WHEN 'V' THEN UPDATE Players SET Defeated = Defeated-1 WHERE idPlayer=result;
+			WHEN 'C' THEN UPDATE Players SET Conceded = Conceded-1 WHERE idPlayer=result;
+			WHEN 'D' THEN UPDATE Players SET Victories = Victories-1 WHERE idPlayer=result;
+			WHEN 'E' THEN UPDATE Players SET Draws = Draws-1 WHERE idPlayer=result;
+		END CASE;
+		UPDATE Matches SET Result=par_Result WHERE idMatch=par_idMatch;
+	END IF;
+END//
+delimiter ;

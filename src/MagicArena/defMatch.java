@@ -80,9 +80,9 @@ public class defMatch extends javax.swing.JPanel implements TableCellRenderer
 																		this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 12));	
 																		
 																		this.getComponent(this.getComponentCount()-1).setForeground(new Color(121, 181, 181, 255));
-																		if(Integer.parseInt((String)source)<0 || Integer.parseInt((String)source)>20)
+																		if(Integer.parseInt((String)source)<=0 || Integer.parseInt((String)source)>20)
 																		{
-																			if(Integer.parseInt((String)source)<0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 0, 0, 255));	
+																			if(Integer.parseInt((String)source)<=0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 0, 0, 255));	
 																			if(Integer.parseInt((String)source)>20) this.getComponent(this.getComponentCount()-1).setForeground(new Color(85, 85, 0, 255));	
 																			setBackground(new Color(170, 170, 127, 255));
 																		}
@@ -95,9 +95,9 @@ public class defMatch extends javax.swing.JPanel implements TableCellRenderer
 																		this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 12));	
 																		
 																		this.getComponent(this.getComponentCount()-1).setForeground(new Color(121, 181, 181, 255));
-																		if(Integer.parseInt((String)source)<0 || Integer.parseInt((String)source)>20)
+																		if(Integer.parseInt((String)source)<=0 || Integer.parseInt((String)source)>20)
 																		{
-																			if(Integer.parseInt((String)source)<0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 0, 0, 255));	
+																			if(Integer.parseInt((String)source)<=0) this.getComponent(this.getComponentCount()-1).setForeground(new Color(255, 0, 0, 255));	
 																			if(Integer.parseInt((String)source)>20) this.getComponent(this.getComponentCount()-1).setForeground(new Color(85, 85, 0, 255));	
 																			setBackground(new Color(170, 170, 127, 255));
 																		}
@@ -119,13 +119,6 @@ public class defMatch extends javax.swing.JPanel implements TableCellRenderer
 																			
 																			
 																			break;
-			/*case ma_tablemodelmatch.RES:	//add(new JTextField((String)source));
-																		if(((String)source).contains("VIC")) add(new JLabel(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/victoire.png"))));
-																		if(((String)source).contains("DEF")) add(new JLabel(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/défaite.png"))));				
-																		if(((String)source).contains("CON")) add(new JLabel(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/concede.png"))));
-																		this.getComponent(this.getComponentCount()-1).setFont(new Font("Liberation Mono", Font.BOLD, 12));	
-																		break;*/
-																		
 		}
 		LaTable.setToolTipText(FenetrePrincipale.ToolTipForStats);
 		this.validate();

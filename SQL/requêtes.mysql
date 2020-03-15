@@ -1,0 +1,15 @@
+Afficher les résultats des matches gagnés:
+
+SELECT Alias, Victories, Defeated, Conceded, MatchesDone FROM Players WHERE MatchesDone > 1 AND (Victories = Conceded OR Victories = Defeated) ORDER BY MatchesDone DESC,Defeated DESC, Conceded DESC;
+
+Afficher les résultats des matches perdus/gagnés:
+
+SELECT Alias, Victories, Defeated, Conceded, MatchesDone FROM Players WHERE MatchesDone > 1 AND Victories > Conceded + Defeated ORDER BY MatchesDone DESC;
+SELECT Alias, Victories, Defeated, Conceded, MatchesDone FROM Players WHERE MatchesDone > 1 AND Victories < Conceded + Defeated ORDER BY MatchesDone DESC;   
+
+Quand il y a plus de deux rencontres...
+
+SELECT idMatch,(SELECT Alias FROM Players WHERE Players.idPlayer=Matches.idPlayer) AS Alias,Matches.HisScore,Matches.MyScore, Result, EndTime,Duration  FROM Matches WHERE idPlayer IN (SELECT idPlayer FROM Players WHERE MatchesDone > 1 AND Victories > Conceded + Defeated);
+
+SELECT idMatch,(SELECT Alias FROM Players WHERE Players.idPlayer=Matches.idPlayer) AS Alias,Matches.HisScore,Matches.MyScore, Result, EndTime,Duration  FROM Matches WHERE idPlayer IN (SELECT idPlayer FROM Players WHERE MatchesDone > 1 AND Victories < Conceded + Defeated);
+
