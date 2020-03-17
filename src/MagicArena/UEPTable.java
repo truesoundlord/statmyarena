@@ -19,7 +19,6 @@ public abstract class UEPTable extends JTable
 	 * Creation attempt of a "general" Table object for the players and matches
 	 * @param TheModel the model used to handle the table datas
 	 * @param TheRenderer the renderer to display the table datas
-	 * @param handled the specification of the class to be used to display informations
 	 */
 	public UEPTable(TableModel TheModel, TableCellRenderer TheRenderer) 
 	{

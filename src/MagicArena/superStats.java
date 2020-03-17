@@ -151,7 +151,7 @@ public class superStats extends javax.swing.JFrame
 			jLBLMatchOpponentScoreVSMIN.setToolTipText(jLBLAliasMINPScore.getText()+" scored this against your worst score...");			
 			
 			jLBLVictoriesInaRow.setText("Victories in a row: "+getInARow('V'));
-			jLBLConcedesInaRow.setText("Concedes ina row: "+getInARow('C'));
+			jLBLConcedesInaRow.setText("Concedes in a row: "+getInARow('C'));
 			jLBLDefeatsInaRow.setText("Defeats in a row: "+getInARow('D'));
 			
 			ModeleTableMatch=new ma_tablemodelmatch();
@@ -876,16 +876,17 @@ public class superStats extends javax.swing.JFrame
 
   private void SelectColor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectColor
     String strCouleur=((JCheckBox)evt.getSource()).getName();
+		
     if(strCouleur.contains("Black"))
     {
       if(enemyColors.DeckColors.get(ma_Couleurs.NOIR)==false) enemyColors.DeckColors.set(ma_Couleurs.NOIR);
       else enemyColors.DeckColors.clear(ma_Couleurs.NOIR);
+			
     }
     if(strCouleur.contains("Red"))
     {
       if(enemyColors.DeckColors.get(ma_Couleurs.ROUGE)==false) enemyColors.DeckColors.set(ma_Couleurs.ROUGE);
       else enemyColors.DeckColors.clear(ma_Couleurs.ROUGE);
-
     }
     if(strCouleur.contains("Green"))
     {
@@ -905,6 +906,7 @@ public class superStats extends javax.swing.JFrame
     try
     {
       DisplayDatas(enemyColors.getInt());
+			ModeleTableMatch.ClearDatas();
     }
     catch(SQLException ex)
     {
@@ -1084,6 +1086,29 @@ public class superStats extends javax.swing.JFrame
 			jLBLWinTotal.setToolTipText(jLBLWinTotal.getToolTipText()+" ("+String.format("%.1f", PercentVic)+"% )");
 			jLBLLstTotal.setToolTipText(jLBLLstTotal.getToolTipText()+" ("+String.format("%.1f", PercentDef)+"% )");
 			jLBLConTotal.setToolTipText(jLBLConTotal.getToolTipText()+" ("+String.format("%.1f", PercentCon)+"% )");
+			
+			// En fonction des combinaisons...
+			
+			int difference=(Integer.valueOf(jTFConcedes.getText())+Integer.valueOf(jTFVictories.getText()))-Integer.valueOf(jTFDefeats.getText());
+			if((combinaison&ma_Couleurs.VALNOIR)==ma_Couleurs.VALNOIR) jCBNoir.setToolTipText(String.valueOf(difference));
+			else jCBNoir.setToolTipText(null);
+			if((combinaison&ma_Couleurs.VALROUGE)==ma_Couleurs.VALROUGE) jCBRouge.setToolTipText(String.valueOf(difference));
+			else jCBRouge.setToolTipText(null);
+			if((combinaison&ma_Couleurs.VALVERT)==ma_Couleurs.VALVERT) jCBVert.setToolTipText(String.valueOf(difference));
+			else jCBVert.setToolTipText(null);
+			if((combinaison&ma_Couleurs.VALBLEU)==ma_Couleurs.VALBLEU) jCBBleu.setToolTipText(String.valueOf(difference));
+			else jCBBleu.setToolTipText(null);
+			if((combinaison&ma_Couleurs.VALBLANC)==ma_Couleurs.VALBLANC) jCBBlanc.setToolTipText(String.valueOf(difference));
+			else jCBBlanc.setToolTipText(null);
+		}
+		else
+		{
+			// donc il n'y a pas de combinaison de couleurs
+			jCBNoir.setToolTipText(null);
+			jCBRouge.setToolTipText(null);
+			jCBVert.setToolTipText(null);
+			jCBBleu.setToolTipText(null);
+			jCBBlanc.setToolTipText(null);
 		}
 	}
 	
