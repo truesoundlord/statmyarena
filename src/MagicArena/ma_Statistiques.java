@@ -1,12 +1,8 @@
 package MagicArena;
 
-import java.awt.Color;
 import java.sql.SQLException;
 import java.util.BitSet;
 import java.util.LinkedList;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 
 
 /**
