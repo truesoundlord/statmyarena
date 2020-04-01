@@ -7,7 +7,6 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -89,9 +88,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			LaConnection = LeDriver.connect("jdbc:mariadb://192.168.0.3:3306/MagicArena?user=magicuser&password=resucigam",null);
 			if(LaConnection.isValid(1))
 			{
-				jLabelStatus.setIcon(new ImageIcon(getClass().getResource("images/database_ok.png")));
-				jLabelStatus.setEnabled(true);
-				jLabelStatus.setToolTipText("Connecté à la base de données ("+LaConnection.getCatalog()+")");
 				isConnected=true;
 				
 				PopulateTable();
@@ -125,12 +121,12 @@ public class FenetrePrincipale extends javax.swing.JFrame
 					}
 				};
 				
-				TableStatistiques=new ma_Statistiques(innerModel,innerRenderer);
-				TableStatistiques.setConnection(LaConnection);
+				Statistiques=new ma_Statistiques(innerModel,innerRenderer);
+				Statistiques.setConnection(LaConnection);
 		
 				
-				jScrollPanePlayers.getVerticalScrollBar().setUnitIncrement(360);
-				jScrollPanePlayers.getVerticalScrollBar().setBlockIncrement(360);
+				jScrollPanePlayers.getVerticalScrollBar().setUnitIncrement(400);
+				jScrollPanePlayers.getVerticalScrollBar().setBlockIncrement(400);
 
 				jScrollPanePlayers.getVerticalScrollBar().setValue(80);
 				jScrollPanePlayers.getVerticalScrollBar().setDoubleBuffered(true);
@@ -174,7 +170,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		catch (SQLException ex) 
 		{
 			Logger.getLogger(FenetrePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-			jLabelStatus.setEnabled(false);
 		}
 	}
 	
@@ -204,8 +199,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextFieldMyScore = new javax.swing.JTextField();
     jTextFieldResultText = new javax.swing.JTextField();
     jButtonUpdate = new javax.swing.JButton();
-    jPanelInfos = new javax.swing.JPanel();
-    jLabelStatus = new javax.swing.JLabel();
     jLabelTours = new javax.swing.JLabel();
     jButtonAddTurn = new javax.swing.JButton();
     jScrollPaneComments = new javax.swing.JScrollPane();
@@ -226,6 +219,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
     setMaximumSize(new java.awt.Dimension(1400, 900));
     setMinimumSize(new java.awt.Dimension(1400, 900));
     setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+    setPreferredSize(new java.awt.Dimension(1400, 900));
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter()
     {
@@ -263,6 +257,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTablePlayer.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     jTablePlayer.setCellSelectionEnabled(true);
     jTablePlayer.setDoubleBuffered(true);
+    jTablePlayer.setMaximumSize(new java.awt.Dimension(0, 400));
+    jTablePlayer.setMinimumSize(new java.awt.Dimension(0, 400));
     jTablePlayer.setRowHeight(32);
     jTablePlayer.setUpdateSelectionOnSort(false);
     jTablePlayer.addMouseListener(new java.awt.event.MouseAdapter()
@@ -426,34 +422,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
       }
     });
 
-    jPanelInfos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-    jPanelInfos.setDoubleBuffered(false);
-    jPanelInfos.setFocusable(false);
-    jPanelInfos.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
-    jPanelInfos.setPreferredSize(new java.awt.Dimension(1350, 40));
-    jPanelInfos.setRequestFocusEnabled(false);
-    jPanelInfos.setVerifyInputWhenFocusTarget(false);
-
-    jLabelStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/database_ko.png"))); // NOI18N
-    jLabelStatus.setEnabled(false);
-    jLabelStatus.setFocusable(false);
-
-    javax.swing.GroupLayout jPanelInfosLayout = new javax.swing.GroupLayout(jPanelInfos);
-    jPanelInfos.setLayout(jPanelInfosLayout);
-    jPanelInfosLayout.setHorizontalGroup(
-      jPanelInfosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInfosLayout.createSequentialGroup()
-        .addContainerGap(1310, Short.MAX_VALUE)
-        .addComponent(jLabelStatus)
-        .addContainerGap())
-    );
-    jPanelInfosLayout.setVerticalGroup(
-      jPanelInfosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanelInfosLayout.createSequentialGroup()
-        .addComponent(jLabelStatus)
-        .addGap(0, 1, Short.MAX_VALUE))
-    );
-
     jLabelTours.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jLabelTours.setText("Turns");
     jLabelTours.setToolTipText("Indicates the number of turns");
@@ -541,57 +509,52 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jPanelPanneau.setLayout(jPanelPanneauLayout);
     jPanelPanneauLayout.setHorizontalGroup(
       jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanelPanneauLayout.createSequentialGroup()
+          .addGap(24, 24, 24)
+          .addComponent(jButtonUpdate))
+        .addGroup(jPanelPanneauLayout.createSequentialGroup()
+          .addGap(6, 6, 6)
+          .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jComboBoxEnemyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jComboBoxMyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanelResults, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanelPanneauLayout.createSequentialGroup()
+              .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabelTours, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelManas, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addGap(18, 18, 18)
+              .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jButtonAddTurn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSpinnerManaNoires))))))
       .addGroup(jPanelPanneauLayout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jScrollPaneMatchesExt, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-          .addComponent(jStatsManasTours, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-          .addComponent(jTextFieldMatchTurns, javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jTextFieldOAVictories, javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jTextFieldOADefeats, javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jTextFieldDate, javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jTextFieldMatchDuration, javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jScrollPaneComments))
-        .addGap(15, 15, 15))
-      .addGroup(jPanelPanneauLayout.createSequentialGroup()
-        .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanelPanneauLayout.createSequentialGroup()
-              .addGap(24, 24, 24)
-              .addComponent(jButtonUpdate))
-            .addGroup(jPanelPanneauLayout.createSequentialGroup()
-              .addGap(6, 6, 6)
-              .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jComboBoxEnemyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jComboBoxMyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jPanelResults, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanelPanneauLayout.createSequentialGroup()
-                  .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTours, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelManas, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                  .addGap(18, 18, 18)
-                  .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonAddTurn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSpinnerManaNoires))))))
+        .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
           .addGroup(jPanelPanneauLayout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-              .addGroup(jPanelPanneauLayout.createSequentialGroup()
-                .addComponent(jCheckBoxNoir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBoxRouge)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBoxVert)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBoxBleu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBoxBlanc))
-              .addComponent(jTextField_enemy, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(jPanelInfos, javax.swing.GroupLayout.PREFERRED_SIZE, 1352, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jCheckBoxNoir)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jCheckBoxRouge)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jCheckBoxVert)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jCheckBoxBleu)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jCheckBoxBlanc))
+          .addComponent(jTextField_enemy, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+      .addGroup(jPanelPanneauLayout.createSequentialGroup()
+        .addGap(12, 12, 12)
+        .addComponent(jScrollPaneMatchesExt, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jStatsManasTours, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jScrollPaneComments, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jTextFieldOADefeats, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jTextFieldOAVictories, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jTextFieldMatchTurns, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jTextFieldMatchDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
     );
     jPanelPanneauLayout.setVerticalGroup(
       jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -622,10 +585,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
               .addComponent(jButtonAddTurn))
             .addGap(33, 33, 33)
             .addComponent(jButtonUpdate)
-            .addGap(24, 24, 24))
+            .addGap(77, 77, 77))
           .addGroup(jPanelPanneauLayout.createSequentialGroup()
-            .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanelPanneauLayout.createSequentialGroup()
             .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -642,8 +605,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jScrollPaneComments, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addComponent(jScrollPaneMatchesExt, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jPanelInfos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
 
@@ -652,15 +613,16 @@ public class FenetrePrincipale extends javax.swing.JFrame
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addContainerGap()
+        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 1381, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(25, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 841, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(15, 15, 15))
+      .addGroup(layout.createSequentialGroup()
+        .addContainerGap()
+        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(8, Short.MAX_VALUE))
     );
 
     pack();
@@ -967,16 +929,16 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				
 				switch(MatchResult)
 				{
-					case 1:	TableStatistiques.computeResults('D');
+					case 1:	Statistiques.computeResults('D');
 									ToolTipForStats="Defeats suffered by the player against "+cematch.getName();
 									break;
-					case 2: TableStatistiques.computeResults('C');
+					case 2: Statistiques.computeResults('C');
 									ToolTipForStats="Concedes by the player "+cematch.getName();
 									break;
-					case 3:	TableStatistiques.computeResults('V');
+					case 3:	Statistiques.computeResults('V');
 									ToolTipForStats="Victories againsts the player "+cematch.getName();
 									break;
-					case 4: TableStatistiques.computeResults('E');
+					case 4: Statistiques.computeResults('E');
 									ToolTipForStats="Draws with the player "+cematch.getName();
 									break;
 				}
@@ -1148,7 +1110,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			jTextAreaCommentaires.setEditable(false);
 			// TODO: ajouter les matches joués contre ce joueur dans la liste, peu importe le résultat
 			
-			TableStatistiques.computeStats(jTextField_enemy.getText());
+			Statistiques.computeStats(jTextField_enemy.getText());
 			
 			// TODO: déterminer le  niveau du joueur sélectionné...
 			
@@ -1221,8 +1183,11 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	
   private void displayAsTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_displayAsTyped
     String seekfor=jTextField_enemy.getText();
+		boolean bFound=false;
 		
 		// Nous allons chercher dans la liste des ennemis si un nom n'apparaîtrait pas dans celle-ci...
+		
+		//System.err.println("DEBUG: "+evt.getExtendedKeyCode());
 		
 		int nbreElem=listeEnnemis.size();
 	
@@ -1238,10 +1203,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		{
 			String comparaison=((classEnemy)listeEnnemis.get(nbreElem)).getName();
 			
-			//classEnemy tmp=(classEnemy)listeEnnemis.get(nbreElem);
-			
-			//System.err.println(seekfor+"<->"+comparaison);
-						
 			if(comparaison.contains(seekfor))
 			{
 				// Il faudra virer les éléments de la table et ne mettre que ceux qui correspondent... (il n'y a pas, dans le modèle, moyen d'enlever une ligne)
@@ -1254,24 +1215,30 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				// Lorsque je recherche un "bidon" juste après il va encore l'ajouter dans la liste
 				
 				// essai du contournement du bug
-								
+				
+				// System.err.println(seekfor+"<->"+comparaison);
+				bFound=true;
+				
 				ModeleTable.addRow(listeEnnemis.get(nbreElem));
 				jTablePlayer.setToolTipText("Select one row to set the name of the player if present");
 			}
-			else
-			{
-				enemyColors.DeckColors.clear();
-		
-				jCheckBoxNoir.setSelected(false);
-				jCheckBoxRouge.setSelected(false);
-				jCheckBoxVert.setSelected(false);
-				jCheckBoxBleu.setSelected(false);
-				jCheckBoxBlanc.setSelected(false);
-			}
+			
 			jTablePlayer.revalidate();
 			jTablePlayer.repaint();
 			nbreElem--;
 		}
+		
+		if(!bFound || seekfor.isBlank())
+		{
+			enemyColors.DeckColors.clear();
+		
+			jCheckBoxNoir.setSelected(false);
+			jCheckBoxRouge.setSelected(false);
+			jCheckBoxVert.setSelected(false);
+			jCheckBoxBleu.setSelected(false);
+			jCheckBoxBlanc.setSelected(false);
+		}
+		
 		if(cematch==null)
 		{
 			cematch=new classMatch();
@@ -1678,9 +1645,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
   public javax.swing.JComboBox<String> jComboBoxEnemyLevel;
   public javax.swing.JComboBox<String> jComboBoxMyLevel;
   public javax.swing.JLabel jLabelManas;
-  public javax.swing.JLabel jLabelStatus;
   public javax.swing.JLabel jLabelTours;
-  public javax.swing.JPanel jPanelInfos;
   public javax.swing.JPanel jPanelPanneau;
   private javax.swing.JPanel jPanelResults;
   private javax.swing.JScrollPane jScrollPaneComments;
@@ -1746,7 +1711,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	
 	// Statistiques
 	
-	public ma_Statistiques TableStatistiques;											// Objet permettant d'obtenir les stats d'un match 
+	public ma_Statistiques Statistiques;											// Objet permettant d'obtenir les stats d'un match 
 	public superStats FenetreStatistiques;												// Objet permettant d'accéder aux statistiques étendues 
 		
 	private defMatch innerRenderer=new defMatch();

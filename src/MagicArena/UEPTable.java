@@ -26,6 +26,7 @@ public abstract class UEPTable extends JTable
 		InnerRenderer=TheRenderer;
 		
 		setModel(InnerModel);
+		
 	}
 	
 	public void addDefaultRenderer(Class<?> laclasse)

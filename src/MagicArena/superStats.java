@@ -164,6 +164,9 @@ public class superStats extends javax.swing.JFrame
 			LaTable.setBackground(new java.awt.Color(31, 112, 121));
 			LaTable.setCellSelectionEnabled(true);
 			LaTable.setAutoCreateColumnsFromModel(false);
+			
+			jScrollPanePourTable.getVerticalScrollBar().setUnitIncrement(400);
+			jScrollPanePourTable.getVerticalScrollBar().setBlockIncrement(400);
 		
 			LaTable.setShowGrid(false);
 			LaTable.getTableHeader().setReorderingAllowed(false);
@@ -757,7 +760,7 @@ public class superStats extends javax.swing.JFrame
       .addGroup(jPanelSuperStatsLayout.createSequentialGroup()
         .addComponent(jPanelSStats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPanePourTable, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(jScrollPanePourTable, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
