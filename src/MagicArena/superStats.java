@@ -822,7 +822,7 @@ public class superStats extends javax.swing.JFrame
   }//GEN-LAST:event_jCBEnemyLevelActionPerformed
 
   private void jTFDefeatsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFDefeatsMouseClicked
-    if(enemyColors.getInt()==0) return;
+    //if(enemyColors.getInt()==0) return;
 		try
     {
 			if(bToggleRealDefeats==false)
