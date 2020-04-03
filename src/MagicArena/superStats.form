@@ -474,6 +474,9 @@
                   <Dimension value="[360, 40]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanelFormeMouseClicked"/>
+              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -539,32 +542,50 @@
                   <Properties>
                     <Property name="toolTipText" type="java.lang.String" value="Last win"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTFLastRealWinFocusGained"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFLastRealDefeat">
                   <Properties>
                     <Property name="toolTipText" type="java.lang.String" value="Last defeat"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTFLastRealDefeatFocusGained"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFLastConcedeByMe">
                   <Properties>
                     <Property name="toolTipText" type="java.lang.String" value="Last concede by me"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTFLastConcedeByMeFocusGained"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFLastConcede">
                   <Properties>
                     <Property name="toolTipText" type="java.lang.String" value="Last concede"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTFLastConcedeFocusGained"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFLastDraw">
                   <Properties>
                     <Property name="toolTipText" type="java.lang.String" value="Last draw"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTFLastDrawFocusGained"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFLastCowardry">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="toolTipText" type="java.lang.String" value="Last abandon at first turn like a pussy"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTFLastCowardryFocusGained"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

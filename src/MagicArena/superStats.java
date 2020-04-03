@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -30,6 +31,8 @@ public class superStats extends javax.swing.JFrame
 		
 	public superStats(java.sql.Connection param)
 	{
+		this.idHelper = new int[]{-1,-1,-1,-1,-1,-1};
+		//this.idHelper = new int[6];
 		this.MDMatches = new LinkedList<>();
 		initComponents();
 		setVisible(true);
@@ -65,6 +68,8 @@ public class superStats extends javax.swing.JFrame
 			getEfficencyIcons(10);
 			jPanelForme.setToolTipText("Last 10 matches status...");
 			
+			// public enum Helper {HRW,HRD,HLCM,HLC,HLD,HLT};
+			
 			String tmpLast=getLast('V');
 			String Results;
 			if(tmpLast!=null)
@@ -72,6 +77,7 @@ public class superStats extends javax.swing.JFrame
 				String[] tmpSplit=tmpLast.split("-666-");
 				Results=tmpSplit[0]+" ("+tmpSplit[1]+") ["+tmpSplit[2]+" matches ago...]";
 				jTFLastRealWin.setText(Results);
+				idHelper[HRW]=Integer.valueOf(tmpSplit[3]);
 			}
 			tmpLast=getLast('P');
 			if(tmpLast!=null)
@@ -79,6 +85,7 @@ public class superStats extends javax.swing.JFrame
 				String[] tmpSplit=tmpLast.split("-666-");
 				Results=tmpSplit[0]+" ("+tmpSplit[1]+") ["+tmpSplit[2]+" matches ago...]";
 				jTFLastRealDefeat.setText(Results);
+				idHelper[HRD]=Integer.valueOf(tmpSplit[3]);
 			}
 			tmpLast=getLast('D');
 			if(tmpLast!=null)
@@ -86,6 +93,7 @@ public class superStats extends javax.swing.JFrame
 				String[] tmpSplit=tmpLast.split("-666-");
 				Results=tmpSplit[0]+" ("+tmpSplit[1]+") ["+tmpSplit[2]+" matches ago...]";
 				jTFLastConcedeByMe.setText(Results);
+				idHelper[HLCM]=Integer.valueOf(tmpSplit[3]);
 			}
 			tmpLast=getLast('C');
 			if(tmpLast!=null)
@@ -93,6 +101,7 @@ public class superStats extends javax.swing.JFrame
 				String[] tmpSplit=tmpLast.split("-666-");
 				Results=tmpSplit[0]+" ("+tmpSplit[1]+") ["+tmpSplit[2]+" matches ago...]";
 				jTFLastConcede.setText(Results);
+				idHelper[HLC]=Integer.valueOf(tmpSplit[3]);
 			}
 			tmpLast=getLast('E');
 			if(tmpLast!=null)
@@ -100,6 +109,7 @@ public class superStats extends javax.swing.JFrame
 				String[] tmpSplit=tmpLast.split("-666-");
 				Results=tmpSplit[0]+" ("+tmpSplit[1]+") ["+tmpSplit[2]+" matches ago...]";
 				jTFLastDraw.setText(Results);
+				idHelper[HLD]=Integer.valueOf(tmpSplit[3]);
 			}
 			tmpLast=getLast('T');
 			if(tmpLast!=null)
@@ -107,6 +117,7 @@ public class superStats extends javax.swing.JFrame
 				String[] tmpSplit=tmpLast.split("-666-");
 				Results=tmpSplit[0]+" ("+tmpSplit[1]+") ["+tmpSplit[2]+" matches ago...]";
 				jTFLastCowardry.setText(Results);
+				idHelper[HLT]=Integer.valueOf(tmpSplit[3]);
 			}
 						
 			GroupeDeBoutons.add(jRBMAXP);
@@ -438,6 +449,13 @@ public class superStats extends javax.swing.JFrame
     jPanelForme.setFocusable(false);
     jPanelForme.setMaximumSize(new java.awt.Dimension(360, 40));
     jPanelForme.setMinimumSize(new java.awt.Dimension(360, 40));
+    jPanelForme.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        jPanelFormeMouseClicked(evt);
+      }
+    });
 
     javax.swing.GroupLayout jPanelFormeLayout = new javax.swing.GroupLayout(jPanelForme);
     jPanelForme.setLayout(jPanelFormeLayout);
@@ -453,17 +471,59 @@ public class superStats extends javax.swing.JFrame
     jPanelLastest.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
     jTFLastRealWin.setToolTipText("Last win");
+    jTFLastRealWin.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusGained(java.awt.event.FocusEvent evt)
+      {
+        jTFLastRealWinFocusGained(evt);
+      }
+    });
 
     jTFLastRealDefeat.setToolTipText("Last defeat");
+    jTFLastRealDefeat.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusGained(java.awt.event.FocusEvent evt)
+      {
+        jTFLastRealDefeatFocusGained(evt);
+      }
+    });
 
     jTFLastConcedeByMe.setToolTipText("Last concede by me");
+    jTFLastConcedeByMe.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusGained(java.awt.event.FocusEvent evt)
+      {
+        jTFLastConcedeByMeFocusGained(evt);
+      }
+    });
 
     jTFLastConcede.setToolTipText("Last concede");
+    jTFLastConcede.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusGained(java.awt.event.FocusEvent evt)
+      {
+        jTFLastConcedeFocusGained(evt);
+      }
+    });
 
     jTFLastDraw.setToolTipText("Last draw");
+    jTFLastDraw.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusGained(java.awt.event.FocusEvent evt)
+      {
+        jTFLastDrawFocusGained(evt);
+      }
+    });
 
     jTFLastCowardry.setHorizontalAlignment(javax.swing.JTextField.LEFT);
     jTFLastCowardry.setToolTipText("Last abandon at first turn like a pussy");
+    jTFLastCowardry.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusGained(java.awt.event.FocusEvent evt)
+      {
+        jTFLastCowardryFocusGained(evt);
+      }
+    });
 
     javax.swing.GroupLayout jPanelLastestLayout = new javax.swing.GroupLayout(jPanelLastest);
     jPanelLastest.setLayout(jPanelLastestLayout);
@@ -1026,8 +1086,245 @@ public class superStats extends javax.swing.JFrame
 			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
 		}
   }//GEN-LAST:event_jLBLConMouseClicked
-	
-	
+
+  private void jTFLastRealWinFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTFLastRealWinFocusGained
+  {//GEN-HEADEREND:event_jTFLastRealWinFocusGained
+		if(idHelper[HRW]==-1) return;
+		String SQLRequest="SELECT * FROM Matches WHERE idMatch="+idHelper[HRW];
+		try
+		{
+			if(LaConnection.isValid(1))			
+			{
+				ModeleTableMatch.ClearDatas();
+				LesMatches.clear();
+				Statement=LaConnection.createStatement();
+				Resultats=Statement.executeQuery(SQLRequest);
+				if(Resultats.first())
+				{
+					java.sql.ResultSetMetaData MetaDonnees=Resultats.getMetaData();
+					int NbChamps=MetaDonnees.getColumnCount();
+					for(int cptchamps=0;cptchamps<NbChamps;cptchamps++)
+					{
+						String unecolonne=ParseSQL(MetaDonnees.getColumnTypeName(cptchamps+1),Resultats,cptchamps+1);
+						MDMatches.add(unecolonne);
+					}
+					PackDatasFromDB(MDMatches); // ListeDesMatches est modifié ici (je sais c'est opaque)
+					MDMatches.clear();
+					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
+				}
+			}
+		} 
+		catch (SQLException ex)
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jTFLastRealWinFocusGained
+
+  private void jTFLastRealDefeatFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTFLastRealDefeatFocusGained
+  {//GEN-HEADEREND:event_jTFLastRealDefeatFocusGained
+    if(idHelper[HRD]==-1) return;
+		String SQLRequest="SELECT * FROM Matches WHERE idMatch="+idHelper[HRD];
+		try
+		{
+			if(LaConnection.isValid(1))			
+			{
+				ModeleTableMatch.ClearDatas();
+				LesMatches.clear();
+				Statement=LaConnection.createStatement();
+				Resultats=Statement.executeQuery(SQLRequest);
+				if(Resultats.first())
+				{
+					java.sql.ResultSetMetaData MetaDonnees=Resultats.getMetaData();
+					int NbChamps=MetaDonnees.getColumnCount();
+					for(int cptchamps=0;cptchamps<NbChamps;cptchamps++)
+					{
+						String unecolonne=ParseSQL(MetaDonnees.getColumnTypeName(cptchamps+1),Resultats,cptchamps+1);
+						MDMatches.add(unecolonne);
+					}
+					PackDatasFromDB(MDMatches); // ListeDesMatches est modifié ici (je sais c'est opaque)
+					MDMatches.clear();
+					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
+				}
+			}
+		} 
+		catch (SQLException ex)
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jTFLastRealDefeatFocusGained
+
+  private void jTFLastConcedeByMeFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTFLastConcedeByMeFocusGained
+  {//GEN-HEADEREND:event_jTFLastConcedeByMeFocusGained
+    if(idHelper[HLCM]==-1) return;
+		String SQLRequest="SELECT * FROM Matches WHERE idMatch="+idHelper[HLCM];
+		try
+		{
+			if(LaConnection.isValid(1))			
+			{
+				ModeleTableMatch.ClearDatas();
+				LesMatches.clear();
+				Statement=LaConnection.createStatement();
+				Resultats=Statement.executeQuery(SQLRequest);
+				if(Resultats.first())
+				{
+					java.sql.ResultSetMetaData MetaDonnees=Resultats.getMetaData();
+					int NbChamps=MetaDonnees.getColumnCount();
+					for(int cptchamps=0;cptchamps<NbChamps;cptchamps++)
+					{
+						String unecolonne=ParseSQL(MetaDonnees.getColumnTypeName(cptchamps+1),Resultats,cptchamps+1);
+						MDMatches.add(unecolonne);
+					}
+					PackDatasFromDB(MDMatches); // ListeDesMatches est modifié ici (je sais c'est opaque)
+					MDMatches.clear();
+					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
+				}
+			}
+		} 
+		catch (SQLException ex)
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jTFLastConcedeByMeFocusGained
+
+  private void jTFLastConcedeFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTFLastConcedeFocusGained
+  {//GEN-HEADEREND:event_jTFLastConcedeFocusGained
+    if(idHelper[HLC]==-1) return;
+		String SQLRequest="SELECT * FROM Matches WHERE idMatch="+idHelper[HLC];
+		try
+		{
+			if(LaConnection.isValid(1))			
+			{
+				ModeleTableMatch.ClearDatas();
+				LesMatches.clear();
+				Statement=LaConnection.createStatement();
+				Resultats=Statement.executeQuery(SQLRequest);
+				if(Resultats.first())
+				{
+					java.sql.ResultSetMetaData MetaDonnees=Resultats.getMetaData();
+					int NbChamps=MetaDonnees.getColumnCount();
+					for(int cptchamps=0;cptchamps<NbChamps;cptchamps++)
+					{
+						String unecolonne=ParseSQL(MetaDonnees.getColumnTypeName(cptchamps+1),Resultats,cptchamps+1);
+						MDMatches.add(unecolonne);
+					}
+					PackDatasFromDB(MDMatches); // ListeDesMatches est modifié ici (je sais c'est opaque)
+					MDMatches.clear();
+					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
+				}
+			}
+		} 
+		catch (SQLException ex)
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jTFLastConcedeFocusGained
+
+  private void jTFLastDrawFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTFLastDrawFocusGained
+  {//GEN-HEADEREND:event_jTFLastDrawFocusGained
+    if(idHelper[HLD]==-1) return;
+		String SQLRequest="SELECT * FROM Matches WHERE idMatch="+idHelper[HLD];
+		try
+		{
+			if(LaConnection.isValid(1))			
+			{
+				ModeleTableMatch.ClearDatas();
+				LesMatches.clear();
+				Statement=LaConnection.createStatement();
+				Resultats=Statement.executeQuery(SQLRequest);
+				if(Resultats.first())
+				{
+					java.sql.ResultSetMetaData MetaDonnees=Resultats.getMetaData();
+					int NbChamps=MetaDonnees.getColumnCount();
+					for(int cptchamps=0;cptchamps<NbChamps;cptchamps++)
+					{
+						String unecolonne=ParseSQL(MetaDonnees.getColumnTypeName(cptchamps+1),Resultats,cptchamps+1);
+						MDMatches.add(unecolonne);
+					}
+					PackDatasFromDB(MDMatches); // ListeDesMatches est modifié ici (je sais c'est opaque)
+					MDMatches.clear();
+					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
+				}
+			}
+		} 
+		catch (SQLException ex)
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jTFLastDrawFocusGained
+
+  private void jTFLastCowardryFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTFLastCowardryFocusGained
+  {//GEN-HEADEREND:event_jTFLastCowardryFocusGained
+    if(idHelper[HLT]==-1) return;
+		String SQLRequest="SELECT * FROM Matches WHERE idMatch="+idHelper[HLT];
+		try
+		{
+			if(LaConnection.isValid(1))			
+			{
+				ModeleTableMatch.ClearDatas();
+				LesMatches.clear();
+				Statement=LaConnection.createStatement();
+				Resultats=Statement.executeQuery(SQLRequest);
+				if(Resultats.first())
+				{
+					java.sql.ResultSetMetaData MetaDonnees=Resultats.getMetaData();
+					int NbChamps=MetaDonnees.getColumnCount();
+					for(int cptchamps=0;cptchamps<NbChamps;cptchamps++)
+					{
+						String unecolonne=ParseSQL(MetaDonnees.getColumnTypeName(cptchamps+1),Resultats,cptchamps+1);
+						MDMatches.add(unecolonne);
+					}
+					PackDatasFromDB(MDMatches); // ListeDesMatches est modifié ici (je sais c'est opaque)
+					MDMatches.clear();
+					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
+				}
+			}
+		} 
+		catch (SQLException ex)
+		{
+			Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+		}
+  }//GEN-LAST:event_jTFLastCowardryFocusGained
+
+  private void jPanelFormeMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jPanelFormeMouseClicked
+  {//GEN-HEADEREND:event_jPanelFormeMouseClicked
+    JPanel panneau=(JPanel)evt.getSource();
+		if(panneau.isValid())
+		{
+			JLabel cible=(JLabel)panneau.getComponentAt(evt.getPoint());
+			int idx=panneau.getComponentZOrder(cible);
+			// System.err.println("DEBUG --> index = "+idx); c'est beau ^^
+			try
+			{
+				// nous avons obtenu la position du match à aller rechercher dans la base de données
+				
+				if(LaConnection.isValid(1))
+				{
+					String SQLRequest="SELECT * FROM Matches ORDER BY EndTime DESC LIMIT 1 OFFSET "+idx;
+					ModeleTableMatch.ClearDatas();
+					LesMatches.clear();
+					Statement=LaConnection.createStatement();
+					Resultats=Statement.executeQuery(SQLRequest);
+					if(Resultats.first())
+					{
+						java.sql.ResultSetMetaData MetaDonnees=Resultats.getMetaData();
+						int NbChamps=MetaDonnees.getColumnCount();
+						for(int cptchamps=0;cptchamps<NbChamps;cptchamps++)
+						{
+							String unecolonne=ParseSQL(MetaDonnees.getColumnTypeName(cptchamps+1),Resultats,cptchamps+1);
+							MDMatches.add(unecolonne);
+						}
+						PackDatasFromDB(MDMatches); // ListeDesMatches est modifié ici (je sais c'est opaque)
+						MDMatches.clear();
+						ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement	
+					}
+				}
+			} 
+			catch (SQLException ex)
+			{
+				Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+  }//GEN-LAST:event_jPanelFormeMouseClicked
 	
 	private void DisplayDatas(int combinaison) throws SQLException
 	{
@@ -1259,7 +1556,7 @@ public class superStats extends javax.swing.JFrame
 		if(param=='T') param='C';
 		if(param=='P') param='D';
 		String SQLRequest="SELECT (SELECT Alias FROM Players WHERE Players.idPlayer=Matches.idPlayer), "+ 
-											"EndTime, (SELECT (SELECT MAX(idMatch) FROM Matches)-idMatch) FROM Matches "+
+											"EndTime, (SELECT (SELECT MAX(idMatch) FROM Matches)-idMatch),idMatch FROM Matches "+
 											"WHERE Result='"+param+"' ";
 		
 		
@@ -1282,8 +1579,8 @@ public class superStats extends javax.swing.JFrame
 				tmp+=Resultats.getString(1)+"-666-"; // Alias
 				String tmpdate[]=Resultats.getDate(2).toString().split("-"); // EndTime
 				tmp+=String.format("%2s", tmpdate[2])+"/"+String.format("%2s", tmpdate[1])+"/"+String.format("%4s", tmpdate[0])+"-666-"; 
-				tmp+=String.valueOf(Resultats.getInt(3)+1); // How far
-								
+				tmp+=String.valueOf(Resultats.getInt(3)+1)+"-666-"; // How far
+				tmp+=String.valueOf(Resultats.getInt(4)); // helper
 			} 
 			Resultats.close();
 			Statement.close();
@@ -1595,11 +1892,21 @@ public class superStats extends javax.swing.JFrame
 	private final String strPostfixes[]=new String[]{"Tier 4", "Tier 3", "Tier 2", "Tier 1"};
 	private final String strPrefixes[]=new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mystic"};   // platinium tier 1 <-> 15
 	
+	private final int idHelper[];
+	
 	public enum ScoreInfo {MAXPP,MINPP,MAXPE,MINPE,MID,SCMP,SCmP,SCME,SCmE,Alias;};
+	
+	static int HRW=0;
+	static int HRD=1;
+	static int HLCM=2;
+	static int HLC=3;
+	static int HLD=4;
+	static int HLT=5;
 	
 	UEPTable LaTable;
 	ma_tablemodelmatch ModeleTableMatch;
 	defMatch RendererMatch;
+	
 	
 			
 	// SQL Related
