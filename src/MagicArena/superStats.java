@@ -1017,6 +1017,8 @@ public class superStats extends javax.swing.JFrame
 						ModeleTableMatch.addRow(degraded);
 						LesMatches.add(degraded);
 					}
+					Resultats.close();
+					Statement.close();
 				}
 			} 
 			catch (SQLException ex)
@@ -1112,6 +1114,8 @@ public class superStats extends javax.swing.JFrame
 					MDMatches.clear();
 					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
 				}
+				Resultats.close();
+				Statement.close();
 			}
 		} 
 		catch (SQLException ex)
@@ -1145,6 +1149,8 @@ public class superStats extends javax.swing.JFrame
 					MDMatches.clear();
 					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
 				}
+				Resultats.close();
+				Statement.close();
 			}
 		} 
 		catch (SQLException ex)
@@ -1178,6 +1184,8 @@ public class superStats extends javax.swing.JFrame
 					MDMatches.clear();
 					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
 				}
+				Resultats.close();
+				Statement.close();
 			}
 		} 
 		catch (SQLException ex)
@@ -1211,6 +1219,8 @@ public class superStats extends javax.swing.JFrame
 					MDMatches.clear();
 					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
 				}
+				Resultats.close();
+				Statement.close();
 			}
 		} 
 		catch (SQLException ex)
@@ -1244,6 +1254,8 @@ public class superStats extends javax.swing.JFrame
 					MDMatches.clear();
 					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
 				}
+				Resultats.close();
+				Statement.close();
 			}
 		} 
 		catch (SQLException ex)
@@ -1277,6 +1289,8 @@ public class superStats extends javax.swing.JFrame
 					MDMatches.clear();
 					ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement
 				}
+				Resultats.close();
+				Statement.close();
 			}
 		} 
 		catch (SQLException ex)
@@ -1317,6 +1331,8 @@ public class superStats extends javax.swing.JFrame
 						MDMatches.clear();
 						ModeleTableMatch.addRow(LesMatches.get(0)); // normalement on a qu'un seul enregistrement	
 					}
+					Resultats.close();
+					Statement.close();
 				}
 			} 
 			catch (SQLException ex)
@@ -1731,6 +1747,8 @@ public class superStats extends javax.swing.JFrame
 				PackDatasFromDB(MDMatches); // ListeDesMatches est modifié ici (je sais c'est opaque)
 				MDMatches.clear();
 			}
+			Resultats.close();
+			Statement.close();
 		}
 		for(int cpt=0;cpt<LesMatches.size();cpt++) ModeleTableMatch.addRow(LesMatches.get(cpt));
 	}
