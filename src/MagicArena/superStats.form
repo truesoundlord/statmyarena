@@ -114,31 +114,32 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="jTFVictories" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTFVictories" alignment="2" min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="jLBLWinTotal" alignment="2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="jLBLLstTotal" alignment="2" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTFDefeats" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTFDefeats" alignment="2" min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="jTFConcedes" alignment="2" min="-2" max="-2" attributes="0"/>
                           <Component id="jLBLConTotal" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTFConcedes" alignment="2" min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jCBVert" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="2" attributes="0">
-                              <Component id="jCBVert" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jCBRouge" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jCBNoir" alignment="2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCBNoir" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jCBBleu" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="jCBBlanc" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="jCBEnemyLevel" alignment="2" min="-2" pref="164" max="-2" attributes="0"/>
                           <Group type="102" alignment="2" attributes="0">
                               <Component id="jLBLWins" min="-2" pref="24" max="-2" attributes="0"/>
                               <EmptySpace min="17" pref="17" max="17" attributes="0"/>
@@ -146,9 +147,8 @@
                               <EmptySpace min="18" pref="18" max="18" attributes="0"/>
                               <Component id="jLBLCon" min="-2" pref="23" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jCBEnemyLevel" alignment="2" min="-2" pref="164" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanelLastest" max="32767" attributes="0"/>
                           <Component id="jPanelForme" max="32767" attributes="0"/>
@@ -166,44 +166,47 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTFConcedes" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTFDefeats" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTFConcedes" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTFVictories" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jCBNoir" alignment="2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jCBEnemyLevel" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="jPanelForme" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jCBEnemyLevel" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jPanelLastest" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                                      <Component id="jCBRouge" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jCBVert" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jCBBleu" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jCBBlanc" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="50" max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="2" attributes="0">
-                                          <Component id="jLBLWins" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLBLDef" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLBLCon" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLBLConTotal" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLBLLstTotal" alignment="2" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLBLWinTotal" alignment="2" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanelLastest" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="15" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jPanelStatsScores" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="jCBNoir" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jCBRouge" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jCBVert" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jCBBleu" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="2" attributes="0">
+                                  <Component id="jLBLWins" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLBLDef" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLBLCon" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLBLConTotal" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLBLLstTotal" alignment="2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLBLWinTotal" alignment="2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jCBBlanc" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -612,7 +615,7 @@
                               <Component id="jLBLDefeatsInaRow" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLBLConcedesInaRow" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="366" max="32767" attributes="0"/>
+                          <EmptySpace pref="348" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLBLMINPScore" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLBLMAXPScore" alignment="0" min="-2" max="-2" attributes="0"/>
