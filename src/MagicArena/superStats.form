@@ -6,9 +6,6 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1368, 762]"/>
-    </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1368, 762]"/>
     </Property>
@@ -131,7 +128,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jCBVert" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="1" groupAlignment="2" attributes="0">
-                              <Component id="jCBRouge" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jCBRouge" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jCBNoir" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jCBBleu" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -174,26 +171,24 @@
                               </Group>
                               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                               <Component id="jPanelLastest" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="15" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jPanelStatsScores" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jPanelStatsScores" alignment="0" max="32767" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="jCBNoir" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jCBRouge" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jCBVert" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jCBBleu" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="2" attributes="0">
                                   <Component id="jLBLWins" alignment="2" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLBLDef" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -204,9 +199,10 @@
                               </Group>
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jCBBlanc" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -607,36 +603,44 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLBLVictoriesInaRow" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLAliasMINEScore" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLAliasMAXEScore" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLAliasMINPScore" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLAliasMAXPScore" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLDefeatsInaRow" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLConcedesInaRow" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLBLVictoriesInaRow" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLAliasMINEScore" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLAliasMAXEScore" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLAliasMINPScore" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLAliasMAXPScore" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLDefeatsInaRow" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLConcedesInaRow" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="348" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLBLMINPScore" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLMAXPScore" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLMAXEScore" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLMINEScore" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLBLMatchOpponentScoreVSMAX" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLMatchOpponentScoreVSMIN" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLMatchScoreVSMAX" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLBLMatchScoreVSMIN" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jRBMAXE" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jRBMINP" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jRBMAXP" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jRBMINE" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLBLConsecutiveMatchesAtLevel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace pref="348" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLBLMINPScore" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLMAXPScore" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLMAXEScore" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLMINEScore" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLBLMatchOpponentScoreVSMAX" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLMatchOpponentScoreVSMIN" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLMatchScoreVSMAX" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLBLMatchScoreVSMIN" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jRBMAXE" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRBMINP" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRBMAXP" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRBMINE" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -677,6 +681,8 @@
                           <Component id="jLBLDefeatsInaRow" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLBLConcedesInaRow" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jLBLConsecutiveMatchesAtLevel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -845,6 +851,14 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Rien"/>
                     <Property name="toolTipText" type="java.lang.String" value="Number of concedes in a row"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLBLConsecutiveMatchesAtLevel">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Liberation Mono" size="12" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Rien"/>
                   </Properties>
                 </Component>
               </SubComponents>

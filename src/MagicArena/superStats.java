@@ -257,9 +257,9 @@ public class superStats extends javax.swing.JFrame
     jLBLVictoriesInaRow = new javax.swing.JLabel();
     jLBLDefeatsInaRow = new javax.swing.JLabel();
     jLBLConcedesInaRow = new javax.swing.JLabel();
+    jLBLConsecutiveMatchesAtLevel = new javax.swing.JLabel();
     jScrollPanePourTable = new javax.swing.JScrollPane();
 
-    setMaximumSize(new java.awt.Dimension(1368, 762));
     setMinimumSize(new java.awt.Dimension(1368, 762));
     setResizable(false);
     setSize(new java.awt.Dimension(1368, 762));
@@ -645,6 +645,9 @@ public class superStats extends javax.swing.JFrame
     jLBLConcedesInaRow.setText("Rien");
     jLBLConcedesInaRow.setToolTipText("Number of concedes in a row");
 
+    jLBLConsecutiveMatchesAtLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
+    jLBLConsecutiveMatchesAtLevel.setText("Rien");
+
     javax.swing.GroupLayout jPanelStatsScoresLayout = new javax.swing.GroupLayout(jPanelStatsScores);
     jPanelStatsScores.setLayout(jPanelStatsScoresLayout);
     jPanelStatsScoresLayout.setHorizontalGroup(
@@ -652,32 +655,37 @@ public class superStats extends javax.swing.JFrame
       .addGroup(jPanelStatsScoresLayout.createSequentialGroup()
         .addContainerGap()
         .addGroup(jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLBLVictoriesInaRow)
-          .addComponent(jLBLAliasMINEScore)
-          .addComponent(jLBLAliasMAXEScore)
-          .addComponent(jLBLAliasMINPScore)
-          .addComponent(jLBLAliasMAXPScore)
-          .addComponent(jLBLDefeatsInaRow)
-          .addComponent(jLBLConcedesInaRow))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
-        .addGroup(jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLBLMINPScore)
-          .addComponent(jLBLMAXPScore)
-          .addComponent(jLBLMAXEScore)
-          .addComponent(jLBLMINEScore))
-        .addGap(18, 18, 18)
-        .addGroup(jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLBLMatchOpponentScoreVSMAX)
-          .addComponent(jLBLMatchOpponentScoreVSMIN)
-          .addComponent(jLBLMatchScoreVSMAX)
-          .addComponent(jLBLMatchScoreVSMIN))
-        .addGap(47, 47, 47)
-        .addGroup(jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jRBMAXE)
-          .addComponent(jRBMINP)
-          .addComponent(jRBMAXP)
-          .addComponent(jRBMINE))
-        .addGap(16, 16, 16))
+          .addGroup(jPanelStatsScoresLayout.createSequentialGroup()
+            .addGroup(jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jLBLVictoriesInaRow)
+              .addComponent(jLBLAliasMINEScore)
+              .addComponent(jLBLAliasMAXEScore)
+              .addComponent(jLBLAliasMINPScore)
+              .addComponent(jLBLAliasMAXPScore)
+              .addComponent(jLBLDefeatsInaRow)
+              .addComponent(jLBLConcedesInaRow))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
+            .addGroup(jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jLBLMINPScore)
+              .addComponent(jLBLMAXPScore)
+              .addComponent(jLBLMAXEScore)
+              .addComponent(jLBLMINEScore))
+            .addGap(18, 18, 18)
+            .addGroup(jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jLBLMatchOpponentScoreVSMAX)
+              .addComponent(jLBLMatchOpponentScoreVSMIN)
+              .addComponent(jLBLMatchScoreVSMAX)
+              .addComponent(jLBLMatchScoreVSMIN))
+            .addGap(47, 47, 47)
+            .addGroup(jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jRBMAXE)
+              .addComponent(jRBMINP)
+              .addComponent(jRBMAXP)
+              .addComponent(jRBMINE))
+            .addGap(16, 16, 16))
+          .addGroup(jPanelStatsScoresLayout.createSequentialGroup()
+            .addComponent(jLBLConsecutiveMatchesAtLevel)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
     );
     jPanelStatsScoresLayout.setVerticalGroup(
       jPanelStatsScoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -712,6 +720,8 @@ public class superStats extends javax.swing.JFrame
         .addComponent(jLBLDefeatsInaRow)
         .addGap(18, 18, 18)
         .addComponent(jLBLConcedesInaRow)
+        .addGap(18, 18, 18)
+        .addComponent(jLBLConsecutiveMatchesAtLevel)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -736,7 +746,7 @@ public class superStats extends javax.swing.JFrame
         .addGroup(jPanelSStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addComponent(jCBVert)
           .addGroup(jPanelSStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-            .addComponent(jCBRouge, javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jCBRouge, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jCBNoir, javax.swing.GroupLayout.Alignment.LEADING))
           .addComponent(jCBBleu)
           .addComponent(jCBBlanc))
@@ -771,22 +781,21 @@ public class superStats extends javax.swing.JFrame
               .addComponent(jCBEnemyLevel, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jPanelLastest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(15, Short.MAX_VALUE))
-          .addGroup(jPanelSStatsLayout.createSequentialGroup()
-            .addComponent(jPanelStatsScores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addContainerGap())))
+            .addGap(0, 9, Short.MAX_VALUE))
+          .addComponent(jPanelStatsScores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap())
       .addGroup(jPanelSStatsLayout.createSequentialGroup()
         .addGap(17, 17, 17)
         .addComponent(jCBNoir)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jCBRouge)
-        .addGap(18, 18, 18)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jCBVert)
-        .addGap(18, 18, 18)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jCBBleu)
-        .addGap(18, 18, 18)
         .addGroup(jPanelSStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSStatsLayout.createSequentialGroup()
+          .addGroup(jPanelSStatsLayout.createSequentialGroup()
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelSStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
               .addComponent(jLBLWins, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(jLBLDef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -795,9 +804,10 @@ public class superStats extends javax.swing.JFrame
               .addComponent(jLBLLstTotal)
               .addComponent(jLBLWinTotal))
             .addGap(16, 16, 16))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSStatsLayout.createSequentialGroup()
+          .addGroup(jPanelSStatsLayout.createSequentialGroup()
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jCBBlanc)
-            .addGap(36, 36, 36))))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
     );
 
     jCBBlanc.getAccessibleContext().setAccessibleName("White");
@@ -874,6 +884,11 @@ public class superStats extends javax.swing.JFrame
         jLBLCon.setToolTipText("Number of games conceded by level "+Levels.get(EnnemyLvl)+" ("+String.format("%.1f", percentcon)+"%)");
 
 				if(ModeleTableMatch!=null) ModeleTableMatch.ClearDatas();
+				
+				int ConsMatchesAtLevel=getConsecutiveMatchesAtLevel(EnnemyLvl);
+				jLBLConsecutiveMatchesAtLevel.setToolTipText("Number of matches consecutively played at level "+Levels.get(EnnemyLvl));
+				if(ConsMatchesAtLevel>0) jLBLConsecutiveMatchesAtLevel.setText(String.valueOf(ConsMatchesAtLevel)+" consecutively played at level "+Levels.get(EnnemyLvl));
+				else jLBLConsecutiveMatchesAtLevel.setText("No matches done at level "+Levels.get(EnnemyLvl));
       }
       catch (SQLException ex)
       {
@@ -1664,6 +1679,16 @@ public class superStats extends javax.swing.JFrame
 		return null;
 	}
 	
+	/** 
+	 * Computes the number of 
+	 * 'D' defeats in a row
+	 * 'V' victories in a row (real)
+	 * 'C' concedes in a row
+	 * ...consecutive results of the matches done.
+	 * @param pattern
+	 * @return
+	 * @throws SQLException 
+	 */
 	private String getInARow(char pattern) throws SQLException
 	{
 		if(LaConnection.isValid(1))
@@ -1860,6 +1885,54 @@ public class superStats extends javax.swing.JFrame
 				
 		return tmp;
 	}
+
+	/**
+	 * Computes the higher number of consecutive matches at a given level...
+	 * @param EnnemyLvl 
+	 * @return
+	 * @throws SQLException 
+	 */
+	private int getConsecutiveMatchesAtLevel(int EnnemyLvl) throws SQLException
+	{
+		// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		if(LaConnection.isValid(1))
+		{
+			int tmp;
+			int leplusgrand=-1;
+			LinkedList<Integer> listedesresultats=new LinkedList<>();
+			
+			String SQLRequest="SELECT MyLvl FROM Matches";
+			
+			Statement=LaConnection.createStatement();
+			Resultats=Statement.executeQuery(SQLRequest);
+			
+			if(Resultats.first())
+			{
+				do
+				{
+					tmp=Resultats.getInt(1);
+					if(tmp==EnnemyLvl) 
+					{
+						listedesresultats.add(tmp);
+					}
+					else
+					{
+						if(listedesresultats.size()>leplusgrand) leplusgrand=listedesresultats.size();
+						listedesresultats.clear();																												// ... vu qu'il ne s'agit plus de la même valeur on doit vider la liste...
+					}
+				}while(Resultats.next());
+			}
+			//System.err.println("getInaRow:");
+			//System.err.println("Pattern '"+pattern+"'");
+			//System.err.println("Found: "+leplusgrand);
+			
+			Resultats.close();
+			Statement.close();
+			//return String.valueOf(leplusgrand);
+			return leplusgrand;
+		}
+		return -1;
+	}
 	
 	
 	/**
@@ -1951,6 +2024,7 @@ public class superStats extends javax.swing.JFrame
   public javax.swing.JLabel jLBLCon;
   public javax.swing.JLabel jLBLConTotal;
   public javax.swing.JLabel jLBLConcedesInaRow;
+  public javax.swing.JLabel jLBLConsecutiveMatchesAtLevel;
   public javax.swing.JLabel jLBLDef;
   public javax.swing.JLabel jLBLDefeatsInaRow;
   public javax.swing.JLabel jLBLLstTotal;
