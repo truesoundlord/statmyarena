@@ -69,17 +69,10 @@ public abstract class UEPTable extends JTable
 	// Abstract methods
 	
 	/**
-	 * This abstract method is to be used to populate the datas in the table from a database or whatever...
-	 * @param lesdonnees the linked list containing the datas to be used...
-	 * @throws SQLException 
-	 */
-	//public abstract void PopulateTableWithDatas(LinkedList<Object> lesdonnees) throws SQLException;
-	/**
 	 * This abstract method has to be used to help the method getToolTipText to display coherent data
 	 * @param ligne line
 	 * @param colonne column
 	 * @return a string representation of the data located at the coordinates ligne,colonne  
 	 */
 	public abstract String getFromModel(int ligne,int colonne);
-	//public abstract void setRendererClasses(LinkedList<Object> lesclasses);
 }

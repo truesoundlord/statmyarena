@@ -487,6 +487,12 @@ public class classMatch
 		return id;
 	}
 	
+	/**
+	 * Get the comments for a match identified by its idMatch field...
+	 * @param LaConnection
+	 * @return
+	 * @throws SQLException 
+	 */
 	public String getComments(java.sql.Connection LaConnection) throws SQLException
 	{
 		String tmp="no comments";
@@ -512,7 +518,7 @@ public class classMatch
 					
 					// Il faudrait formater le message de manière à ce que ce soit lisible ^^
 					
-					if(prework.length()>30) prework=WrapComments(prework);
+					if(length>30) prework=WrapComments(prework);
 										
 					//tmp+="<TEXTAREA ROWS=4 COLS=50 BORDER=0>"+prework+"</TEXTAREA>";	
 					tmp+=prework;	
@@ -550,47 +556,68 @@ public class classMatch
 		
 		// vu qu'on est pas en C il va falloir se casser le cul :{
 		
-		int position=1;
-		int positionligne=1;
+		int iBufferPosition=1;						// position dans le buffer (strText)
+		int longueurActuelle=1;							
 		do
 		{
-			if(strText[position]=='\n') 
+			// Gestion des cas particuliers propres à ma manière de commenter
+			
+			// Le nombre de créatures sous forme: 1x vindicative, par exemple -> le 1x vindicative doit être insécable
+			
+			if(strText[iBufferPosition]=='\n') longueurActuelle=0;
+			
+			if((strText[iBufferPosition]>='0' && strText[iBufferPosition]<'9') && strText[iBufferPosition+1]=='x' && iBufferPosition<longueurtexte-1)															
 			{
-				positionligne=0;
-			}
-			if((strText[position]>='0' && strText[position]<'9') && strText[position+1]=='x' && position<longueurtexte-1)															// essayer de lister
-			{
-				strText[position-1]='\n';
-				positionligne=0;
-				position+=2;
+				longueurActuelle=0;											// on ne considère pas que nous devons "wrapper" (couper)	
+				iBufferPosition+=2;
 				formatedtext=String.valueOf(strText);
 				continue;
 			}
-			if((strText[position]>='0' && strText[position]<'9') && strText[position+1]=='/' && position<longueurtexte-1)															// essayer de lister
+			
+			// La puissance des créatures sous forme 9/7 trample, par exemple -> le 9/7 doit être insécable
+			if((strText[iBufferPosition]>='0' && strText[iBufferPosition]<'9') && strText[iBufferPosition+1]=='/' && iBufferPosition<longueurtexte-1)															
 			{
-				positionligne=0;
-				position+=2;
+				iBufferPosition+=2;
 				formatedtext=String.valueOf(strText);
 				continue;
 			}
-						
-			if(positionligne>40)
+			
+			switch(strText[iBufferPosition])
 			{
-				if(strText[position]=='.') 
+				case '!': // détection d'un point d'exclamation (chercher les éventuels autres)
+									while(strText[iBufferPosition++]=='!' && iBufferPosition<longueurtexte-1) longueurActuelle=0;			// insécable
+									break;
+				case '.': while(strText[iBufferPosition++]=='.' && iBufferPosition<longueurtexte-1) longueurActuelle=0;			// insécable
+									break;
+				case '^': while(strText[iBufferPosition++]=='^' && iBufferPosition<longueurtexte-1) longueurActuelle=0;			// insécable
+									break;
+				case ':': if(strText[iBufferPosition+1]=='{' && iBufferPosition<longueurtexte-1) longueurActuelle-=2;
+									break;
+				case '?': while(strText[iBufferPosition++]=='?' && iBufferPosition<longueurtexte-1) longueurActuelle=0;			// insécable
+									break;					
+			}
+			
+			if(longueurActuelle>45) 
+			{
+				// nous devons "wrapper" à un moment donné, et le seul caractère qui puisse nous permettre de séparer deux mots c'est le caractère ' ' (espace)
+				if(strText[iBufferPosition]==' ' && strText[iBufferPosition+1]!='!' && iBufferPosition<longueurtexte-1)
 				{
-					strText[position+1]='\n';
-					positionligne=0;
+					strText[iBufferPosition]='\n';
+					longueurActuelle=0;									// la prochaine "coupe" se fera dans au moins 45 caractères...
 				}
-				if(strText[position]==' ' && strText[position+1]!='!' && position<longueurtexte-1) 
+				else
 				{
-					strText[position]='\n';
-					positionligne=0;
+					// c'est ici qu'il faut faire le "rewind" (chercher l'espace précédent)
+					while(strText[--iBufferPosition]!=' ' && iBufferPosition>0);
+					strText[iBufferPosition]='\n';
+					longueurActuelle=0; // on ne coupera le texte que dans 45 caractères...
 				}
 			}
-			else positionligne++;
+			
+			iBufferPosition++;
+			longueurActuelle++;
 			formatedtext=String.valueOf(strText);
-			position++;
-		}while(position<longueurtexte-1);
+		}while(iBufferPosition<longueurtexte-1);
 		
 		return formatedtext;
 	}

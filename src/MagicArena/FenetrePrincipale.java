@@ -1,6 +1,8 @@
 package MagicArena;
 
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.BitSet;
 import java.util.GregorianCalendar;
@@ -120,6 +122,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 						}
 					}
 				};
+			
 				
 				Statistiques=new ma_Statistiques(innerModel,innerRenderer);
 				Statistiques.setConnection(LaConnection);
@@ -147,13 +150,38 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				jTableMatches.setRowHeight(40);
 				jTableMatches.setRowSelectionAllowed(false);
 				jTableMatches.setShowHorizontalLines(true);
+				
+				// Gestion du clic sur une des colonnes de la table listant les matches...
+				
 				jTableMatches.addMouseListener(new java.awt.event.MouseAdapter()
 				{
 					@Override
 					public void mouseClicked(java.awt.event.MouseEvent evt)
 					{
 						SelectionMatch(evt);
+						
+						// éviter de devoir passer par le tri au-dessus pour retrouver TOUS les matches joués contre un joueur en particulier quelque soit son deck
+						
+						int colonne=jTableMatches.getSelectedColumn();
+						int ligne=jTableMatches.getSelectedRow();
+						//System.err.println("DEBUG: "+colonne+","+ligne);
+						if(colonne==0)
+						{
+							String NomDuConnard=String.valueOf(jTableMatches.getModel().getValueAt(ligne,colonne));
+							//System.err.println("DEBUG: "+NomDuConnard);
+							
+							try
+							{
+								Statistiques.listMatchesAgainstPlayer(NomDuConnard);
+							} 
+							catch (SQLException ex)
+							{
+								Logger.getLogger(FenetrePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+							}
+						}
 					}
+					
+						 
 				});
 				
 
@@ -980,7 +1008,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			
 			jTextAreaCommentaires.setText("");
 			jTextAreaCommentaires.setEditable(true);
-			jTextField_enemy.requestFocus();
+			//jTextField_enemy.requestFocus();
+			jTextAreaCommentaires.requestFocus();
 		}
   }//GEN-LAST:event_updatedatas
 
@@ -1110,7 +1139,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			jTextAreaCommentaires.setEditable(false);
 			// TODO: ajouter les matches joués contre ce joueur dans la liste, peu importe le résultat
 			
-			Statistiques.computeStats(jTextField_enemy.getText());
+			Statistiques.listMatchesAgainstPlayer(jTextField_enemy.getText());
 			
 			// TODO: déterminer le  niveau du joueur sélectionné...
 			

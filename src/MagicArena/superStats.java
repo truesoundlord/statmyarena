@@ -1888,13 +1888,12 @@ public class superStats extends javax.swing.JFrame
 
 	/**
 	 * Computes the higher number of consecutive matches at a given level...
-	 * @param EnnemyLvl 
+	 * @param paramLevel 
 	 * @return
 	 * @throws SQLException 
 	 */
-	private int getConsecutiveMatchesAtLevel(int EnnemyLvl) throws SQLException
+	private int getConsecutiveMatchesAtLevel(int paramLevel) throws SQLException
 	{
-		// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 		if(LaConnection.isValid(1))
 		{
 			int tmp;
@@ -1911,7 +1910,7 @@ public class superStats extends javax.swing.JFrame
 				do
 				{
 					tmp=Resultats.getInt(1);
-					if(tmp==EnnemyLvl) 
+					if(tmp==paramLevel) 
 					{
 						listedesresultats.add(tmp);
 					}
@@ -1922,13 +1921,8 @@ public class superStats extends javax.swing.JFrame
 					}
 				}while(Resultats.next());
 			}
-			//System.err.println("getInaRow:");
-			//System.err.println("Pattern '"+pattern+"'");
-			//System.err.println("Found: "+leplusgrand);
-			
 			Resultats.close();
 			Statement.close();
-			//return String.valueOf(leplusgrand);
 			return leplusgrand;
 		}
 		return -1;

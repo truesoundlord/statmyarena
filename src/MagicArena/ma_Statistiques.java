@@ -27,6 +27,7 @@ public class ma_Statistiques extends javax.swing.JPanel
 		
 	}
 	
+
 	public void computeResults(char param) throws SQLException
 	{
 		//System.err.println("compute "+param);
@@ -66,7 +67,12 @@ public class ma_Statistiques extends javax.swing.JPanel
 		MatchesDone=ListeDesMatches.size();
 	}
 	
-	public void computeStats(String param) throws SQLException
+		/**
+	 * Fills the model with the datas from the database concerning the matches done by one player
+	 * @param param the player's alias which we want to list the matches played with
+	 * @throws SQLException 
+	 */
+	public void listMatchesAgainstPlayer(String param) throws SQLException
 	{
 			// hihi ^^
 		
