@@ -536,9 +536,9 @@ public class classMatch
 	}
 	
 	/**
-	 * Attempt to format the TootTipText in a readable way...
+	 * Attempt to format the TootTipText in a readable way... as we could see in a TextArea object
 	 * @param texttoformat
-	 * @return 
+	 * @return "wrapped" comments from database 
 	 */
 	private String WrapComments(String texttoformat)
 	{
@@ -570,7 +570,7 @@ public class classMatch
 			{
 				longueurActuelle=0;											// on ne considère pas que nous devons "wrapper" (couper)	
 				iBufferPosition+=2;
-				formatedtext=String.valueOf(strText);
+				//formatedtext=String.valueOf(strText);
 				continue;
 			}
 			
@@ -578,10 +578,12 @@ public class classMatch
 			if((strText[iBufferPosition]>='0' && strText[iBufferPosition]<'9') && strText[iBufferPosition+1]=='/' && iBufferPosition<longueurtexte-1)															
 			{
 				iBufferPosition+=2;
-				formatedtext=String.valueOf(strText);
+				longueurActuelle=0;											// on ne considère pas que nous devons "wrapper" (couper)	
+				//formatedtext=String.valueOf(strText);
 				continue;
 			}
 			
+				
 			switch(strText[iBufferPosition])
 			{
 				case '!': // détection d'un point d'exclamation (chercher les éventuels autres)
@@ -591,27 +593,36 @@ public class classMatch
 									break;
 				case '^': while(strText[iBufferPosition++]=='^' && iBufferPosition<longueurtexte-1) longueurActuelle=0;			// insécable
 									break;
-				case ':': if(strText[iBufferPosition+1]=='{' && iBufferPosition<longueurtexte-1) longueurActuelle-=2;
+				case ':': if(strText[iBufferPosition+1]=='{' && iBufferPosition<longueurtexte-1) longueurActuelle=0;
 									break;
 				case '?': while(strText[iBufferPosition++]=='?' && iBufferPosition<longueurtexte-1) longueurActuelle=0;			// insécable
 									break;					
 			}
+		
 			
-			if(longueurActuelle>45) 
+			if(longueurActuelle>35) 
 			{
 				// nous devons "wrapper" à un moment donné, et le seul caractère qui puisse nous permettre de séparer deux mots c'est le caractère ' ' (espace)
-				if(strText[iBufferPosition]==' ' && strText[iBufferPosition+1]!='!' && iBufferPosition<longueurtexte-1)
+				if(	strText[iBufferPosition]==' ' && 
+						strText[iBufferPosition+1]!='!' && strText[iBufferPosition+1]!='.' && strText[iBufferPosition+1]!='^' && 
+						strText[iBufferPosition+1]!=':' && strText[iBufferPosition+1]!='!' && 
+						iBufferPosition<longueurtexte-1)
 				{
+					
 					strText[iBufferPosition]='\n';
 					longueurActuelle=0;									// la prochaine "coupe" se fera dans au moins 45 caractères...
 				}
-				else
+				/*else
 				{
-					// c'est ici qu'il faut faire le "rewind" (chercher l'espace précédent)
-					while(strText[--iBufferPosition]!=' ' && iBufferPosition>0);
-					strText[iBufferPosition]='\n';
-					longueurActuelle=0; // on ne coupera le texte que dans 45 caractères...
-				}
+					// c'est ici qu'il faut faire le "forward" (chercher l'espace suivant -- cela devrait éviter les mots tous seuls sur une ligne ^^ )
+					if(strText[iBufferPosition]==' ')
+					{
+						System.err.println("SECATE:\nBefore ->"+strText[iBufferPosition-1]+"\nAfter ->"+strText[iBufferPosition+1]);
+						while(strText[++iBufferPosition]!=' ' && iBufferPosition<longueurtexte-1);
+						strText[iBufferPosition]='\n';
+						longueurActuelle=0; // on ne coupera le texte que dans 45 caractères...
+					}
+				}*/
 			}
 			
 			iBufferPosition++;
