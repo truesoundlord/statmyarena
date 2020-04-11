@@ -901,7 +901,6 @@ public class superStats extends javax.swing.JFrame
   }//GEN-LAST:event_jCBEnemyLevelActionPerformed
 
   private void jTFDefeatsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFDefeatsMouseClicked
-    //if(enemyColors.getInt()==0) return;
 		try
     {
 			int overalldefeats=Integer.valueOf(getStats(enemyColors.getInt(),'D'));
@@ -929,7 +928,6 @@ public class superStats extends javax.swing.JFrame
 																		String.format("%.1f", Float.valueOf(jTFDefeats.getText())/Float.valueOf(overalldefeats)*100.0f)+" %");
 				
 				bToggleRealDefeats=false;
-				
 				populateTableWith("RealDefeats");
 			}
 		}
