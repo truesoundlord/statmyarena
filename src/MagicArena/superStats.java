@@ -913,7 +913,7 @@ public class superStats extends javax.swing.JFrame
 																		String.format("%.1f",Float.valueOf(jTFDefeats.getText())/Float.valueOf(getStats(enemyColors.getInt(), 'D'))*100.0f)+" %");
 
 				bToggleRealDefeats=true;
-				populateTableWith("RealDefeats");
+				populateTableWith("Defeats");
 
 			}
 			else
@@ -921,13 +921,14 @@ public class superStats extends javax.swing.JFrame
 				jTFDefeats.setText(getStats(enemyColors.getInt(),'D'));
 				jTFDefeats.setBackground(new Color(255,255,255,255));
 
-				jTFDefeats.setToolTipText("Defeats (including concedes done by me)");
+				jTFDefeats.setToolTipText("Defeats");
 				int Total=Integer.valueOf(jTFVictories.getText())+Integer.valueOf(jTFConcedes.getText())+Integer.valueOf(jTFDefeats.getText());
 				float PercentDef=(float)(Integer.valueOf(jTFDefeats.getText())/(float)Total)*100.0f;
 				jTFDefeats.setToolTipText(jTFDefeats.getToolTipText()+" ("+String.format("%.1f", PercentDef)+"% )");
 				
 				bToggleRealDefeats=false;
-				populateTableWith("Defeats");
+				
+				populateTableWith("RealDefeats");
 			}
 		}
     catch (SQLException ex)
