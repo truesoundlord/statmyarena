@@ -904,13 +904,14 @@ public class superStats extends javax.swing.JFrame
     //if(enemyColors.getInt()==0) return;
 		try
     {
+			int overalldefeats=Integer.valueOf(getStats(enemyColors.getInt(),'D'));
 			if(bToggleRealDefeats==false)
 			{
 
-				jTFDefeats.setText(getRealDefeats(enemyColors.getInt()));
+				jTFDefeats.setText(getConcedes(enemyColors.getInt()));
 				jTFDefeats.setBackground(new Color(152,182,182,255));
-				jTFDefeats.setToolTipText(	"Matches conceded by me... ("+jTFDefeats.getText()+"/"+getStats(enemyColors.getInt(), 'D')+") --> "+
-																		String.format("%.1f",Float.valueOf(jTFDefeats.getText())/Float.valueOf(getStats(enemyColors.getInt(), 'D'))*100.0f)+" %");
+				jTFDefeats.setToolTipText(	"Matches conceded by me... ("+jTFDefeats.getText()+"/"+overalldefeats+") --> "+
+																		String.format("%.1f",Float.valueOf(jTFDefeats.getText())/Float.valueOf(overalldefeats)*100.0f)+" %");
 
 				bToggleRealDefeats=true;
 				populateTableWith("Defeats");
@@ -918,13 +919,14 @@ public class superStats extends javax.swing.JFrame
 			}
 			else
 			{
-				jTFDefeats.setText(getStats(enemyColors.getInt(),'D'));
+				int realdefeats=Integer.valueOf(getConcedes(enemyColors.getInt()));
+				realdefeats = overalldefeats-realdefeats;
 				jTFDefeats.setBackground(new Color(255,255,255,255));
+				jTFDefeats.setText(String.valueOf(realdefeats));
 
 				jTFDefeats.setToolTipText("Defeats");
-				int Total=Integer.valueOf(jTFVictories.getText())+Integer.valueOf(jTFConcedes.getText())+Integer.valueOf(jTFDefeats.getText());
-				float PercentDef=(float)(Integer.valueOf(jTFDefeats.getText())/(float)Total)*100.0f;
-				jTFDefeats.setToolTipText(jTFDefeats.getToolTipText()+" ("+String.format("%.1f", PercentDef)+"% )");
+				jTFDefeats.setToolTipText(	"Matches losts...("+realdefeats+"/"+overalldefeats+") --> "+
+																		String.format("%.1f", Float.valueOf(jTFDefeats.getText())/Float.valueOf(overalldefeats)*100.0f)+" %");
 				
 				bToggleRealDefeats=false;
 				
@@ -1498,7 +1500,7 @@ public class superStats extends javax.swing.JFrame
 		return null;
 	}
 	
-	private String getRealDefeats(int couleur) throws SQLException
+	private String getConcedes(int couleur) throws SQLException
 	{
 		int tmp;
 		String SQLRequest="SELECT COUNT(idMatch) FROM Matches WHERE MatchColor="+couleur+" AND Result='D' AND MyScore > 0";
