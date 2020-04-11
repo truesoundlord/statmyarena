@@ -64,7 +64,6 @@ public class classMatch
 	static final int PRSm=4;
 	static final int PRSS=5;
 	
-	
 	// SQL Related
 	
 	static private java.sql.Statement Statement;
@@ -519,7 +518,7 @@ public class classMatch
 					// Il faudrait formater le message de manière à ce que ce soit lisible ^^
 					
 					if(length>30) prework=WrapComments(prework);
-										
+															
 					//tmp+="<TEXTAREA ROWS=4 COLS=50 BORDER=0>"+prework+"</TEXTAREA>";	
 					tmp+=prework;	
 					
@@ -542,6 +541,7 @@ public class classMatch
 	 */
 	private String WrapComments(String texttoformat)
 	{
+		// Why this method is called four times ????????
 		String formatedtext="";
 				
 		//texttoformat=texttoformat.replace("\n"," ");
@@ -553,6 +553,7 @@ public class classMatch
 				
 		int longueurtexte=texttoformat.length();
 		
+		//System.err.println("CALL");
 		
 		// vu qu'on est pas en C il va falloir se casser le cul :{
 		
@@ -564,11 +565,15 @@ public class classMatch
 			
 			// Le nombre de créatures sous forme: 1x vindicative, par exemple -> le 1x vindicative doit être insécable
 			
-			if(strText[iBufferPosition]=='\n') longueurActuelle=0;
+				// DEBUG avril 2020
+			
+			//System.err.print("'"+strText[iBufferPosition]+"' ("+Integer.valueOf(strText[iBufferPosition])+")");
+			
+		
 			
 			if((strText[iBufferPosition]>='0' && strText[iBufferPosition]<'9') && strText[iBufferPosition+1]=='x' && iBufferPosition<longueurtexte-1)															
 			{
-				longueurActuelle=0;											// on ne considère pas que nous devons "wrapper" (couper)	
+				longueurActuelle-=2;											// on ne considère pas que nous devons "wrapper" (couper)	
 				iBufferPosition+=2;
 				//formatedtext=String.valueOf(strText);
 				continue;
@@ -578,29 +583,14 @@ public class classMatch
 			if((strText[iBufferPosition]>='0' && strText[iBufferPosition]<'9') && strText[iBufferPosition+1]=='/' && iBufferPosition<longueurtexte-1)															
 			{
 				iBufferPosition+=2;
-				longueurActuelle=0;											// on ne considère pas que nous devons "wrapper" (couper)	
+				longueurActuelle-=5;											// le maximum de caractères (d'expérience j'ai déjà eu des 40/39 trample lifelink hexproof et volante dans la gueulle, pas loin en tous cas ^^) formant la puissance d'une créature...
 				//formatedtext=String.valueOf(strText);
 				continue;
 			}
 			
-				
-			switch(strText[iBufferPosition])
-			{
-				case '!': // détection d'un point d'exclamation (chercher les éventuels autres)
-									while(strText[iBufferPosition++]=='!' && iBufferPosition<longueurtexte-1) longueurActuelle=0;			// insécable
-									break;
-				case '.': while(strText[iBufferPosition++]=='.' && iBufferPosition<longueurtexte-1) longueurActuelle=0;			// insécable
-									break;
-				case '^': while(strText[iBufferPosition++]=='^' && iBufferPosition<longueurtexte-1) longueurActuelle=0;			// insécable
-									break;
-				case ':': if(strText[iBufferPosition+1]=='{' && iBufferPosition<longueurtexte-1) longueurActuelle=0;
-									break;
-				case '?': while(strText[iBufferPosition++]=='?' && iBufferPosition<longueurtexte-1) longueurActuelle=0;			// insécable
-									break;					
-			}
-		
+			// DEBUG Avril 2020
 			
-			if(longueurActuelle>35) 
+			if(longueurActuelle>45) 
 			{
 				// nous devons "wrapper" à un moment donné, et le seul caractère qui puisse nous permettre de séparer deux mots c'est le caractère ' ' (espace)
 				if(	strText[iBufferPosition]==' ' && 
@@ -610,6 +600,89 @@ public class classMatch
 				{
 					
 					strText[iBufferPosition]='\n';
+					//strText[iBufferPosition]='$';
+					//System.err.println(strText);
+					longueurActuelle=0;									// la prochaine "coupe" se fera dans au moins 45 caractères...
+				}
+				/*else
+				{
+					// c'est ici qu'il faut faire le "forward" (chercher l'espace suivant -- cela devrait éviter les mots tous seuls sur une ligne ^^ )
+					if(strText[iBufferPosition]==' ')
+					{
+						System.err.println("SECATE:\nBefore ->"+strText[iBufferPosition-1]+"\nAfter ->"+strText[iBufferPosition+1]);
+						while(strText[++iBufferPosition]!=' ' && iBufferPosition<longueurtexte-1);
+						strText[iBufferPosition]='\n';
+						longueurActuelle=0; // on ne coupera le texte que dans 45 caractères...
+					}
+				}*/
+			}
+			
+				
+			switch(strText[iBufferPosition])
+			{
+				case '!': // détection d'un point d'exclamation (chercher les éventuels autres)
+									//System.err.println("!");
+									while(strText[iBufferPosition]=='!' && iBufferPosition<longueurtexte-1) 
+									{
+										//System.err.print(">"+strText[iBufferPosition]+"<\n");
+										longueurActuelle--;
+										iBufferPosition++;
+									}			// insécable
+									//System.err.println("DEBUG: after while -> "+strText[iBufferPosition]+"("+Integer.valueOf(strText[iBufferPosition])+")");
+									// BUG: le '\n' est "bazardé" je sais pas pourquoi 
+									// Il est passé dans le iBufferPosition++ 
+									break;
+				case '.': //System.err.println(".");
+									while(strText[iBufferPosition]=='.' && iBufferPosition<longueurtexte-1) 
+									{
+										longueurActuelle--;
+										iBufferPosition++;
+									}			// insécable
+									//System.err.println("DEBUG: after while -> "+strText[iBufferPosition]+"("+Integer.valueOf(strText[iBufferPosition])+")");
+									
+									break;
+				case '^': // System.err.println("^");
+									while(strText[iBufferPosition]=='^' && iBufferPosition<longueurtexte-1) 
+									{
+										longueurActuelle--;
+										iBufferPosition++;
+									}			// insécable
+									//System.err.println("DEBUG: after while -> "+strText[iBufferPosition]+"("+Integer.valueOf(strText[iBufferPosition])+")");
+									
+									break;
+				case ':': if(strText[iBufferPosition+1]=='{' && iBufferPosition<longueurtexte-1) longueurActuelle--;
+																		
+									break;
+				case '?': //System.err.println("?");
+									while(strText[iBufferPosition]=='?' && iBufferPosition<longueurtexte-1) 
+									{
+										longueurActuelle--;
+										iBufferPosition++;
+									}			// insécable
+									//System.err.println("DEBUG: after while -> "+strText[iBufferPosition]+"("+Integer.valueOf(strText[iBufferPosition])+")");
+									
+									break;					
+			}
+			
+			if(strText[iBufferPosition]=='\n') 
+			{
+				//System.err.println("\nWRAP");
+				longueurActuelle=0;
+			}
+		
+			
+			if(longueurActuelle>45) 
+			{
+				// nous devons "wrapper" à un moment donné, et le seul caractère qui puisse nous permettre de séparer deux mots c'est le caractère ' ' (espace)
+				if(	strText[iBufferPosition]==' ' && 
+						strText[iBufferPosition+1]!='!' && strText[iBufferPosition+1]!='.' && strText[iBufferPosition+1]!='^' && 
+						strText[iBufferPosition+1]!=':' && strText[iBufferPosition+1]!='!' && 
+						iBufferPosition<longueurtexte-1)
+				{
+					
+					strText[iBufferPosition]='\n';
+					//strText[iBufferPosition]='$';
+					//System.err.println(strText);
 					longueurActuelle=0;									// la prochaine "coupe" se fera dans au moins 45 caractères...
 				}
 				/*else
@@ -627,9 +700,10 @@ public class classMatch
 			
 			iBufferPosition++;
 			longueurActuelle++;
+			
 			formatedtext=String.valueOf(strText);
 		}while(iBufferPosition<longueurtexte-1);
-		
+		//System.err.println("END CALL");
 		return formatedtext;
 	}
 	
