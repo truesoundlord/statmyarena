@@ -1999,7 +1999,8 @@ public class superStats extends javax.swing.JFrame
 		{
 			switch(colonne)
 			{
-				case ma_tablemodelmatch.NAME:		return "Match: "+String.valueOf(LesMatches.get(ligne).getMatchID())+" "+LesMatches.get(ligne).getBeginDate();
+				case ma_tablemodelmatch.NAME:		return "Match: "+String.valueOf(LesMatches.get(ligne).getMatchID())+" "+LesMatches.get(ligne).getBeginDate()+
+																							 " ["+LesMatches.get(ligne).getResults()+"]";
 				case ma_tablemodelmatch.COL:			return ((ma_Couleurs)ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.COL)).getBinaryString();
 				case ma_tablemodelmatch.ENLVL:		return Levels.get(Integer.valueOf(ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.ENLVL).toString()));
 				case ma_tablemodelmatch.MYLVL:		return Levels.get(Integer.valueOf(ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.MYLVL).toString()));
