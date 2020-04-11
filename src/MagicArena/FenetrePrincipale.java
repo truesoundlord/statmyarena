@@ -1740,7 +1740,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	
 	// Statistiques
 	
-	public ma_Statistiques Statistiques;											// Objet permettant d'obtenir les stats d'un match 
+	public ma_Statistiques Statistiques;													// Objet permettant d'obtenir les stats d'un match 
 	public superStats FenetreStatistiques;												// Objet permettant d'accéder aux statistiques étendues 
 		
 	private defMatch innerRenderer=new defMatch();

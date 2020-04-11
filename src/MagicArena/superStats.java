@@ -3,6 +3,8 @@ package MagicArena;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.BitSet;
 import java.util.LinkedList;
@@ -1755,6 +1757,13 @@ public class superStats extends javax.swing.JFrame
 			SQLRequest="SELECT * FROM Matches WHERE Result='"+status[1]+"' AND EnLvl="+dbenlevel+" ORDER BY EndTime DESC";
 		}
 		
+		// TODO: add clicks on particular player name and retreive all the matches done against this player
+		
+		if(whattodo.contains("Player"))
+		{
+			SQLRequest="SELECT * FROM Matches WHERE idPlayer IN (SELECT idPlayer FROM Players WHERE Alias = '"+selectedPlayer+"') ORDER BY EndTime DESC"; 		
+		}
+		
 		ModeleTableMatch.ClearDatas();
 		LesMatches.clear();
 		if(LaConnection.isValid(1))
@@ -1939,6 +1948,50 @@ public class superStats extends javax.swing.JFrame
 		public UEPTableImpl(TableModel TheModel, TableCellRenderer TheRenderer) 
 		{
 			super(TheModel, TheRenderer);
+			addMouseListener(new MouseListener()
+			{
+				@Override
+				public void mouseClicked(MouseEvent me)
+				{
+					int ligne=LaTable.getSelectedRow();
+					if(ligne>-1)
+					{
+						selectedPlayer=String.valueOf(LaTable.getModel().getValueAt(ligne,0));
+						try
+						{
+							populateTableWith("Player");
+						} 
+						catch (SQLException ex)
+						{
+							Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+						}
+					}
+				}
+
+				@Override
+				public void mousePressed(MouseEvent me)
+				{
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent me)
+				{
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent me)
+				{
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent me)
+				{
+					
+				}
+			});
 		}
 
 		@Override
@@ -1962,6 +2015,8 @@ public class superStats extends javax.swing.JFrame
 				default: return "";
 			}
 		}
+		
+		
 
 		/*@Override
 		public void PopulateTableWithDatas(LinkedList<Object> lesdonnees) throws SQLException
@@ -1980,6 +2035,7 @@ public class superStats extends javax.swing.JFrame
 	private final String strPrefixes[]=new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mystic"};   // platinium tier 1 <-> 15
 	
 	private final int idHelper[];
+	private String selectedPlayer;
 	
 	public enum ScoreInfo {MAXPP,MINPP,MAXPE,MINPE,MID,SCMP,SCmP,SCME,SCmE,Alias;};
 	
