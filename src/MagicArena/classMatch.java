@@ -569,7 +569,6 @@ public class classMatch
 			
 			//System.err.print("'"+strText[iBufferPosition]+"' ("+Integer.valueOf(strText[iBufferPosition])+")");
 			
-		
 			
 			if((strText[iBufferPosition]>='0' && strText[iBufferPosition]<'9') && strText[iBufferPosition+1]=='x' && iBufferPosition<longueurtexte-1)															
 			{
