@@ -533,6 +533,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
 
     jStatsManasTours.setText("Manas/Tours");
 
+    jScrollPaneMatchesExt.setMaximumSize(new java.awt.Dimension(32767, 280));
+    jScrollPaneMatchesExt.setMinimumSize(new java.awt.Dimension(25, 280));
+    jScrollPaneMatchesExt.setPreferredSize(new java.awt.Dimension(6, 280));
+
     javax.swing.GroupLayout jPanelPanneauLayout = new javax.swing.GroupLayout(jPanelPanneau);
     jPanelPanneau.setLayout(jPanelPanneauLayout);
     jPanelPanneauLayout.setHorizontalGroup(
@@ -617,7 +621,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
           .addGroup(jPanelPanneauLayout.createSequentialGroup()
             .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
           .addGroup(jPanelPanneauLayout.createSequentialGroup()
             .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -631,9 +635,9 @@ public class FenetrePrincipale extends javax.swing.JFrame
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jStatsManasTours, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jScrollPaneComments, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(jScrollPaneMatchesExt, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap())
+            .addComponent(jScrollPaneComments))
+          .addComponent(jScrollPaneMatchesExt, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(48, 48, 48))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -649,8 +653,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(8, Short.MAX_VALUE))
+        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(7, Short.MAX_VALUE))
     );
 
     pack();
