@@ -83,7 +83,7 @@ public class ma_Statistiques extends javax.swing.JPanel
 		{
 			ListeDesMatches.clear();
 			Statement=uneConnexion.createStatement();
-			bStatusRequest=Statement.execute("SELECT * FROM Matches WHERE idPlayer IN (SELECT idPlayer FROM Players WHERE Alias='"+param+"' ORDER BY Couleurs DESC) ORDER BY idMatch DESC");
+			bStatusRequest=Statement.execute("SELECT * FROM Matches WHERE idPlayer IN (SELECT idPlayer FROM Players WHERE Alias= BINARY '"+param+"' ORDER BY Couleurs DESC) ORDER BY idMatch DESC");
 			if(bStatusRequest)
 			{
 				Resultats = Statement.getResultSet();

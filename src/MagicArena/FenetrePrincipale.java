@@ -1,8 +1,6 @@
 package MagicArena;
 
 import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.BitSet;
 import java.util.GregorianCalendar;
@@ -1577,7 +1575,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		
 		//System.err.println("DEBUG: "+playername);
 		
-		String SQLRequest="SELECT Matches.idMatch,Comments FROM Comments, Matches WHERE Matches.idMatch=Comments.idMatch AND Matches.idPlayer IN (SELECT idPlayer FROM Players WHERE Alias='"+playername+"')";
+		String SQLRequest="SELECT Matches.idMatch,Comments FROM Comments, Matches WHERE Matches.idMatch=Comments.idMatch AND Matches.idPlayer IN (SELECT idPlayer FROM Players WHERE Alias= BINARY '"+playername+"')";
 		
 		Statement=LaConnection.createStatement();
 		Statement.execute(SQLRequest);
@@ -1608,8 +1606,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		param=param.replace("\\", "\\\\"); // Comment gérer les connards qui mettent un backslash dans leurs alias ???
 		param=param.replace("'", "\\'");
 		
-		
-		String SQLRequest="SELECT EnLvl FROM Matches WHERE idPlayer=(SELECT idPlayer FROM Players WHERE Alias='"+param+"' ORDER BY idPlayer DESC LIMIT 1) ORDER BY StartTime DESC LIMIT 1";
+		// Il faut indiquer BINARY sinon 'David' sera la même chose que 'david' alors que ce sont deux joueurs différents !! (BUG avril 2020)
+		String SQLRequest="SELECT EnLvl FROM Matches WHERE idPlayer=(SELECT idPlayer FROM Players WHERE Alias= BINARY '"+param+"' ORDER BY idPlayer DESC LIMIT 1) ORDER BY StartTime DESC LIMIT 1";
 		Statement=LaConnection.createStatement();
 		Statement.execute(SQLRequest);
 			
