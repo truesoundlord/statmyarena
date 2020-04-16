@@ -242,10 +242,9 @@ public class FenetrePrincipale extends javax.swing.JFrame
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("MagicArena Stats v0.2.2020");
     setBackground(new java.awt.Color(67, 100, 121));
-    setMaximumSize(new java.awt.Dimension(1400, 900));
     setMinimumSize(new java.awt.Dimension(1400, 900));
     setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-    setPreferredSize(new java.awt.Dimension(1400, 900));
+    setUndecorated(true);
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter()
     {
@@ -259,7 +258,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jPanelPanneau.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
     jPanelPanneau.setMaximumSize(new java.awt.Dimension(1400, 900));
     jPanelPanneau.setMinimumSize(new java.awt.Dimension(1400, 900));
-    jPanelPanneau.setPreferredSize(new java.awt.Dimension(1380, 850));
 
     jTextField_enemy.setBackground(new java.awt.Color(0, 102, 102));
     jTextField_enemy.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
@@ -615,7 +613,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
               .addComponent(jButtonAddTurn))
             .addGap(33, 33, 33)
             .addComponent(jButtonUpdate)
-            .addGap(77, 77, 77))
+            .addGap(62, 62, 62))
           .addGroup(jPanelPanneauLayout.createSequentialGroup()
             .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -635,7 +633,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jScrollPaneComments))
           .addComponent(jScrollPaneMatchesExt, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(48, 48, 48))
+        .addGap(8, 8, 8))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -645,14 +643,14 @@ public class FenetrePrincipale extends javax.swing.JFrame
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
         .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 1381, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(25, Short.MAX_VALUE))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 849, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(7, Short.MAX_VALUE))
+        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 843, Short.MAX_VALUE)
+        .addContainerGap())
     );
 
     pack();
@@ -801,6 +799,18 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			cematch.setScore(true,Integer.valueOf(jTextFieldMyScore.getText()));
 			cematch.setMatchLength();
 			
+			// Petits soucis (deux matchs sur 2500) AVRIL 2020
+			if(cematch.getScore(false)<=0 && cematch.getResults()!=classMatch.Resultats.VIC) 
+			{
+				cematch.setResult(classMatch.Resultats.VIC);
+				System.err.println("Fixed: MUST BE VICTORY !!");
+			}
+			if(cematch.getScore(true)<=0 && cematch.getResults()!=classMatch.Resultats.DEF) 
+			{
+				cematch.setResult(classMatch.Resultats.DEF);
+				System.err.println("Fixed: MUST BE DEFEAT !!");
+			}
+						
 			// Troisième vérification
 			
 			if(jLabelTours.getText().contains("Turns")) 
@@ -1134,7 +1144,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		
 		try 
 		{
-			//System.err.println("DEBUG 2 février 2020: "+jTextAreaCommentaires.isEditable());   // elle est à true...
 			String tmp=getCommentsFromPlayer(jTextField_enemy.getText());
 			if(!tmp.isEmpty())
 				jTextAreaCommentaires.setText(tmp);
@@ -1564,8 +1573,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	
 	private String getCommentsFromPlayer(String playername) throws SQLException
 	{
-		// SELECT Comments FROM Comments WHERE idMatch >= (SELECT MAX(idMatch )) AND idMatch=(SELECT idMatch FROM Matches WHERE idPlayer=(SELECT idPlayer FROM Players WHERE Alias='Bitcoin King'));
-		// SELECT Comments FROM Comments, Matches WHERE Matches.idMatch=Comments.idMatch AND Matches.idPlayer IN (SELECT idPlayer FROM Players WHERE Alias='fabio')
 		String tmp="";
 		
 		// BUG 1 février 2020
@@ -1573,7 +1580,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		playername=playername.replace("'", "\\'");
 		
 		
-		//System.err.println("DEBUG: "+playername);
+		// BUG Avril 2020
 		
 		String SQLRequest="SELECT Matches.idMatch,Comments FROM Comments, Matches WHERE Matches.idMatch=Comments.idMatch AND Matches.idPlayer IN (SELECT idPlayer FROM Players WHERE Alias= BINARY '"+playername+"')";
 		

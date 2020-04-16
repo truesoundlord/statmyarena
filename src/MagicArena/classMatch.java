@@ -11,30 +11,30 @@ import java.util.LinkedList;
  */
 public class classMatch 
 {
-	private String EnemyName;
-	private int MyScore;
-	private int HisScore;
-	private int Turns;
+	private String EnemyName;						// db Alias field
+	private int MyScore;								// db MyScore field
+	private int HisScore;								// db HisScore field						
+	private int Turns;									// db Turns field		
 	
-	private int keyNiveauEnemy;
-	private int keyMonNiveau;
+	private int keyNiveauEnemy;					// db EnLvl field
+	private int keyMonNiveau;						// db MyLvl field
 	
-	static LinkedList<String> Levels;
+	static LinkedList<String> Levels;			
 		
-	private BitSet MatchColors;
+	private BitSet MatchColors;					// db MatchColor field
 	
-	private int idPlayer;
-	private int idMatch;
+	private int idPlayer;								// db idPlayer field
+	private int idMatch;								// db idMatch field	
 	private int Manas;									// noires je ne pense pas changer de deck pour faire les tapettes avec plusieurs couleurs et faire des combinaisons de merde qui prennent des heures...
 																			// et qui une fois sur deux ne servent à rien ^^
 
-	public enum Resultats {VIC,CON,DEF,DRW;};
+	public enum Resultats {VIC,CON,DEF,DRW;};			
 	
-	Resultats MatchResult;
+	Resultats MatchResult;							// db Result field
 	
-	private GregorianCalendar dateDebut;
-	private GregorianCalendar dateFin;
-	private final GregorianCalendar MatchLength;
+	private GregorianCalendar dateDebut;								// db StartTime field
+	private GregorianCalendar dateFin;									// db Endtime field
+	private final GregorianCalendar MatchLength;				// db Duration field
 	
 	private final String strPostfixes[]=new String[]{"Tier 4", "Tier 3", "Tier 2", "Tier 1"};
 	private final String strPrefixes[]=new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mystic"};   // platinium tier 1 <-> 15
