@@ -30,11 +30,15 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	@SuppressWarnings("OverridableMethodCallInConstructor")
 	public FenetrePrincipale() throws SQLException 
 	{
+		lesIntervales=new UEPElement[]{new UEPElement(0,3),new UEPElement(4,7),new UEPElement(8,11),new UEPElement(12,15),new UEPElement(16,19),new UEPElement(20,23)};
 		this.innerModel = new ma_tablemodelmatch();
 		this.lesdonnees = new LinkedList<>();
 		this.listeEnnemis = new LinkedList<>();
 		this.strPostfixes = new String[]{"Tier 4", "Tier 3", "Tier 2", "Tier 1"};
 		this.strPrefixes = new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mystic"};
+		
+		verifLevels=new UEPInterval(lesIntervales);
+		
 		initComponents();
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("images/iconma.png")));
@@ -717,6 +721,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			return;
 		}
 		
+		cematch.setEnd();																					// le match est terminé
+		System.err.println("End: "+cematch.getEndDate());
 		
 		// Par rapport au match, on se place de mon point de vue...
 		switch(MatchResult)
@@ -745,6 +751,11 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		
 		
 		System.err.println(dlgMessage);
+		
+		// AVRIL 2020
+		
+		int intervaleE=verifLevels.getListIndexFromValue(jComboBoxEnemyLevel.getSelectedIndex());
+		int intervaleP=verifLevels.getListIndexFromValue(jComboBoxMyLevel.getSelectedIndex());
 				
 		cematch.setLevel(false, (String)jComboBoxEnemyLevel.getSelectedItem());
 		cematch.setLevel(true, (String)jComboBoxMyLevel.getSelectedItem());
@@ -755,9 +766,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		if(answer==JOptionPane.YES_OPTION)
 		{
 			// C'est ICI que nous devrons ajouter l'enregistrement des données du match...
-			
-			cematch.setEnd();																																																			// le match est terminé
-			System.err.println("End: "+cematch.getEndDate());
 						
 			// Première vérification
 									
@@ -785,11 +793,23 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				}
 			}
 			
+			// AVRIL 2020
+			if(intervaleE!=intervaleP)
+			{
+				dlgMessage="Levels are not similars :{";
+				answer=JOptionPane.showConfirmDialog(getParent(), dlgMessage, "Are you sure ?", JOptionPane.YES_NO_OPTION);
+				if(answer==JOptionPane.NO_OPTION || answer==JOptionPane.CANCEL_OPTION)
+				{
+					System.err.println("Aborted !!");
+					return;
+				}
+			}
+			
 			// Pour éviter tout soucis !!
 			
 			if(jTextField_enemy.getText().isEmpty()) 
 			{
-				System.err.println("ERREUR !! Le nom du connard ne peut pas être vide !!"); // cas du <Oublié> dans la base de données ^^
+				System.err.println("ERROR !! Name couldn't be empty !!"); // cas du <Oublié> dans la base de données ^^
 				return;
 			}
 			
@@ -809,6 +829,11 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			{
 				cematch.setResult(classMatch.Resultats.DEF);
 				System.err.println("Fixed: MUST BE DEFEAT !!");
+			}
+			if(cematch.getScore(false)==20 && cematch.getScore(true)==20 && cematch.getColors().isEmpty() && cematch.getResults()!=classMatch.Resultats.CON)
+			{
+				cematch.setResult(classMatch.Resultats.CON);
+				System.err.println("Fixed: MUST BE CONCEDE !!");
 			}
 						
 			// Troisième vérification
@@ -1767,6 +1792,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	public static String Version="1.";
 	
 	private UEPTable jTableMatches;
+	private UEPInterval verifLevels;
+	private UEPElement[] lesIntervales;
 	
 }
 
