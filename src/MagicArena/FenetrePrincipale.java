@@ -818,16 +818,19 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			if(cematch.getScore(false)<=0 && cematch.getResults()!=classMatch.Resultats.VIC) 
 			{
 				cematch.setResult(classMatch.Resultats.VIC);
+				MatchResult=3;
 				System.err.println("Fixed: MUST BE VICTORY !!");
 			}
 			if(cematch.getScore(true)<=0 && cematch.getResults()!=classMatch.Resultats.DEF) 
 			{
 				cematch.setResult(classMatch.Resultats.DEF);
+				MatchResult=1;
 				System.err.println("Fixed: MUST BE DEFEAT !!");
 			}
 			if(cematch.getScore(false)==20 && cematch.getScore(true)==20 && cematch.getColors().isEmpty() && cematch.getResults()!=classMatch.Resultats.CON)
 			{
 				cematch.setResult(classMatch.Resultats.CON);
+				MatchResult=2;
 				System.err.println("Fixed: MUST BE CONCEDE !!");
 			}
 						

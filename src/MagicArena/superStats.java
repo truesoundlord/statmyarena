@@ -1762,7 +1762,7 @@ public class superStats extends javax.swing.JFrame
 		
 		if(whattodo.contains("Player"))
 		{
-			SQLRequest="SELECT * FROM Matches WHERE idPlayer IN (SELECT idPlayer FROM Players WHERE Alias = '"+selectedPlayer+"') ORDER BY EndTime DESC"; 		
+			SQLRequest="SELECT * FROM Matches WHERE idPlayer IN (SELECT idPlayer FROM Players WHERE Alias = BINARY '"+selectedPlayer+"') ORDER BY EndTime DESC"; 		
 		}
 		
 		ModeleTableMatch.ClearDatas();
