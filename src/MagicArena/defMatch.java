@@ -50,12 +50,13 @@ public class defMatch extends javax.swing.JPanel implements TableCellRenderer
 		removeAll();
 		
 		if(colonne==ma_tablemodelmatch.COL) LaTable.getColumnModel().getColumn(colonne).setMinWidth(200);
-		if(colonne==ma_tablemodelmatch.NAME || colonne==ma_tablemodelmatch.ENLVL || colonne==ma_tablemodelmatch.MYLVL) LaTable.getColumnModel().getColumn(colonne).setMinWidth(100);
-		else
-			LaTable.getColumnModel().getColumn(colonne).setMaxWidth(80);
+		if(colonne==ma_tablemodelmatch.NAME) LaTable.getColumnModel().getColumn(colonne).setMinWidth(250);
+		if(colonne==ma_tablemodelmatch.ENLVL || colonne==ma_tablemodelmatch.MYLVL) LaTable.getColumnModel().getColumn(colonne).setMinWidth(90);
+		if(colonne==ma_tablemodelmatch.SCE || colonne==ma_tablemodelmatch.SCP) LaTable.getColumnModel().getColumn(colonne).setMaxWidth(60);
 		
 		setLayout(new FlowLayout(JLabel.CENTER));
 		setBackground(new Color(31, 112, 121,255));
+		
 				
 		switch(colonne)
 		{
