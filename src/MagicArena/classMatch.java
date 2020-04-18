@@ -94,7 +94,6 @@ public class classMatch
 				//cptLevel++;
 			}		
 		}
-		
 		MatchLength=(GregorianCalendar)GregorianCalendar.getInstance();				
 	}
 

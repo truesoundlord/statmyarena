@@ -79,7 +79,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				jComboBoxMyLevel.addItem(Levels.get(cptLevel));
 				jComboBoxEnemyLevel.addItem(Levels.get(cptLevel));
 				cptLevel++;
-				
 			}
 		}
 	
@@ -182,8 +181,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 							}
 						}
 					}
-					
-						 
 				});
 				
 
@@ -708,8 +705,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 								break;
 			}
 		}
-		
-						
   }//GEN-LAST:event_jsliderchanged
 
   private void updatedatas(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatedatas
@@ -937,7 +932,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 					listeEnnemis.get(seekfor).updatedb(LaConnection);
 					System.err.println("[FenetrePrincipale] updatedb DONE !!");
 					
-					
 					RefreshTable();
 				}
 				else
@@ -970,7 +964,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 					
 					// Lié au bug de la recherche
 					// JE NE SAIS PAS POURQUOI "bidon" est déjà dans la liste des ennemis alors que je ne lui ai rien demandé ???????
-					// En effet, mis à part dans PopulateTable() je fais accès à listeEnnemis.add() (?????)
+					// En effet, mis à part dans PopulateTable() je ne fais aucun accès à listeEnnemis.add() autre part (?????)
 					
 					//if(!listeEnnemis.contains(ceConnard))
 					//	listeEnnemis.add(ceConnard);      // explique pourquoi "bidon" apparaît deux fois dans la liste
@@ -1110,8 +1104,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	
   private void SelectionJoueur(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SelectionJoueur
 		int Row=((JTable)evt.getSource()).getSelectedRow();
-		
-		// Ca ne marche pas... <CACA>
 		
 		if(evt.getButton()==2) 
 		{
