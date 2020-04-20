@@ -58,7 +58,7 @@ public class defPlayer extends javax.swing.JPanel implements TableCellRenderer
 			LaTable.getColumnModel().getColumn(colonne).setMinWidth(250);
 		}
 		else
-			LaTable.getColumnModel().getColumn(colonne).setMaxWidth(70exit;);
+			LaTable.getColumnModel().getColumn(colonne).setMaxWidth(70);
 		
 							
 		setLayout(new FlowLayout(JLabel.CENTER));

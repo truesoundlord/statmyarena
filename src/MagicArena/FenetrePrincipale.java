@@ -1413,7 +1413,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				System.err.println("ChargerCommentaires :{");
 				System.err.println(ex.getMessage());
 				System.err.println(ex.getCause());
-				//Logger.getLogger(FenetrePrincipale.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
 		jTextAreaCommentaires.setEditable(false);
@@ -1747,11 +1746,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	public static int lastIndexForMyLevel=-1;											// (???) ancien indice concernant mon niveau	 
 	public static int lastIndexForEnemyLevel=-1;									// (???) ancien indice concernant le niveau de l'ennemi 
 	public static String ToolTipForStats;													// (???) Message pour la JTable de ma_Statistiques (defMatch)	 	
-	
-	
-	
+		
 	public static classEnemy ceConnard;														// Nouvel ennemi 
-
 	public static classMatch cematch;															// Représente le match en cours... 
 	
 	// Position des champs

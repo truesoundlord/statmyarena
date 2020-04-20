@@ -70,8 +70,6 @@ public class superStats extends javax.swing.JFrame
 			getEfficencyIcons(10);
 			jPanelForme.setToolTipText("Last 10 matches status...");
 			
-			// public enum Helper {HRW,HRD,HLCM,HLC,HLD,HLT};
-			
 			String tmpLast=getLast('V');
 			String Results;
 			if(tmpLast!=null)
@@ -1007,7 +1005,7 @@ public class superStats extends javax.swing.JFrame
 				if(LaConnection.isValid(1))				
 				{
 					Statement=LaConnection.createStatement();
-					String SQLRequest="SELECT (SELECT Alias FROM Players WHERE Players.idPlayer=Matches.idPlayer),MatchColor,EnLvl,HisScore,MyScore,MyLvl FROM Matches WHERE idMatch="+selected;
+					String SQLRequest="SELECT (SELECT Alias FROM Players WHERE Players.idPlayer=Matches.idPlayer),MatchColor,EnLvl,HisScore,MyScore,MyLvl,Result,StartTime FROM Matches WHERE idMatch="+selected;
 					Statement.executeQuery(SQLRequest);
 					Resultats=Statement.getResultSet();
 					if(Resultats.first())
@@ -1034,6 +1032,14 @@ public class superStats extends javax.swing.JFrame
 						degraded.setScore(true, Resultats.getInt(5));
 						replvl=classMatch.Levels.get(Integer.valueOf(Resultats.getString(6)));
 						degraded.setLevel(true, replvl);
+						
+						String tmp=Resultats.getString(7); // avril 2020
+						degraded.setResult(tmp);
+						
+						tmp=Resultats.getDate(8).toString()+" "+Resultats.getTime(8).toString();
+						degraded.StartFROMDB(tmp);
+						
+						
 						ModeleTableMatch.addRow(degraded);
 						LesMatches.add(degraded);
 					}
@@ -1377,9 +1383,7 @@ public class superStats extends javax.swing.JFrame
 		jTFConcedes.setToolTipText("Concedes (by the ennemy)");
 		
 		int		Total;
-		
-		
-		
+				
 		if(LaConnection.isValid(1) && combinaison!=0)
 		{
 			// couleur resultat 
@@ -1661,7 +1665,6 @@ public class superStats extends javax.swing.JFrame
 		if(Resultats!=null)
 		{
 			if(!Resultats.first()) return null;
-			//tmp=Resultats.getString(1)+"|"+Resultats.getInt(2)+"|"+Resultats.getInt(3)+"|"+Resultats.getInt(4);
 			switch(extract)
 			{
 				case MID: tmp=String.format("%03d", Resultats.getInt(4));
@@ -1887,7 +1890,7 @@ public class superStats extends javax.swing.JFrame
 		String tmp=new String();
 				
 		if(type.contains("SMALLINT")) tmp=String.valueOf(source.getInt(colonne));
-		if(type.contains("CHAR")) tmp=source.getString(colonne);
+		if(type.contains("CHAR")) tmp=source.getString(colonne);																												// le résultat est considéré comme une chaîne (enum dans MySQL)
 		if(type.contains("BIT")) tmp=String.valueOf(source.getByte(colonne));
  		if(type.contains("TINYINT")) tmp=String.valueOf(source.getInt(colonne));
 		if(type.contains("DATETIME")) tmp=source.getDate(colonne).toString()+" "+source.getTime(colonne).toString();
@@ -2017,14 +2020,6 @@ public class superStats extends javax.swing.JFrame
 				default: return "";
 			}
 		}
-		
-		
-
-		/*@Override
-		public void PopulateTableWithDatas(LinkedList<Object> lesdonnees) throws SQLException
-		{
-			// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-		}*/
 	}
 
 	private ma_Couleurs enemyColors;
@@ -2051,9 +2046,7 @@ public class superStats extends javax.swing.JFrame
 	UEPTable LaTable;
 	ma_tablemodelmatch ModeleTableMatch;
 	defMatch RendererMatch;
-	
-	
-			
+				
 	// SQL Related
 	
 	private java.sql.Connection LaConnection;
