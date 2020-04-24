@@ -123,7 +123,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 						}
 					}
 				};
-			
 				
 				Statistiques=new ma_Statistiques(innerModel,innerRenderer);
 				Statistiques.setConnection(LaConnection);
@@ -159,6 +158,13 @@ public class FenetrePrincipale extends javax.swing.JFrame
 					@Override
 					public void mouseClicked(java.awt.event.MouseEvent evt)
 					{
+						
+						if(evt.getButton()==2) 
+						{
+							ProceedMiddleClick();
+							//System.err.println("CLIC !!");
+						}
+						
 						SelectionMatch(evt);
 						
 						// éviter de devoir passer par le tri au-dessus pour retrouver TOUS les matches joués contre un joueur en particulier quelque soit son deck
@@ -243,10 +249,19 @@ public class FenetrePrincipale extends javax.swing.JFrame
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("MagicArena Stats v0.2.2020");
     setBackground(new java.awt.Color(67, 100, 121));
-    setMinimumSize(new java.awt.Dimension(1400, 900));
+    setMaximumSize(new java.awt.Dimension(1390, 880));
+    setMinimumSize(new java.awt.Dimension(1390, 880));
     setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
     setUndecorated(true);
+    setPreferredSize(new java.awt.Dimension(1390, 880));
     setResizable(false);
+    addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        formMouseClicked(evt);
+      }
+    });
     addWindowListener(new java.awt.event.WindowAdapter()
     {
       public void windowClosing(java.awt.event.WindowEvent evt)
@@ -259,6 +274,13 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jPanelPanneau.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
     jPanelPanneau.setMaximumSize(new java.awt.Dimension(1400, 900));
     jPanelPanneau.setMinimumSize(new java.awt.Dimension(1400, 900));
+    jPanelPanneau.addMouseListener(new java.awt.event.MouseAdapter()
+    {
+      public void mouseClicked(java.awt.event.MouseEvent evt)
+      {
+        jPanelPanneauEssaiClic(evt);
+      }
+    });
 
     jTextField_enemy.setBackground(new java.awt.Color(0, 102, 102));
     jTextField_enemy.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
@@ -538,52 +560,56 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jPanelPanneau.setLayout(jPanelPanneauLayout);
     jPanelPanneauLayout.setHorizontalGroup(
       jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanelPanneauLayout.createSequentialGroup()
-          .addGap(24, 24, 24)
-          .addComponent(jButtonUpdate))
-        .addGroup(jPanelPanneauLayout.createSequentialGroup()
-          .addGap(6, 6, 6)
-          .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jComboBoxEnemyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jComboBoxMyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanelResults, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanelPanneauLayout.createSequentialGroup()
-              .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabelTours, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabelManas, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGap(18, 18, 18)
-              .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jButtonAddTurn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSpinnerManaNoires))))))
       .addGroup(jPanelPanneauLayout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-          .addGroup(jPanelPanneauLayout.createSequentialGroup()
-            .addComponent(jCheckBoxNoir)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jCheckBoxRouge)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jCheckBoxVert)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jCheckBoxBleu)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jCheckBoxBlanc))
-          .addComponent(jTextField_enemy, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-      .addGroup(jPanelPanneauLayout.createSequentialGroup()
-        .addGap(12, 12, 12)
-        .addComponent(jScrollPaneMatchesExt, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jStatsManasTours, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jScrollPaneComments, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jTextFieldOADefeats, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jTextFieldOAVictories, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jTextFieldMatchTurns, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jTextFieldMatchDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
+          .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanelPanneauLayout.createSequentialGroup()
+              .addGap(24, 24, 24)
+              .addComponent(jButtonUpdate))
+            .addGroup(jPanelPanneauLayout.createSequentialGroup()
+              .addGap(6, 6, 6)
+              .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jComboBoxEnemyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxMyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelResults, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelPanneauLayout.createSequentialGroup()
+                  .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelTours, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelManas, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addGap(18, 18, 18)
+                  .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonAddTurn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSpinnerManaNoires))))))
+          .addGroup(jPanelPanneauLayout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+              .addGroup(jPanelPanneauLayout.createSequentialGroup()
+                .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                  .addGroup(jPanelPanneauLayout.createSequentialGroup()
+                    .addComponent(jCheckBoxNoir)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jCheckBoxRouge)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jCheckBoxVert)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jCheckBoxBleu)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jCheckBoxBlanc))
+                  .addComponent(jTextField_enemy, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+              .addGroup(jPanelPanneauLayout.createSequentialGroup()
+                .addComponent(jScrollPaneMatchesExt, javax.swing.GroupLayout.PREFERRED_SIZE, 1006, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(jStatsManasTours, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jScrollPaneComments, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jTextFieldOADefeats, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jTextFieldOAVictories, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jTextFieldMatchTurns, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jTextFieldMatchDuration, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+        .addGap(4, 4, 4))
     );
     jPanelPanneauLayout.setVerticalGroup(
       jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -604,7 +630,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
             .addComponent(jComboBoxMyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jPanelResults, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGap(32, 32, 32)
             .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
               .addComponent(jLabelManas)
               .addComponent(jSpinnerManaNoires, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -613,11 +639,9 @@ public class FenetrePrincipale extends javax.swing.JFrame
               .addComponent(jLabelTours)
               .addComponent(jButtonAddTurn))
             .addGap(33, 33, 33)
-            .addComponent(jButtonUpdate)
-            .addGap(62, 62, 62))
-          .addGroup(jPanelPanneauLayout.createSequentialGroup()
-            .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addComponent(jButtonUpdate))
+          .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(8, 8, 8)
         .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
           .addGroup(jPanelPanneauLayout.createSequentialGroup()
             .addComponent(jTextFieldDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -643,15 +667,14 @@ public class FenetrePrincipale extends javax.swing.JFrame
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 1381, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 1367, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 843, Short.MAX_VALUE)
-        .addContainerGap())
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(jPanelPanneau, javax.swing.GroupLayout.PREFERRED_SIZE, 830, Short.MAX_VALUE))
     );
 
     pack();
@@ -1106,7 +1129,12 @@ public class FenetrePrincipale extends javax.swing.JFrame
   }//GEN-LAST:event_formWindowClosing
 	
   private void SelectionJoueur(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SelectionJoueur
+		
 		int Row=((JTable)evt.getSource()).getSelectedRow();
+		
+		
+		// AVRIL 2020
+		// TODO: essayer de détecter le clic du milieu sur la frame et non la table...		
 		
 		if(evt.getButton()==2) 
 		{
@@ -1386,6 +1414,28 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			}
 		}
   }//GEN-LAST:event_clicsouris
+
+  private void jPanelPanneauEssaiClic(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jPanelPanneauEssaiClic
+  {//GEN-HEADEREND:event_jPanelPanneauEssaiClic
+    // AVRIL 2020
+		// DONE	 ^*^ 
+		if(evt.getButton()==2) 
+		{
+			ProceedMiddleClick();
+			//System.err.println("CLIC !!");
+		}
+  }//GEN-LAST:event_jPanelPanneauEssaiClic
+
+  private void formMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_formMouseClicked
+  {//GEN-HEADEREND:event_formMouseClicked
+    // AVRIL 2020
+		// DONE	 ^*^ 
+		if(evt.getButton()==2) 
+		{
+			ProceedMiddleClick();
+			//System.err.println("CLIC !!");
+		}
+  }//GEN-LAST:event_formMouseClicked
 	
 	private void ChargerCommentaires(int MatchID)
 	{
@@ -1633,7 +1683,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		param=param.replace("'", "\\'");
 		
 		// Il faut indiquer BINARY sinon 'David' sera la même chose que 'david' alors que ce sont deux joueurs différents !! (BUG avril 2020)
-		String SQLRequest="SELECT EnLvl FROM Matches WHERE idPlayer=(SELECT idPlayer FROM Players WHERE Alias= BINARY '"+param+"' ORDER BY idPlayer DESC LIMIT 1) ORDER BY StartTime DESC LIMIT 1";
+		String SQLRequest="SELECT EnLvl FROM Matches WHERE idPlayer = (SELECT idPlayer FROM Players WHERE Alias= BINARY '"+param+"' ORDER BY idPlayer DESC LIMIT 1) ORDER BY EnLvl DESC LIMIT 1";
 		Statement=LaConnection.createStatement();
 		Statement.execute(SQLRequest);
 			
@@ -1646,7 +1696,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		Resultats.close();
 		Statement.close();
 		
-		if(tmp!=-1) jComboBoxEnemyLevel.setSelectedIndex(tmp);
+		if(tmp!=-1) 
+		{
+			jComboBoxEnemyLevel.setSelectedIndex(tmp);
+		}
 	}
 	
 

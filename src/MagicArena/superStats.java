@@ -3,6 +3,7 @@ package MagicArena;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
@@ -1033,7 +1034,9 @@ public class superStats extends javax.swing.JFrame
 						replvl=classMatch.Levels.get(Integer.valueOf(Resultats.getString(6)));
 						degraded.setLevel(true, replvl);
 						
-						String tmp=Resultats.getString(7); // avril 2020
+						// avril 2020
+						
+						String tmp=Resultats.getString(7); 
 						degraded.setResult(tmp);
 						
 						tmp=Resultats.getDate(8).toString()+" "+Resultats.getTime(8).toString();
@@ -1948,14 +1951,13 @@ public class superStats extends javax.swing.JFrame
 	 */
 	private class UEPTableImpl extends UEPTable 
 	{
-
 		public UEPTableImpl(TableModel TheModel, TableCellRenderer TheRenderer) 
 		{
 			super(TheModel, TheRenderer);
-			addMouseListener(new MouseListener()
+			addMouseListener(new MouseAdapter()
 			{
 				@Override
-				public void mouseClicked(MouseEvent me)
+				public void mouseClicked(MouseEvent e)
 				{
 					int ligne=LaTable.getSelectedRow();
 					if(ligne>-1)
@@ -1970,30 +1972,6 @@ public class superStats extends javax.swing.JFrame
 							Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
 						}
 					}
-				}
-
-				@Override
-				public void mousePressed(MouseEvent me)
-				{
-					
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent me)
-				{
-					
-				}
-
-				@Override
-				public void mouseEntered(MouseEvent me)
-				{
-					
-				}
-
-				@Override
-				public void mouseExited(MouseEvent me)
-				{
-					
 				}
 			});
 		}
