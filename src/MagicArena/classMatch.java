@@ -37,7 +37,7 @@ public class classMatch
 	private final GregorianCalendar MatchLength;				// db Duration field
 	
 	private final String strPostfixes[]=new String[]{"Tier 4", "Tier 3", "Tier 2", "Tier 1"};
-	private final String strPrefixes[]=new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mystic"};   // platinium tier 1 <-> 15
+	private final String strPrefixes[]=new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mythic"};   // platinium tier 1 <-> 15
 	
 	private boolean bStart;
 	
@@ -85,7 +85,7 @@ public class classMatch
 		Levels.clear();
 		
 		//int cptLevel=0;
-		for(int cptPrefixes=0;cptPrefixes<strPrefixes.length;cptPrefixes++)
+		for(int cptPrefixes=0;cptPrefixes<strPrefixes.length-1;cptPrefixes++)
 		{
 			for(int cptPostfixes=0;cptPostfixes<strPostfixes.length;cptPostfixes++)
 			{
@@ -95,6 +95,7 @@ public class classMatch
 			}		
 		}
 		MatchLength=(GregorianCalendar)GregorianCalendar.getInstance();				
+		Levels.add(strPrefixes[5]);
 	}
 
 	// set methods
@@ -703,6 +704,35 @@ public class classMatch
 		}while(iBufferPosition<longueurtexte-1);
 		//System.err.println("END CALL");
 		return formatedtext;
+	}
+	
+	public int getMysticLevel(java.sql.Connection LaConnection,boolean param) throws SQLException
+	{
+		int tmp=-1;
+		String SQLRequest;
+		if(!LaConnection.isValid(1)) return tmp;
+		Statement =LaConnection.createStatement();
+		if(param) // je veux mon niveau
+		{
+			SQLRequest="SELECT PourcentagePl FROM Mythic WHERE idMatch="+idMatch;
+		}
+		else			// je veux celui de l'adversaire
+		{
+			SQLRequest="SELECT PourcentageEn FROM Mythic WHERE idMatch="+idMatch;
+		}
+		Statement.executeQuery(SQLRequest);
+		java.sql.ResultSet Resultats;
+		Resultats=Statement.getResultSet();
+		
+		if(Resultats.first())
+		{
+			tmp=Resultats.getInt(1);
+			
+		}
+		Resultats.close();
+		Statement.close();
+		
+		return tmp;
 	}
 	
 } // END CLASS

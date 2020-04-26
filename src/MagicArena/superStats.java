@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.BitSet;
 import java.util.LinkedList;
@@ -52,7 +53,7 @@ public class superStats extends javax.swing.JFrame
 		jCBEnemyLevel.removeAllItems();
 		jCBEnemyLevel.setSelectedIndex(-1);
 		
-		for(int cptPrefixes=0;cptPrefixes<strPrefixes.length;cptPrefixes++)
+		for(int cptPrefixes=0;cptPrefixes<strPrefixes.length-1;cptPrefixes++)
 		{
 			for(int cptPostfixes=0;cptPostfixes<strPostfixes.length;cptPostfixes++)
 			{
@@ -61,6 +62,8 @@ public class superStats extends javax.swing.JFrame
 				jCBEnemyLevel.addItem(Levels.get(cptLevel++));
 			}		
 		}
+		jCBEnemyLevel.addItem(strPrefixes[5]);
+		Levels.add(strPrefixes[5]);
 		jCBEnemyLevel.setSelectedIndex(-1);
 		jCBEnemyLevel.setToolTipText("Define the enemy level against which you need statistics");
 		
@@ -1984,8 +1987,24 @@ public class superStats extends javax.swing.JFrame
 				case ma_tablemodelmatch.NAME:		return "Match: "+String.valueOf(LesMatches.get(ligne).getMatchID())+" "+LesMatches.get(ligne).getBeginDate()+
 																							 " ["+LesMatches.get(ligne).getResults()+"]";
 				case ma_tablemodelmatch.COL:			return ((ma_Couleurs)ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.COL)).getBinaryString();
-				case ma_tablemodelmatch.ENLVL:		return Levels.get(Integer.valueOf(ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.ENLVL).toString()));
-				case ma_tablemodelmatch.MYLVL:		return Levels.get(Integer.valueOf(ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.MYLVL).toString()));
+				case ma_tablemodelmatch.ENLVL:		//return Levels.get(Integer.valueOf(ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.ENLVL).toString()));
+																				try
+																				{
+																					return TTTLevels(ligne,false);
+																				}
+																				catch(SQLException ex)
+																				{
+																					Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+																				}
+				case ma_tablemodelmatch.MYLVL:		//return Levels.get(Integer.valueOf(ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.MYLVL).toString()));
+																				try
+																				{
+																					return TTTLevels(ligne,true);
+																				}
+																				catch(SQLException ex)
+																				{
+																					Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+																				}
 				case ma_tablemodelmatch.SCP:		
 																				try 
 																				{
@@ -1998,6 +2017,22 @@ public class superStats extends javax.swing.JFrame
 				default: return "";
 			}
 		}
+
+		private String TTTLevels(int ligne, boolean param) throws SQLException
+		{
+			int level;
+			if(param)
+				level=Integer.valueOf(ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.MYLVL).toString());
+			else
+				level=Integer.valueOf(ModeleTableMatch.getValueAt(ligne, ma_tablemodelmatch.ENLVL).toString());
+			if(level==20)
+			{
+				int pourcentage=LesMatches.get(ligne).getMysticLevel(LaConnection, param);
+				if(pourcentage<0) pourcentage=0;
+				return Levels.get(level)+" ("+String.format("%02d %%",pourcentage)+")";
+			}
+			else return Levels.get(level);
+		}
 	}
 
 	private ma_Couleurs enemyColors;
@@ -2007,7 +2042,7 @@ public class superStats extends javax.swing.JFrame
 	private LinkedList<Object> MDMatches;
 	private LinkedList<classMatch> LesMatches=new LinkedList<>();
 	private final String strPostfixes[]=new String[]{"Tier 4", "Tier 3", "Tier 2", "Tier 1"};
-	private final String strPrefixes[]=new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mystic"};   // platinium tier 1 <-> 15
+	private final String strPrefixes[]=new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mythic"};   // platinium tier 1 <-> 15
 	
 	private final int idHelper[];
 	private String selectedPlayer;

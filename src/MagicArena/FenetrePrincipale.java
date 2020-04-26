@@ -1,6 +1,8 @@
 package MagicArena;
 
+import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
 import java.sql.SQLException;
 import java.util.BitSet;
 import java.util.GregorianCalendar;
@@ -13,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import org.mariadb.jdbc.Driver;
 
 
@@ -30,12 +33,12 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	@SuppressWarnings("OverridableMethodCallInConstructor")
 	public FenetrePrincipale() throws SQLException 
 	{
-		lesIntervales=new UEPElement[]{new UEPElement(0,3),new UEPElement(4,7),new UEPElement(8,11),new UEPElement(12,15),new UEPElement(16,19),new UEPElement(20,23)};
+		lesIntervales=new UEPElement[]{new UEPElement(0,3),new UEPElement(4,7),new UEPElement(8,11),new UEPElement(12,15),new UEPElement(16,19),new UEPElement(20,20)};
 		this.innerModel = new ma_tablemodelmatch();
 		this.lesdonnees = new LinkedList<>();
 		this.listeEnnemis = new LinkedList<>();
 		this.strPostfixes = new String[]{"Tier 4", "Tier 3", "Tier 2", "Tier 1"};
-		this.strPrefixes = new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mystic"};
+		this.strPrefixes = new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mythic"};
 		
 		verifLevels=new UEPInterval(lesIntervales);
 		
@@ -70,7 +73,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		jComboBoxMyLevel.removeAllItems();
 		
 		int cptLevel=0;
-		for(int cptPrefixes=0;cptPrefixes<strPrefixes.length;cptPrefixes++)
+		for(int cptPrefixes=0;cptPrefixes<strPrefixes.length-1;cptPrefixes++)
 		{
 			for(int cptPostfixes=0;cptPostfixes<strPostfixes.length;cptPostfixes++)
 			{
@@ -81,6 +84,11 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				cptLevel++;
 			}
 		}
+		
+		// ajouter le niveau mythic
+		jComboBoxMyLevel.addItem(strPrefixes[5]);
+		jComboBoxEnemyLevel.addItem(strPrefixes[5]);
+		Levels.add(strPrefixes[5]);
 	
 		// JTable populating
 		
@@ -102,25 +110,47 @@ public class FenetrePrincipale extends javax.swing.JFrame
 					@Override
 					public String getFromModel(int ligne, int colonne)
 					{
-						switch(colonne)
+						try
 						{
-							case ma_tablemodelmatch.NAME:		return "Match: "+String.valueOf(ma_Statistiques.ListeDesMatches.get(ligne).getMatchID())+" "+
-																											ma_Statistiques.ListeDesMatches.get(ligne).getBeginDate()+
-																											" ["+ma_Statistiques.ListeDesMatches.get(ligne).getResults()+"]";
-							case ma_tablemodelmatch.COL:			return ((ma_Couleurs)innerModel.getValueAt(ligne, ma_tablemodelmatch.COL)).getBinaryString();
-							case ma_tablemodelmatch.ENLVL:		return Levels.get(Integer.valueOf(innerModel.getValueAt(ligne, ma_tablemodelmatch.ENLVL).toString()));
-							case ma_tablemodelmatch.MYLVL:		return Levels.get(Integer.valueOf(innerModel.getValueAt(ligne, ma_tablemodelmatch.MYLVL).toString()));
-							case ma_tablemodelmatch.SCP:		
-																							try 
-																							{
+							switch(colonne)
+							{
+								case ma_tablemodelmatch.NAME:		return "Match: "+String.valueOf(ma_Statistiques.ListeDesMatches.get(ligne).getMatchID())+" "+
+																								ma_Statistiques.ListeDesMatches.get(ligne).getBeginDate()+
+																								" ["+ma_Statistiques.ListeDesMatches.get(ligne).getResults()+"]";
+								case ma_tablemodelmatch.COL:			return ((ma_Couleurs)innerModel.getValueAt(ligne, ma_tablemodelmatch.COL)).getBinaryString();
+								case ma_tablemodelmatch.ENLVL:		// return Levels.get(Integer.valueOf(innerModel.getValueAt(ligne, ma_tablemodelmatch.ENLVL).toString()));
+																								return TTTLevels(ligne,false);
+								case ma_tablemodelmatch.MYLVL:		// return Levels.get(Integer.valueOf(innerModel.getValueAt(ligne, ma_tablemodelmatch.MYLVL).toString()));
+																								return TTTLevels(ligne,true);
+								case ma_tablemodelmatch.SCP:		
 																								return ma_Statistiques.ListeDesMatches.get(ligne).getComments(LaConnection);
-																							} 
-																							catch(SQLException ex) 
-																							{
-																								Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
-																							}
-							default: return "";
+																								 
+																								
+								default: return "";
+							}
 						}
+						catch(SQLException ex) 
+						{
+							Logger.getLogger(superStats.class.getName()).log(Level.SEVERE, null, ex);
+						}
+						return "";
+					}
+
+					private String TTTLevels(int ligne,boolean param) throws SQLException
+					{
+						// throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+						int level;
+						if(param)
+							level=Integer.valueOf(innerModel.getValueAt(ligne, ma_tablemodelmatch.MYLVL).toString());
+						else
+							level=Integer.valueOf(innerModel.getValueAt(ligne, ma_tablemodelmatch.ENLVL).toString());
+						if(level==20)
+						{
+							int pourcentage=ma_Statistiques.ListeDesMatches.get(ligne).getMysticLevel(LaConnection, param);
+							if(pourcentage<0) pourcentage=0;
+							return Levels.get(level)+" ("+String.format("%02d %%",pourcentage)+")";
+						}
+						else return Levels.get(level);
 					}
 				};
 				
@@ -189,6 +219,25 @@ public class FenetrePrincipale extends javax.swing.JFrame
 					}
 				});
 				
+				// TEST avril 2020
+				
+						JTableHeader header = jTablePlayer.getTableHeader();
+						header.addMouseListener(new MouseAdapter()
+						{
+							@Override
+							public void mouseClicked(java.awt.event.MouseEvent evt)
+							{
+								Point position=evt.getPoint();
+								int colonne=jTableMatches.columnAtPoint(position);
+								//System.err.println("Colonne: "+colonne);
+								if(colonne==5)
+								{
+									System.err.println("CLIC !!");
+									// TODO: faire un tri sur le nombre de rencontres ordre décroissant ou croissant
+								}
+							}
+						});
+				
 
 				((DefaultTableCellRenderer) jTableMatches.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
@@ -198,6 +247,18 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				jTextAreaCommentaires.setEditable(false);
 				setMyLevel();
 				setEnLevel();
+				
+				if(jComboBoxEnemyLevel.getSelectedIndex()==20 || jComboBoxMyLevel.getSelectedIndex()==20)
+				{
+					// Traitement du niveau spécial Mythic
+					jTFEnMythicLevel.setVisible(true);
+					jTFMyMythicLevel.setVisible(true);
+				}
+				else
+				{
+					jTFEnMythicLevel.setVisible(false);
+					jTFMyMythicLevel.setVisible(false);
+				}
 			}
 		} 
 		catch (SQLException ex) 
@@ -245,6 +306,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jLabelManas = new javax.swing.JLabel();
     jStatsManasTours = new javax.swing.JLabel();
     jScrollPaneMatchesExt = new javax.swing.JScrollPane();
+    jTFMyMythicLevel = new javax.swing.JTextField();
+    jTFEnMythicLevel = new javax.swing.JTextField();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setTitle("MagicArena Stats v0.2.2020");
@@ -415,15 +478,18 @@ public class FenetrePrincipale extends javax.swing.JFrame
     });
 
     jTextFieldEnemyScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
+    jTextFieldEnemyScore.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTextFieldEnemyScore.setText("20");
     jTextFieldEnemyScore.setToolTipText("Set player score");
 
     jTextFieldMyScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
+    jTextFieldMyScore.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTextFieldMyScore.setText("20");
     jTextFieldMyScore.setToolTipText("Set my score");
 
     jTextFieldResultText.setEditable(false);
     jTextFieldResultText.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
+    jTextFieldResultText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTextFieldResultText.setText("Defeat");
     jTextFieldResultText.setToolTipText("Results");
 
@@ -556,6 +622,21 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jScrollPaneMatchesExt.setMinimumSize(new java.awt.Dimension(25, 280));
     jScrollPaneMatchesExt.setPreferredSize(new java.awt.Dimension(6, 280));
 
+    jTFMyMythicLevel.setBackground(new java.awt.Color(0, 204, 102));
+    jTFMyMythicLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
+    jTFMyMythicLevel.setForeground(new java.awt.Color(0, 153, 153));
+    jTFMyMythicLevel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+    jTFMyMythicLevel.setText("0");
+    jTFMyMythicLevel.setToolTipText("Your Mythic Level");
+
+    jTFEnMythicLevel.setBackground(new java.awt.Color(255, 51, 51));
+    jTFEnMythicLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
+    jTFEnMythicLevel.setForeground(new java.awt.Color(0, 255, 255));
+    jTFEnMythicLevel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+    jTFEnMythicLevel.setText("0");
+    jTFEnMythicLevel.setToolTipText("Enemy Mythic Level");
+    jTFEnMythicLevel.setAutoscrolls(false);
+
     javax.swing.GroupLayout jPanelPanneauLayout = new javax.swing.GroupLayout(jPanelPanneau);
     jPanelPanneau.setLayout(jPanelPanneauLayout);
     jPanelPanneauLayout.setHorizontalGroup(
@@ -584,18 +665,23 @@ public class FenetrePrincipale extends javax.swing.JFrame
             .addContainerGap()
             .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
               .addGroup(jPanelPanneauLayout.createSequentialGroup()
-                .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                  .addGroup(jPanelPanneauLayout.createSequentialGroup()
-                    .addComponent(jCheckBoxNoir)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jCheckBoxRouge)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jCheckBoxVert)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jCheckBoxBleu)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jCheckBoxBlanc))
-                  .addComponent(jTextField_enemy, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                  .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addGroup(jPanelPanneauLayout.createSequentialGroup()
+                      .addComponent(jCheckBoxNoir)
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addComponent(jCheckBoxRouge)
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addComponent(jCheckBoxVert)
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addComponent(jCheckBoxBleu)
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addComponent(jCheckBoxBlanc))
+                    .addComponent(jTextField_enemy, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPanneauLayout.createSequentialGroup()
+                    .addComponent(jTFEnMythicLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTFMyMythicLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPanePlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
               .addGroup(jPanelPanneauLayout.createSequentialGroup()
@@ -614,7 +700,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jPanelPanneauLayout.setVerticalGroup(
       jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanelPanneauLayout.createSequentialGroup()
-        .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
           .addGroup(jPanelPanneauLayout.createSequentialGroup()
             .addComponent(jTextField_enemy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -630,10 +716,14 @@ public class FenetrePrincipale extends javax.swing.JFrame
             .addComponent(jComboBoxMyLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(jPanelResults, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(32, 32, 32)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-              .addComponent(jLabelManas)
-              .addComponent(jSpinnerManaNoires, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addComponent(jTFEnMythicLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jTFMyMythicLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+              .addComponent(jSpinnerManaNoires, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabelManas))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
               .addComponent(jLabelTours)
@@ -823,6 +913,22 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				}
 			}
 			
+			// 26 AVRIL 2020 (date à laquelle j'ai atteint le niveau Mythic ^^)
+			
+			if(cematch.getLevel(false)==20 && cematch.getLevel(true)==20)
+			{
+				if(jTFEnMythicLevel.getText().isEmpty() || jTFMyMythicLevel.getText().isEmpty())
+				{
+					dlgMessage="Mythic levels are not set :{";
+					answer=JOptionPane.showConfirmDialog(getParent(), dlgMessage, "Are you sure ?", JOptionPane.YES_NO_OPTION);
+					if(answer==JOptionPane.NO_OPTION || answer==JOptionPane.CANCEL_OPTION)
+					{
+						System.err.println("Aborted !!");
+						return;
+					}
+				}
+			}
+			
 			// Pour éviter tout soucis !!
 			
 			if(jTextField_enemy.getText().isEmpty()) 
@@ -988,6 +1094,13 @@ public class FenetrePrincipale extends javax.swing.JFrame
 					ceConnard.insertdb(LaConnection);
 					System.err.println("[FenetrePrincipale] insertdb DONE !!");
 					
+					// 24 avril 2020
+					if(cematch.getLevel(false)==20) // Traitement du niveau spécial Mythic
+					{
+						// Pour ne pas ajouter de la complexité le niveau mythic sera géré dans une table à part...
+						ComputeMythicFixture(cematch);
+					}
+					
 					// Lié au bug de la recherche
 					// JE NE SAIS PAS POURQUOI "bidon" est déjà dans la liste des ennemis alors que je ne lui ai rien demandé ???????
 					// En effet, mis à part dans PopulateTable() je ne fais aucun accès à listeEnnemis.add() autre part (?????)
@@ -998,7 +1111,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 					PopulateTable(); // ici c'est "normal" vu que je vais lire la base de données (ce que je voulais éviter mais apparemment ça ne marche que comme ça :{ )
 					
 				}
-				
+								
 				// Normalement que ce soit une insertion ou un update ceConnard est connu...
 				
 				cematch.setDBPlayerID(ceConnard.getSQLid());
@@ -1015,7 +1128,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				switch(MatchResult)
 				{
 					case 1:	Statistiques.computeResults('D');
-									ToolTipForStats="Defeats suffered by the player against "+cematch.getName();
+									ToolTipForStats="Defeats suffered by the player against "+cematch.getName(); // TODO: vérifier que ce soit utile... depuis UEPTable... 
 									break;
 					case 2: Statistiques.computeResults('C');
 									ToolTipForStats="Concedes by the player "+cematch.getName();
@@ -1742,8 +1855,30 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		
 		if(tmp!=-1) jComboBoxEnemyLevel.setSelectedIndex(tmp);
 	}
-
-
+	
+	private void ComputeMythicFixture(classMatch param) throws SQLException
+	{
+		// besoin de l'identifiant du match
+		int idMatch=param.getMatchID();
+		
+		
+		
+		System.err.println("ComputeMythicFixture: idMatch "+idMatch);
+		
+		if(LaConnection.isValid(1))
+		{
+			Statement=LaConnection.createStatement();
+			
+			String SQLRequest="INSERT INTO Mythic (idMatch,PourcentageEn,PourcentagePl) VALUES (";
+			SQLRequest+=idMatch+",";
+			SQLRequest+=jTFEnMythicLevel.getText()+",";
+			SQLRequest+=jTFMyMythicLevel.getText()+")";
+			
+			Statement.execute(SQLRequest);
+			Statement.close();
+		}
+	}
+	
   // Variables declaration - do not modify//GEN-BEGIN:variables
   public javax.swing.JButton jButtonAddTurn;
   public javax.swing.JButton jButtonUpdate;
@@ -1764,6 +1899,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
   public javax.swing.JSlider jSliderResults;
   private javax.swing.JSpinner jSpinnerManaNoires;
   private javax.swing.JLabel jStatsManasTours;
+  private javax.swing.JTextField jTFEnMythicLevel;
+  private javax.swing.JTextField jTFMyMythicLevel;
   public javax.swing.JTable jTablePlayer;
   public javax.swing.JTextArea jTextAreaCommentaires;
   public javax.swing.JTextField jTextFieldDate;
@@ -1838,6 +1975,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	private UEPTable jTableMatches;
 	private UEPInterval verifLevels;
 	private UEPElement[] lesIntervales;
+
+	
 	
 }
 
