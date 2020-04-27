@@ -39,7 +39,7 @@ public class classMatch
 	private final String strPostfixes[]=new String[]{"Tier 4", "Tier 3", "Tier 2", "Tier 1"};
 	private final String strPrefixes[]=new String[]{"Bronze", "Silver", "Gold", "Platinium", "Diamond","Mythic"};   // platinium tier 1 <-> 15
 	
-	private boolean bStart;
+	//private boolean bStart;
 	
 	// Pour les accès aux bases de données
 	
@@ -76,7 +76,7 @@ public class classMatch
 	 */
 	public classMatch()
 	{
-		this.bStart = false;
+		//this.bStart = false;
 		Levels=new LinkedList<>();
 		MatchColors=new BitSet(5);
 		dateDebut=(GregorianCalendar)GregorianCalendar.getInstance();
@@ -203,7 +203,7 @@ public class classMatch
 	public void setBegin()
 	{
 		dateDebut=(GregorianCalendar)GregorianCalendar.getInstance();
-		bStart=true;
+		//bStart=true;
 	}
 	
 	/**
@@ -217,7 +217,7 @@ public class classMatch
 		{
 			setMatchLength();
 		}
-		bStart=false;
+		//bStart=false;
 	}
 	
 	/**

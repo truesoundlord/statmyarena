@@ -1932,10 +1932,10 @@ public class superStats extends javax.swing.JFrame
 					if(tmp==paramLevel) 
 					{
 						listedesresultats.add(tmp);
+						if(listedesresultats.size()>leplusgrand) leplusgrand=listedesresultats.size();   // DEBUG 27 AVRIL 2020
 					}
 					else
 					{
-						if(listedesresultats.size()>leplusgrand) leplusgrand=listedesresultats.size();
 						listedesresultats.clear();																												// ... vu qu'il ne s'agit plus de la même valeur on doit vider la liste...
 					}
 				}while(Resultats.next());
@@ -2117,6 +2117,4 @@ public class superStats extends javax.swing.JFrame
   public javax.swing.JTextField jTFLastRealWin;
   public javax.swing.JTextField jTFVictories;
   // End of variables declaration//GEN-END:variables
-
-
 }

@@ -1860,9 +1860,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	{
 		// besoin de l'identifiant du match
 		int idMatch=param.getMatchID();
-		
-		
-		
 		System.err.println("ComputeMythicFixture: idMatch "+idMatch);
 		
 		if(LaConnection.isValid(1))
@@ -1961,7 +1958,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	private defMatch innerRenderer=new defMatch();
 	private ma_tablemodelmatch innerModel;
 	
-	
 	// SQL related
 	
 	private Driver LeDriver;																			// Objet ODBC représentant le pilote 
@@ -1975,8 +1971,5 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	private UEPTable jTableMatches;
 	private UEPInterval verifLevels;
 	private UEPElement[] lesIntervales;
-
-	
-	
 }
 
