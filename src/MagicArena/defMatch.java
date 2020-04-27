@@ -121,7 +121,7 @@ public class defMatch extends javax.swing.JPanel implements TableCellRenderer
 																			
 																			break;
 		}
-		LaTable.setToolTipText(FenetrePrincipale.ToolTipForStats);
+		//LaTable.setToolTipText(FenetrePrincipale.ToolTipForStats);
 		this.validate();
 		return this;
 	}

@@ -107,7 +107,7 @@ public class classEnemy implements java.io.Serializable
 		return Clashes;
 	}
 	
-	public int getSQLid()
+	public int getPlayerID()
 	{
 		return SQLid;
 	}

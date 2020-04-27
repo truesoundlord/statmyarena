@@ -251,6 +251,7 @@
             <Property name="focusTraversalPolicyProvider" type="boolean" value="true"/>
           </Properties>
           <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_enemyFocusLost"/>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="displayAsTyped"/>
           </Events>
           <AuxValues>
@@ -534,6 +535,9 @@
                 <Property name="text" type="java.lang.String" value="20"/>
                 <Property name="toolTipText" type="java.lang.String" value="Set player score"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldEnemyScoreKeyPressed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
@@ -547,6 +551,9 @@
                 <Property name="text" type="java.lang.String" value="20"/>
                 <Property name="toolTipText" type="java.lang.String" value="Set my score"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldMyScoreKeyPressed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
@@ -797,6 +804,10 @@
             <Property name="text" type="java.lang.String" value="0"/>
             <Property name="toolTipText" type="java.lang.String" value="Your Mythic Level"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTFMyMythicLevelFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFMyMythicLevelKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFEnMythicLevel">
           <Properties>
@@ -814,6 +825,10 @@
             <Property name="toolTipText" type="java.lang.String" value="Enemy Mythic Level"/>
             <Property name="autoscrolls" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTFEnMythicLevelFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFEnMythicLevelKeyPressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -351,6 +351,13 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextField_enemy.setToolTipText("Player name");
     jTextField_enemy.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
     jTextField_enemy.setFocusTraversalPolicyProvider(true);
+    jTextField_enemy.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusLost(java.awt.event.FocusEvent evt)
+      {
+        jTextField_enemyFocusLost(evt);
+      }
+    });
     jTextField_enemy.addKeyListener(new java.awt.event.KeyAdapter()
     {
       public void keyReleased(java.awt.event.KeyEvent evt)
@@ -481,11 +488,25 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextFieldEnemyScore.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTextFieldEnemyScore.setText("20");
     jTextFieldEnemyScore.setToolTipText("Set player score");
+    jTextFieldEnemyScore.addKeyListener(new java.awt.event.KeyAdapter()
+    {
+      public void keyPressed(java.awt.event.KeyEvent evt)
+      {
+        jTextFieldEnemyScoreKeyPressed(evt);
+      }
+    });
 
     jTextFieldMyScore.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jTextFieldMyScore.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTextFieldMyScore.setText("20");
     jTextFieldMyScore.setToolTipText("Set my score");
+    jTextFieldMyScore.addKeyListener(new java.awt.event.KeyAdapter()
+    {
+      public void keyPressed(java.awt.event.KeyEvent evt)
+      {
+        jTextFieldMyScoreKeyPressed(evt);
+      }
+    });
 
     jTextFieldResultText.setEditable(false);
     jTextFieldResultText.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
@@ -628,6 +649,20 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTFMyMythicLevel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTFMyMythicLevel.setText("0");
     jTFMyMythicLevel.setToolTipText("Your Mythic Level");
+    jTFMyMythicLevel.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusLost(java.awt.event.FocusEvent evt)
+      {
+        jTFMyMythicLevelFocusLost(evt);
+      }
+    });
+    jTFMyMythicLevel.addKeyListener(new java.awt.event.KeyAdapter()
+    {
+      public void keyPressed(java.awt.event.KeyEvent evt)
+      {
+        jTFMyMythicLevelKeyPressed(evt);
+      }
+    });
 
     jTFEnMythicLevel.setBackground(new java.awt.Color(255, 51, 51));
     jTFEnMythicLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
@@ -636,6 +671,20 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTFEnMythicLevel.setText("0");
     jTFEnMythicLevel.setToolTipText("Enemy Mythic Level");
     jTFEnMythicLevel.setAutoscrolls(false);
+    jTFEnMythicLevel.addFocusListener(new java.awt.event.FocusAdapter()
+    {
+      public void focusLost(java.awt.event.FocusEvent evt)
+      {
+        jTFEnMythicLevelFocusLost(evt);
+      }
+    });
+    jTFEnMythicLevel.addKeyListener(new java.awt.event.KeyAdapter()
+    {
+      public void keyPressed(java.awt.event.KeyEvent evt)
+      {
+        jTFEnMythicLevelKeyPressed(evt);
+      }
+    });
 
     javax.swing.GroupLayout jPanelPanneauLayout = new javax.swing.GroupLayout(jPanelPanneau);
     jPanelPanneau.setLayout(jPanelPanneauLayout);
@@ -1094,12 +1143,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 					ceConnard.insertdb(LaConnection);
 					System.err.println("[FenetrePrincipale] insertdb DONE !!");
 					
-					// 24 avril 2020
-					if(cematch.getLevel(false)==20) // Traitement du niveau spécial Mythic
-					{
-						// Pour ne pas ajouter de la complexité le niveau mythic sera géré dans une table à part...
-						ComputeMythicFixture(cematch);
-					}
+				
 					
 					// Lié au bug de la recherche
 					// JE NE SAIS PAS POURQUOI "bidon" est déjà dans la liste des ennemis alors que je ne lui ai rien demandé ???????
@@ -1114,10 +1158,18 @@ public class FenetrePrincipale extends javax.swing.JFrame
 								
 				// Normalement que ce soit une insertion ou un update ceConnard est connu...
 				
-				cematch.setDBPlayerID(ceConnard.getSQLid());
-				cematch.SaveMeToDB(LaConnection);
+				cematch.setDBPlayerID(ceConnard.getPlayerID());
+				cematch.SaveMeToDB(LaConnection);																				// l'id du match est connue ici !!
 				System.err.println("[FenetrePrincipale] SaveMeToDB DONE !!");
-				System.err.println("DB id: "+ceConnard.getSQLid());
+				System.err.println("DB id Players: "+ceConnard.getPlayerID());
+				System.err.println("DB id Matches: "+cematch.getMatchID());					
+				
+					// 24 avril 2020
+					if(cematch.getLevel(false)==20) // Traitement du niveau spécial Mythic
+					{
+						// Pour ne pas ajouter de la complexité le niveau mythic sera géré dans une table à part...
+						ComputeMythicFixture(cematch);
+					}
 				
 				jTextFieldDate.setText("");
 				jTextFieldMatchDuration.setText("");
@@ -1128,16 +1180,16 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				switch(MatchResult)
 				{
 					case 1:	Statistiques.computeResults('D');
-									ToolTipForStats="Defeats suffered by the player against "+cematch.getName(); // TODO: vérifier que ce soit utile... depuis UEPTable... 
+									//ToolTipForStats="Defeats suffered by the player against "+cematch.getName(); // TODO: vérifier que ce soit utile... depuis UEPTable... 
 									break;
 					case 2: Statistiques.computeResults('C');
-									ToolTipForStats="Concedes by the player "+cematch.getName();
+									//ToolTipForStats="Concedes by the player "+cematch.getName();
 									break;
 					case 3:	Statistiques.computeResults('V');
-									ToolTipForStats="Victories againsts the player "+cematch.getName();
+									//ToolTipForStats="Victories againsts the player "+cematch.getName();
 									break;
 					case 4: Statistiques.computeResults('E');
-									ToolTipForStats="Draws with the player "+cematch.getName();
+									//ToolTipForStats="Draws with the player "+cematch.getName();
 									break;
 				}
 				
@@ -1148,7 +1200,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				jTextFieldMatchDuration.setText("Match duration: "+cematch.getDuration());
 				jTextFieldMatchTurns.setText("Turns: "+cematch.getTurns());
 				jTextFieldDate.setToolTipText(prefix);
-				
+				jTFMyMythicLevel.setText("0");
 			} 
 			catch (SQLException ex) 
 			{
@@ -1241,6 +1293,11 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		}
   }//GEN-LAST:event_formWindowClosing
 	
+	/**
+	 * This method helps the player to select a player in the list
+	 * <The begin date is set HERE>
+	 * @param evt 
+	 */
   private void SelectionJoueur(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SelectionJoueur
 		
 		int Row=((JTable)evt.getSource()).getSelectedRow();
@@ -1326,7 +1383,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			System.err.println(ex.getCause());
 		}
 		jTextFieldDate.setToolTipText("Fixture date");
-		ToolTipForStats="Fixtures with player "+jTextField_enemy.getText();
+		//ToolTipForStats="Fixtures with player "+jTextField_enemy.getText();
   }//GEN-LAST:event_SelectionJoueur
 
 	 private void SelectionMatch(java.awt.event.MouseEvent evt) 
@@ -1382,6 +1439,11 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		}
   }//GEN-LAST:event_AjouterTour
 	
+	/**
+	 * As we type there is a selection in the list related to the pattern typed
+	 * <The Begin date is set here>
+	 * @param evt 
+	 */
   private void displayAsTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_displayAsTyped
     String seekfor=jTextField_enemy.getText();
 		boolean bFound=false;
@@ -1549,7 +1611,46 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			//System.err.println("CLIC !!");
 		}
   }//GEN-LAST:event_formMouseClicked
-	
+
+  private void jTFEnMythicLevelFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTFEnMythicLevelFocusLost
+  {//GEN-HEADEREND:event_jTFEnMythicLevelFocusLost
+    jTFMyMythicLevel.requestFocus();
+  }//GEN-LAST:event_jTFEnMythicLevelFocusLost
+
+  private void jTFMyMythicLevelFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTFMyMythicLevelFocusLost
+  {//GEN-HEADEREND:event_jTFMyMythicLevelFocusLost
+    jTextField_enemy.requestFocus();
+  }//GEN-LAST:event_jTFMyMythicLevelFocusLost
+
+  private void jTextFieldEnemyScoreKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTextFieldEnemyScoreKeyPressed
+  {//GEN-HEADEREND:event_jTextFieldEnemyScoreKeyPressed
+    if(evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') jTextFieldEnemyScore.setEditable(true);
+		else jTextFieldEnemyScore.setEditable(false);
+  }//GEN-LAST:event_jTextFieldEnemyScoreKeyPressed
+
+  private void jTextFieldMyScoreKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTextFieldMyScoreKeyPressed
+  {//GEN-HEADEREND:event_jTextFieldMyScoreKeyPressed
+    if(evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') jTextFieldMyScore.setEditable(true);
+		else jTextFieldMyScore.setEditable(false);
+  }//GEN-LAST:event_jTextFieldMyScoreKeyPressed
+
+  private void jTFEnMythicLevelKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTFEnMythicLevelKeyPressed
+  {//GEN-HEADEREND:event_jTFEnMythicLevelKeyPressed
+    if(evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') jTFEnMythicLevel.setEditable(true);
+		else jTFEnMythicLevel.setEditable(false);
+  }//GEN-LAST:event_jTFEnMythicLevelKeyPressed
+
+  private void jTFMyMythicLevelKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTFMyMythicLevelKeyPressed
+  {//GEN-HEADEREND:event_jTFMyMythicLevelKeyPressed
+	if(evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') jTFMyMythicLevel.setEditable(true);
+		else jTFMyMythicLevel.setEditable(false);    
+  }//GEN-LAST:event_jTFMyMythicLevelKeyPressed
+
+  private void jTextField_enemyFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTextField_enemyFocusLost
+  {//GEN-HEADEREND:event_jTextField_enemyFocusLost
+    jTFEnMythicLevel.requestFocus();
+  }//GEN-LAST:event_jTextField_enemyFocusLost
+		
 	private void ChargerCommentaires(int MatchID)
 	{
 		if(jTextAreaCommentaires.isEditable())
@@ -1932,7 +2033,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	
 	public static int lastIndexForMyLevel=-1;											// (???) ancien indice concernant mon niveau	 
 	public static int lastIndexForEnemyLevel=-1;									// (???) ancien indice concernant le niveau de l'ennemi 
-	public static String ToolTipForStats;													// (???) Message pour la JTable de ma_Statistiques (defMatch)	 	
+	//public static String ToolTipForStats;													// (???) Message pour la JTable de ma_Statistiques (defMatch)	 	
 		
 	public static classEnemy ceConnard;														// Nouvel ennemi 
 	public static classMatch cematch;															// Représente le match en cours... 
