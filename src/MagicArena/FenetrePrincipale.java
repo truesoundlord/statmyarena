@@ -2,6 +2,7 @@ package MagicArena;
 
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.sql.SQLException;
 import java.util.BitSet;
@@ -351,13 +352,6 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextField_enemy.setToolTipText("Player name");
     jTextField_enemy.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
     jTextField_enemy.setFocusTraversalPolicyProvider(true);
-    jTextField_enemy.addFocusListener(new java.awt.event.FocusAdapter()
-    {
-      public void focusLost(java.awt.event.FocusEvent evt)
-      {
-        jTextField_enemyFocusLost(evt);
-      }
-    });
     jTextField_enemy.addKeyListener(new java.awt.event.KeyAdapter()
     {
       public void keyReleased(java.awt.event.KeyEvent evt)
@@ -645,17 +639,10 @@ public class FenetrePrincipale extends javax.swing.JFrame
 
     jTFMyMythicLevel.setBackground(new java.awt.Color(0, 204, 102));
     jTFMyMythicLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
-    jTFMyMythicLevel.setForeground(new java.awt.Color(0, 153, 153));
+    jTFMyMythicLevel.setForeground(new java.awt.Color(0, 102, 102));
     jTFMyMythicLevel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTFMyMythicLevel.setText("0");
     jTFMyMythicLevel.setToolTipText("Your Mythic Level");
-    jTFMyMythicLevel.addFocusListener(new java.awt.event.FocusAdapter()
-    {
-      public void focusLost(java.awt.event.FocusEvent evt)
-      {
-        jTFMyMythicLevelFocusLost(evt);
-      }
-    });
     jTFMyMythicLevel.addKeyListener(new java.awt.event.KeyAdapter()
     {
       public void keyPressed(java.awt.event.KeyEvent evt)
@@ -666,18 +653,11 @@ public class FenetrePrincipale extends javax.swing.JFrame
 
     jTFEnMythicLevel.setBackground(new java.awt.Color(255, 51, 51));
     jTFEnMythicLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
-    jTFEnMythicLevel.setForeground(new java.awt.Color(0, 255, 255));
+    jTFEnMythicLevel.setForeground(new java.awt.Color(249, 252, 252));
     jTFEnMythicLevel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTFEnMythicLevel.setText("0");
     jTFEnMythicLevel.setToolTipText("Enemy Mythic Level");
     jTFEnMythicLevel.setAutoscrolls(false);
-    jTFEnMythicLevel.addFocusListener(new java.awt.event.FocusAdapter()
-    {
-      public void focusLost(java.awt.event.FocusEvent evt)
-      {
-        jTFEnMythicLevelFocusLost(evt);
-      }
-    });
     jTFEnMythicLevel.addKeyListener(new java.awt.event.KeyAdapter()
     {
       public void keyPressed(java.awt.event.KeyEvent evt)
@@ -705,8 +685,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
                 .addGroup(jPanelPanneauLayout.createSequentialGroup()
                   .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelTours, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelManas, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                  .addGap(18, 18, 18)
+                    .addComponent(jLabelManas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                   .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonAddTurn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSpinnerManaNoires))))))
@@ -770,7 +750,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
               .addComponent(jTFEnMythicLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(jTFMyMythicLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+            .addGroup(jPanelPanneauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(jSpinnerManaNoires, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(jLabelManas))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1200,7 +1180,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 				jTextFieldMatchDuration.setText("Match duration: "+cematch.getDuration());
 				jTextFieldMatchTurns.setText("Turns: "+cematch.getTurns());
 				jTextFieldDate.setToolTipText(prefix);
-				jTFMyMythicLevel.setText("0");
+				//jTFMyMythicLevel.setText("0");
 			} 
 			catch (SQLException ex) 
 			{
@@ -1227,6 +1207,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			// ne pas oublier l'objet enemyColors...
 			enemyColors.DeckColors=new BitSet(5);  
 			jSpinnerManaNoires.setValue(0);
+			jTFEnMythicLevel.setText("0");
 			
 			jTextAreaCommentaires.setText("");
 			jTextAreaCommentaires.setEditable(true);
@@ -1612,44 +1593,41 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		}
   }//GEN-LAST:event_formMouseClicked
 
-  private void jTFEnMythicLevelFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTFEnMythicLevelFocusLost
-  {//GEN-HEADEREND:event_jTFEnMythicLevelFocusLost
-    jTFMyMythicLevel.requestFocus();
-  }//GEN-LAST:event_jTFEnMythicLevelFocusLost
-
-  private void jTFMyMythicLevelFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTFMyMythicLevelFocusLost
-  {//GEN-HEADEREND:event_jTFMyMythicLevelFocusLost
-    jTextField_enemy.requestFocus();
-  }//GEN-LAST:event_jTFMyMythicLevelFocusLost
-
   private void jTextFieldEnemyScoreKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTextFieldEnemyScoreKeyPressed
   {//GEN-HEADEREND:event_jTextFieldEnemyScoreKeyPressed
-    if(evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') jTextFieldEnemyScore.setEditable(true);
+    if(	evt.getKeyChar() >= '0' && evt.getKeyChar() <='9' || 
+				evt.getKeyCode()==KeyEvent.VK_BACK_SPACE || 
+				evt.getKeyCode()==KeyEvent.VK_DELETE || 
+				evt.getKeyCode()==KeyEvent.VK_MINUS) jTextFieldEnemyScore.setEditable(true);
 		else jTextFieldEnemyScore.setEditable(false);
   }//GEN-LAST:event_jTextFieldEnemyScoreKeyPressed
 
   private void jTextFieldMyScoreKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTextFieldMyScoreKeyPressed
   {//GEN-HEADEREND:event_jTextFieldMyScoreKeyPressed
-    if(evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') jTextFieldMyScore.setEditable(true);
+    if(	evt.getKeyChar() >= '0' && evt.getKeyChar() <='9' || 
+				evt.getKeyCode()==KeyEvent.VK_BACK_SPACE || 
+				evt.getKeyCode()==KeyEvent.VK_DELETE || 
+				evt.getKeyCode()==KeyEvent.VK_MINUS) jTextFieldEnemyScore.setEditable(true);
 		else jTextFieldMyScore.setEditable(false);
   }//GEN-LAST:event_jTextFieldMyScoreKeyPressed
 
   private void jTFEnMythicLevelKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTFEnMythicLevelKeyPressed
   {//GEN-HEADEREND:event_jTFEnMythicLevelKeyPressed
-    if(evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') jTFEnMythicLevel.setEditable(true);
+    if(	evt.getKeyChar() >= '0' && evt.getKeyChar() <='9' || 
+				evt.getKeyCode()==KeyEvent.VK_BACK_SPACE || 
+				evt.getKeyCode()==KeyEvent.VK_DELETE || 
+				evt.getKeyCode()==KeyEvent.VK_MINUS) jTextFieldEnemyScore.setEditable(true);
 		else jTFEnMythicLevel.setEditable(false);
   }//GEN-LAST:event_jTFEnMythicLevelKeyPressed
 
   private void jTFMyMythicLevelKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTFMyMythicLevelKeyPressed
   {//GEN-HEADEREND:event_jTFMyMythicLevelKeyPressed
-	if(evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') jTFMyMythicLevel.setEditable(true);
+		if(	evt.getKeyChar() >= '0' && evt.getKeyChar() <='9' || 
+				evt.getKeyCode()==KeyEvent.VK_BACK_SPACE || 
+				evt.getKeyCode()==KeyEvent.VK_DELETE || 
+				evt.getKeyCode()==KeyEvent.VK_MINUS) jTextFieldEnemyScore.setEditable(true);
 		else jTFMyMythicLevel.setEditable(false);    
   }//GEN-LAST:event_jTFMyMythicLevelKeyPressed
-
-  private void jTextField_enemyFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTextField_enemyFocusLost
-  {//GEN-HEADEREND:event_jTextField_enemyFocusLost
-    jTFEnMythicLevel.requestFocus();
-  }//GEN-LAST:event_jTextField_enemyFocusLost
 		
 	private void ChargerCommentaires(int MatchID)
 	{
