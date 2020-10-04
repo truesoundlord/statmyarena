@@ -265,6 +265,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		catch (SQLException ex) 
 		{
 			Logger.getLogger(FenetrePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(this, "La base de données n'est pas disponible\n"+ex.getMessage()+"["+ex.getSQLState()+"]");
+			
 		}
 	}
 	
@@ -342,7 +344,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
     {
       public void mouseClicked(java.awt.event.MouseEvent evt)
       {
-        jPanelPanneauEssaiClic(evt);
+        jPanelPanneauClic(evt);
       }
     });
 
@@ -1260,17 +1262,20 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	
   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
     System.err.println("Fenêtre fermée !!");
-		try 
+		if(LaConnection!=null) 
 		{
-			LaConnection.commit();	// on ne sait jamais...
-			LaConnection.close();
-		} 
-		catch (SQLException ex) 
-		{
-			// Logger.getLogger(FenetrePrincipale.class.getName()).log(Level.SEVERE, null, ex);
-			System.err.println("formWindowClosing");
-			System.err.println(ex.getMessage());
-			System.err.println(ex.getCause());
+			try 
+			{
+				LaConnection.commit();	// on ne sait jamais...
+				LaConnection.close();
+			} 
+			catch (SQLException ex) 
+			{
+				// Logger.getLogger(FenetrePrincipale.class.getName()).log(Level.SEVERE, null, ex);
+				System.err.println("formWindowClosing");
+				System.err.println(ex.getMessage());
+				System.err.println(ex.getCause());
+			}
 		}
   }//GEN-LAST:event_formWindowClosing
 	
@@ -1571,8 +1576,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		}
   }//GEN-LAST:event_clicsouris
 
-  private void jPanelPanneauEssaiClic(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jPanelPanneauEssaiClic
-  {//GEN-HEADEREND:event_jPanelPanneauEssaiClic
+  private void jPanelPanneauClic(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jPanelPanneauClic
+  {//GEN-HEADEREND:event_jPanelPanneauClic
     // AVRIL 2020
 		// DONE	 ^*^ 
 		if(evt.getButton()==2) 
@@ -1580,7 +1585,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 			ProceedMiddleClick();
 			//System.err.println("CLIC !!");
 		}
-  }//GEN-LAST:event_jPanelPanneauEssaiClic
+  }//GEN-LAST:event_jPanelPanneauClic
 
   private void formMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_formMouseClicked
   {//GEN-HEADEREND:event_formMouseClicked
@@ -1595,38 +1600,38 @@ public class FenetrePrincipale extends javax.swing.JFrame
 
   private void jTextFieldEnemyScoreKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTextFieldEnemyScoreKeyPressed
   {//GEN-HEADEREND:event_jTextFieldEnemyScoreKeyPressed
-    if(	evt.getKeyChar() >= '0' && evt.getKeyChar() <='9' || 
+    if( (evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') || 
 				evt.getKeyCode()==KeyEvent.VK_BACK_SPACE || 
 				evt.getKeyCode()==KeyEvent.VK_DELETE || 
-				evt.getKeyCode()==KeyEvent.VK_MINUS) jTextFieldEnemyScore.setEditable(true);
+				evt.getKeyChar()=='-') jTextFieldEnemyScore.setEditable(true);
 		else jTextFieldEnemyScore.setEditable(false);
   }//GEN-LAST:event_jTextFieldEnemyScoreKeyPressed
 
   private void jTextFieldMyScoreKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTextFieldMyScoreKeyPressed
   {//GEN-HEADEREND:event_jTextFieldMyScoreKeyPressed
-    if(	evt.getKeyChar() >= '0' && evt.getKeyChar() <='9' || 
+    if(	(evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') || 
 				evt.getKeyCode()==KeyEvent.VK_BACK_SPACE || 
 				evt.getKeyCode()==KeyEvent.VK_DELETE || 
-				evt.getKeyCode()==KeyEvent.VK_MINUS) jTextFieldEnemyScore.setEditable(true);
+				evt.getKeyChar()=='-') jTextFieldEnemyScore.setEditable(true);
 		else jTextFieldMyScore.setEditable(false);
   }//GEN-LAST:event_jTextFieldMyScoreKeyPressed
 
   private void jTFEnMythicLevelKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTFEnMythicLevelKeyPressed
   {//GEN-HEADEREND:event_jTFEnMythicLevelKeyPressed
-    if(	evt.getKeyChar() >= '0' && evt.getKeyChar() <='9' || 
+    if( (evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') || 
 				evt.getKeyCode()==KeyEvent.VK_BACK_SPACE || 
 				evt.getKeyCode()==KeyEvent.VK_DELETE || 
-				evt.getKeyCode()==KeyEvent.VK_MINUS) jTextFieldEnemyScore.setEditable(true);
+				evt.getKeyChar()=='-') jTextFieldEnemyScore.setEditable(true);
 		else jTFEnMythicLevel.setEditable(false);
   }//GEN-LAST:event_jTFEnMythicLevelKeyPressed
 
   private void jTFMyMythicLevelKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTFMyMythicLevelKeyPressed
   {//GEN-HEADEREND:event_jTFMyMythicLevelKeyPressed
-		if(	evt.getKeyChar() >= '0' && evt.getKeyChar() <='9' || 
+		if(	(evt.getKeyChar() >= '0' && evt.getKeyChar() <='9') || 
 				evt.getKeyCode()==KeyEvent.VK_BACK_SPACE || 
 				evt.getKeyCode()==KeyEvent.VK_DELETE || 
-				evt.getKeyCode()==KeyEvent.VK_MINUS) jTextFieldEnemyScore.setEditable(true);
-		else jTFMyMythicLevel.setEditable(false);    
+				evt.getKeyChar()=='-') jTextFieldEnemyScore.setEditable(true);
+		else jTFMyMythicLevel.setEditable(false);   
   }//GEN-LAST:event_jTFMyMythicLevelKeyPressed
 		
 	private void ChargerCommentaires(int MatchID)
