@@ -276,8 +276,7 @@ public class FenetrePrincipale extends javax.swing.JFrame
 	 */
 	@SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-  private void initComponents()
-  {
+  private void initComponents() {
 
     jPanelPanneau = new javax.swing.JPanel();
     jTextField_enemy = new javax.swing.JTextField();
@@ -321,17 +320,13 @@ public class FenetrePrincipale extends javax.swing.JFrame
     setUndecorated(true);
     setPreferredSize(new java.awt.Dimension(1390, 880));
     setResizable(false);
-    addMouseListener(new java.awt.event.MouseAdapter()
-    {
-      public void mouseClicked(java.awt.event.MouseEvent evt)
-      {
+    addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
         formMouseClicked(evt);
       }
     });
-    addWindowListener(new java.awt.event.WindowAdapter()
-    {
-      public void windowClosing(java.awt.event.WindowEvent evt)
-      {
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosing(java.awt.event.WindowEvent evt) {
         formWindowClosing(evt);
       }
     });
@@ -340,10 +335,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jPanelPanneau.setFont(new java.awt.Font("Liberation Mono", 1, 10)); // NOI18N
     jPanelPanneau.setMaximumSize(new java.awt.Dimension(1400, 900));
     jPanelPanneau.setMinimumSize(new java.awt.Dimension(1400, 900));
-    jPanelPanneau.addMouseListener(new java.awt.event.MouseAdapter()
-    {
-      public void mouseClicked(java.awt.event.MouseEvent evt)
-      {
+    jPanelPanneau.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
         jPanelPanneauClic(evt);
       }
     });
@@ -354,10 +347,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextField_enemy.setToolTipText("Player name");
     jTextField_enemy.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
     jTextField_enemy.setFocusTraversalPolicyProvider(true);
-    jTextField_enemy.addKeyListener(new java.awt.event.KeyAdapter()
-    {
-      public void keyReleased(java.awt.event.KeyEvent evt)
-      {
+    jTextField_enemy.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyReleased(java.awt.event.KeyEvent evt) {
         displayAsTyped(evt);
       }
     });
@@ -374,10 +365,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTablePlayer.setMinimumSize(new java.awt.Dimension(0, 400));
     jTablePlayer.setRowHeight(32);
     jTablePlayer.setUpdateSelectionOnSort(false);
-    jTablePlayer.addMouseListener(new java.awt.event.MouseAdapter()
-    {
-      public void mouseClicked(java.awt.event.MouseEvent evt)
-      {
+    jTablePlayer.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
         SelectionJoueur(evt);
       }
     });
@@ -386,10 +375,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jCheckBoxRouge.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/dis_manarouge.png"))); // NOI18N
     jCheckBoxRouge.setRolloverEnabled(false);
     jCheckBoxRouge.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manarouge.png"))); // NOI18N
-    jCheckBoxRouge.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    jCheckBoxRouge.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         selectDeckRouge(evt);
       }
     });
@@ -397,10 +384,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jCheckBoxVert.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/dis_manavert.png"))); // NOI18N
     jCheckBoxVert.setRolloverEnabled(false);
     jCheckBoxVert.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manavert.png"))); // NOI18N
-    jCheckBoxVert.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    jCheckBoxVert.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         selectDeckVert(evt);
       }
     });
@@ -408,10 +393,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jCheckBoxBleu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/dis_manableu.png"))); // NOI18N
     jCheckBoxBleu.setRolloverEnabled(false);
     jCheckBoxBleu.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manableu.png"))); // NOI18N
-    jCheckBoxBleu.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    jCheckBoxBleu.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         selectDeckBleu(evt);
       }
     });
@@ -419,10 +402,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jCheckBoxBlanc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/dis_manablanc.png"))); // NOI18N
     jCheckBoxBlanc.setRolloverEnabled(false);
     jCheckBoxBlanc.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/manablanc.png"))); // NOI18N
-    jCheckBoxBlanc.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    jCheckBoxBlanc.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         selectDeckBlanc(evt);
       }
     });
@@ -430,10 +411,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jCheckBoxNoir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/dis_mananoir.png"))); // NOI18N
     jCheckBoxNoir.setRolloverEnabled(false);
     jCheckBoxNoir.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/MagicArena/images/mananoir.png"))); // NOI18N
-    jCheckBoxNoir.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    jCheckBoxNoir.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         selectDeckNoir(evt);
       }
     });
@@ -441,10 +420,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jComboBoxMyLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jComboBoxMyLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
     jComboBoxMyLevel.setToolTipText("My current level");
-    jComboBoxMyLevel.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    jComboBoxMyLevel.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         selectionMyLevel(evt);
       }
     });
@@ -452,10 +429,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jComboBoxEnemyLevel.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jComboBoxEnemyLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
     jComboBoxEnemyLevel.setToolTipText("Enemy level");
-    jComboBoxEnemyLevel.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    jComboBoxEnemyLevel.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         SelectionEnemyLevel(evt);
       }
     });
@@ -472,10 +447,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jSliderResults.setToolTipText("Results");
     jSliderResults.setValue(1);
     jSliderResults.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-    jSliderResults.addChangeListener(new javax.swing.event.ChangeListener()
-    {
-      public void stateChanged(javax.swing.event.ChangeEvent evt)
-      {
+    jSliderResults.addChangeListener(new javax.swing.event.ChangeListener() {
+      public void stateChanged(javax.swing.event.ChangeEvent evt) {
         jsliderchanged(evt);
       }
     });
@@ -484,10 +457,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextFieldEnemyScore.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTextFieldEnemyScore.setText("20");
     jTextFieldEnemyScore.setToolTipText("Set player score");
-    jTextFieldEnemyScore.addKeyListener(new java.awt.event.KeyAdapter()
-    {
-      public void keyPressed(java.awt.event.KeyEvent evt)
-      {
+    jTextFieldEnemyScore.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyPressed(java.awt.event.KeyEvent evt) {
         jTextFieldEnemyScoreKeyPressed(evt);
       }
     });
@@ -496,10 +467,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextFieldMyScore.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTextFieldMyScore.setText("20");
     jTextFieldMyScore.setToolTipText("Set my score");
-    jTextFieldMyScore.addKeyListener(new java.awt.event.KeyAdapter()
-    {
-      public void keyPressed(java.awt.event.KeyEvent evt)
-      {
+    jTextFieldMyScore.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyPressed(java.awt.event.KeyEvent evt) {
         jTextFieldMyScoreKeyPressed(evt);
       }
     });
@@ -544,10 +513,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jButtonUpdate.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jButtonUpdate.setText("Update");
     jButtonUpdate.setToolTipText("Save datas");
-    jButtonUpdate.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    jButtonUpdate.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         updatedatas(evt);
       }
     });
@@ -559,17 +526,13 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jButtonAddTurn.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
     jButtonAddTurn.setText("Turn");
     jButtonAddTurn.setToolTipText("Push each time it is YOUR turn");
-    jButtonAddTurn.addMouseListener(new java.awt.event.MouseAdapter()
-    {
-      public void mouseClicked(java.awt.event.MouseEvent evt)
-      {
+    jButtonAddTurn.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
         clicsouris(evt);
       }
     });
-    jButtonAddTurn.addActionListener(new java.awt.event.ActionListener()
-    {
-      public void actionPerformed(java.awt.event.ActionEvent evt)
-      {
+    jButtonAddTurn.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
         AjouterTour(evt);
       }
     });
@@ -586,10 +549,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextAreaCommentaires.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
     jTextAreaCommentaires.setMaximumSize(new java.awt.Dimension(126, 66));
     jTextAreaCommentaires.setMinimumSize(new java.awt.Dimension(126, 66));
-    jTextAreaCommentaires.addFocusListener(new java.awt.event.FocusAdapter()
-    {
-      public void focusLost(java.awt.event.FocusEvent evt)
-      {
+    jTextAreaCommentaires.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusLost(java.awt.event.FocusEvent evt) {
         SauvegarderCommentaires(evt);
       }
     });
@@ -621,10 +582,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTextFieldOADefeats.setToolTipText("Number of lost matches (including concedes)");
 
     jSpinnerManaNoires.setFont(new java.awt.Font("Liberation Mono", 1, 12)); // NOI18N
-    jSpinnerManaNoires.addChangeListener(new javax.swing.event.ChangeListener()
-    {
-      public void stateChanged(javax.swing.event.ChangeEvent evt)
-      {
+    jSpinnerManaNoires.addChangeListener(new javax.swing.event.ChangeListener() {
+      public void stateChanged(javax.swing.event.ChangeEvent evt) {
         modifyManasNoires(evt);
       }
     });
@@ -645,10 +604,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTFMyMythicLevel.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     jTFMyMythicLevel.setText("0");
     jTFMyMythicLevel.setToolTipText("Your Mythic Level");
-    jTFMyMythicLevel.addKeyListener(new java.awt.event.KeyAdapter()
-    {
-      public void keyPressed(java.awt.event.KeyEvent evt)
-      {
+    jTFMyMythicLevel.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyPressed(java.awt.event.KeyEvent evt) {
         jTFMyMythicLevelKeyPressed(evt);
       }
     });
@@ -660,10 +617,8 @@ public class FenetrePrincipale extends javax.swing.JFrame
     jTFEnMythicLevel.setText("0");
     jTFEnMythicLevel.setToolTipText("Enemy Mythic Level");
     jTFEnMythicLevel.setAutoscrolls(false);
-    jTFEnMythicLevel.addKeyListener(new java.awt.event.KeyAdapter()
-    {
-      public void keyPressed(java.awt.event.KeyEvent evt)
-      {
+    jTFEnMythicLevel.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyPressed(java.awt.event.KeyEvent evt) {
         jTFEnMythicLevelKeyPressed(evt);
       }
     });
@@ -1911,6 +1866,16 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		Resultats=Statement.getResultSet();
 		if(Resultats!=null) 
 		{
+			// bug 2020 -- quand la base de données est vide --> CACA
+			
+			if(Resultats.getRow()==0) 
+			{
+				jComboBoxMyLevel.setSelectedIndex(0);
+				Resultats.close();
+				Statement.close();
+				return;
+			}
+			
 			Resultats.first();					
 			tmp=Resultats.getInt(1);
 		}
@@ -1931,6 +1896,14 @@ public class FenetrePrincipale extends javax.swing.JFrame
 		Resultats=Statement.getResultSet();
 		if(Resultats!=null) 
 		{
+			if(Resultats.getRow()==0) 
+			{
+				jComboBoxEnemyLevel.setSelectedIndex(0);
+				Resultats.close();
+				Statement.close();
+				return;
+			}
+			
 			Resultats.first();					
 			tmp=Resultats.getInt(1);
 		}
